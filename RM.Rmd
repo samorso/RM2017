@@ -1,0 +1,807 @@
+---
+title: "Multivariate statistics"
+subtitle: "Reserach Methods I, HES-SO, MScBA"
+author: "Samuel Orso"
+date: "`r Sys.Date()`"
+output: 
+ prettydoc::html_pretty:
+  theme: architect
+  highlight: github
+  toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Before we get started
+### Formalities
+Formal information:  
+* Lecturer: Samuel Orso (Samuel.Orso@unige.ch)  
+* In-class: 20 hours over 5 sessions  
+* Evaluation: two group projects (~4 students randomly assigned) (20%) and a final exam (80%)  
+* Class material on https://cyberlearn.hes-so.ch/
+
+This course serves as an introduction to multivariate statistics with an emphasis on the multivariate regression and its applications. In class, we cover the theory and part of the exercises. The course is self-contained. There exists a large choice of textbooks for self-studying. Here are some options:  
+* *Managerial statistics* (2002). S.C. Albright, W.L. Winston, C.J. Zappe.  
+* *Managerial statistics* (2012). G. Keller.  
+* *Statistics for Business and Economics* (2011). D.R. Anderson, D.J. Sweeney, T.A. Williams.  
+
+
+### Few more wo`R`ds
+This class has been entierely written using `R/RStudio` open source statistical softwares. The students are strongly encouraged to learn how to use these softwares by themselves as it will ease their learning process. Also we believe it will be an asset on your CV and for the rest of your careers. Many web sources exist for learning `R`:  
+* https://www.rstudio.com/  
+* https://www.coursera.org/learn/r-programming/  
+* https://www.datacamp.com/  
+* http://www.r-exercises.com/  
+* and many more ...  
+
+Note that it is **possible** to make the exercises with other softwares (e.g. Excel), but is is **essential** that you understand the outputs from `R` (as presented in class) for the final examination. For the project you can choose.
+
+To get started, install `R` from https://www.r-project.org/ and `RStudio` https://www.rstudio.com/. Along the document, you will see some windows like the following:
+```{r}
+# Just an example
+1 + 2
+```
+The gray block is the `R` code that I wrote (here a simple addition of 1 + 2). The white block is the output from `R` (here 3). This course follows the principle of _reproducibility_: you can copy/paste the blocks of code from the slides to your own computer (using `R` of course) to reproduce the same examples used in the slides and familiarize yourself with coding in `R`. When you begin, you will certainly make a lot of mistakes. Doing mistakes and trying to solve it will help you to learn a lot. Some googling is helpful. `R` can also help you if you ask appropriately For example if you want to know more about the function `mean()`, you can write:
+```{r}
+?mean
+```
+
+For less effort (but less gain as well), you can use `R-commander` (http://www.rcommander.com/) in addition to `R/RStudio`. It is a graphcial user interface that can prevent you from writing the codes.
+
+# Introduction: Multivariate regression
+### Preambule
+Multivariate regression aims at modelling the relationship between one **variable of interest** and many (i.e. multivariate) potential **explanatory variables** (or **predictors**). We will use the multivariate regression for two purposes:    
+1. Verifying a theory   
+2. Predicting  
+
+**Example 1** I suppose that the stopping distance of car depends on the speed of the car. I am interested in the variable *stopping distance* and consider the variable *speed* to potentially explains the phenomena. Here is an illustration based on some data:
+```{r, fig.align='center', fig.height=4, fig.width=6, message=FALSE,cache=TRUE}
+# load the data
+data(cars)
+
+# install package (if not done)
+# install.packages("ggplot2")
+
+# load package
+require(ggplot2) # for better graphs
+
+# plot the regression
+ggplot(cars, aes(x = speed, y = dist)) + 
+  geom_point() +
+  stat_smooth(method = "lm", col = "red")
+```
+The main line is the **regression line**. The gray area around the regression line is the confidence interval (more on that later). The points are the observations. ''Of course'' the points are not on the line. Two reasons for that might be:  
+1. Both the stopping distance and the speed are random variables;  
+2. The relation between the variable of interest and the explanatory variable is not **linear**.  
+The regression line is interpreted as follows: the faster the car drives, the more distance the car needs to stop, which seems to make sense. What else could we consider to explain the stopping distance?
+
+### From mathematics to statistics
+You certainly remember the line equation from your math courses: $$ y = ax + b,$$ where $b$ is the intercept and $a$ the slope. Of course it can be extended to more than one $x$'s. This is somehow the ''ideal'' model that we believe to hold when we work with regression. If we could observe this *idealized* model, we should observe something like:
+
+```{r, fig.align='center', fig.height=4, fig.width=6, message=FALSE,cache=TRUE}
+# Load and install package (if not done)
+# install.packages("ggplot2")
+# require(ggplot2)
+
+# Create a data frame (necessary for ggplot2)
+df <- data.frame(
+  speed = seq(from = min(cars$speed), to = max(cars$speed)), # sequence of integers on the range of "speed"
+  dist = -17.5791 + 3.9324 * seq(from = min(cars$speed), to = max(cars$speed)) # equation of the line
+)
+
+# Plot the data frame
+ggplot(data=df, aes(x=speed, y=dist, group=1)) +
+  geom_point()
+```
+
+
+When it comes to sample observations, all becomes random. There exist many sources of variability: rounding, error in measurement, ... Consequently we observe that instead:
+
+```{r, fig.align='center', fig.height=4, fig.width=6, message=FALSE,cache=TRUE}
+# Load and install package (if not done)
+# install.packages("ggplot2")
+# require(ggplot2)
+
+# Load the data (if not done)
+# data(cars)
+
+# Plot the data
+ggplot(cars, aes(x = speed, y = dist)) + 
+  geom_point()
+```
+
+The general idea of regression is to find back the line equation from the observations. Two reasons for that:   
+1. Check whether $x$ has a linear impact on $y$;     
+2. Predict future values for $y$.   
+
+### Formalization
+The multivariate regression can be formalized as follows. Suppose that you are interested in the variable $y$ and have $p$ potential predictors $x$. You have obtained a sample of size $n$. The **regression equation** is given by $$ y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \dots + \beta_p x_{pi} + \varepsilon_i,\quad i = 1,\dots,n, $$ or more compactly, $$ y_i = \beta_0 + \sum_{j=1}^px_{ij}\beta_j + \varepsilon_i,\quad i = 1,\dots,n. $$
+There are two unknown quantities:  
+1. the $\beta$'s are the **regression parameters**. Note that $\beta_0$ has a specific name: the *intercept*.  
+2. $\varepsilon$ represent the random errors of the regression line. **They are not observable**. However, it is assumed to follows independently and identically a normal distribution centered on 0 and of variance $\sigma^2_\varepsilon$, $\varepsilon_i\sim\mathcal{N}(0,\sigma^2_\varepsilon)$.
+
+These two unknown quantities are assumed to be fixed constant. We can **estimate** them based on the observations, i.e. we find numerical values for them. We denote the **estimators** with a ''hat'': $\hat{\beta}$ is the estimator of $\beta$, $\hat{\sigma}^2_\varepsilon$ is the estimator of $\sigma^2_\varepsilon$. The $\hat{\beta}$'s are called the **regression coefficients**.
+
+**Example 1** We can write the regression equation as $$ \text{dist}_i = \beta_0 + \beta_1\text{speed}_i + \varepsilon_i,\quad i = 1,\dots,50. $$ To obtain the estimators, we run the following code:
+```{r,cache=TRUE}
+# Load the data (if not done)
+# data(cars)
+
+# Estimate the Linear Model
+estim_lm <- lm(dist ~ speed, data=cars)
+
+# Summary of the estimation
+summary(estim_lm)
+```
+The summary has a lot of useful information. For the moment we are only interested in the estimators. We have:  
+* The intercept: $\hat{\beta}_0 =$ `r round(estim_lm$coefficients[1],4)`;  
+* The coefficient of the variable speed: $\hat{\beta}_1$ = `r round(estim_lm$coefficients[2],4)`;  
+* The square root of the estimator of the variance: $\sqrt{\hat{\sigma}^2_\varepsilon} =$ `r round(sqrt(sum((estim_lm$residuals - mean(estim_lm$residuals))^2)/estim_lm$df.residual),2)`.  
+
+Once we obtain the **estimators**, we can write the **estimated regression equation**: $$ \hat{y}_i = \hat{\beta}_0 + \sum_{j=1}^px_{ij}\hat{\beta}_j,\quad i = 1,\dots,n. $$ From this estimated regression equation, we can also obtain values for the *unobserved* errors $\varepsilon$. It is simply defined as $$ \hat{\varepsilon}_i = y_i - \hat{y}_i,\quad i=1,\dots,n. $$ The $\hat{\varepsilon}$'s are called the **residuals**. They are useful in part because we can approximately verify that $\varepsilon$ follows a normal distribution. I insist that this verification is approximate.
+
+**Example 1** The estimated regression equation is given by $$ \widehat{\text{dist}}_i = `r round(estim_lm$coefficients[1],4)` + `r round(estim_lm$coefficients[2],4)`\;\text{speed}_i, \quad i = 1,\dots,50. $$
+```{r, fig.align='center', fig.height=4, fig.width=6, message=FALSE,cache=TRUE}
+# Load and install package (if not done)
+# install.packages("ggplot2")
+# require(ggplot2)
+
+# Load the data (if not done)
+# data(cars)
+
+# Obtain residuals from the estimated linear regression
+res <- estim_lm$residuals
+hat_sigma_eps <- sqrt(sum((estim_lm$residuals - mean(estim_lm$residuals))^2)/estim_lm$df.residual)
+
+# Overlay histogram and normal density
+qplot(res, geom = 'blank') +   
+  stat_function(fun = dnorm, aes(colour = 'Normal'), args = list(sd = hat_sigma_eps)) +          
+  geom_histogram(aes(y = ..density..), alpha = 0.4, binwidth = 3) +                        
+  scale_colour_manual(name = 'Density', values = 'blue') + 
+  ggtitle("Residuals plot") + 
+  xlab(expression(hat(epsilon))) +
+  ylab("Density") + 
+  annotate('text',x=-26,y=0.025,label="X~follows~N~(0~~hat(sigma)[epsilon]^2)",parse=TRUE,size=3,col='blue')
+```
+
+Also we can use the estimated regression to obtain predictions about the variable of interest. Suppose that we observe new values for $x$, denoted $x^{\text{new}}$, then we have **estimated prediction** of a new $y$ $$ \hat{y}^{\text{new}} = \hat{\beta}_0 + \sum_{j=1}^px^{\text{new}}_{ij}\hat{\beta}_j$$
+
+**Example 1** Suppose we observe a new car with speed measured at 15. The predicted distance is $$ \widehat{\text{dist}}^\text{new} = `r round(estim_lm$coefficients[1],4)` + `r round(estim_lm$coefficients[2],4)`\cdot 15 \approx `r round(estim_lm$coefficients[1] + estim_lm$coefficients[2] * 15,4)` $$
+
+### Case study: how much is the car worth?
+Let us introduce a case study that will follow us during the class. For this data set, a representative sample of over eight hundred 2005 GM cars were selected. The data set contains the following variables:
+
+* *Price*: suggested retail price of the used 2005 GM car in excellent condition. The condition of a car can greatly affect price. All cars in this data set were less than one year old when priced and considered to be in excellent condition.
+* *Mileage*: number of miles the car has been driven.   
+* *Make*: manufacturer of the car such as Saturn, Pontiac, and Chevrolet.   
+* *Model*: specific models for each car manufacturer such as Ion, Vibe, Cavalier.   
+* *Trim* (of car): specific type of car model such as SE Sedan 4D, Quad Coupe 2D          
+* *Type*: body type such as sedan, coupe, etc.      
+* *Cylinder*: number of cylinders in the engine        
+* *Liter*: a more specific measure of engine size     
+* *Doors*: number of doors           
+* *Cruise*: indicator variable representing whether the car has cruise control (1 = cruise)
+* *Sound*: indicator variable representing whether the car has upgraded speakers (1 = upgraded)
+* *Leather*: indicator variable representing whether the car has leather seats (1 = leather)
+
+*Price* is the variable of interest. There are 11 potential predictors.
+
+```{r,eval=TRUE,cache=TRUE}
+# Set the working directory of R to your own directory 
+setwd("~/Documents/Teaching/RM/") # in my case, in your computer you should indicate your own path
+getwd() # to check the current directory
+
+# load the dataset
+data <- read.csv(file="kuiper.csv",sep=",")
+
+# Check the first six lines
+knitr::kable(head(data))
+```
+
+```{r,eval=FALSE,echo=FALSE}
+# Set the working directory of R to your own directory 
+setwd("D:/Dropbox/PhD/HEG/RM") # in my case, in your computer you should indicate your own path
+
+# load the dataset
+data <- read.csv(file="kuiper.csv",sep=",")
+
+# Check the first six lines
+knitr::kable(head(data))
+```
+
+# Descriptive analysis
+The aims of descriptive statistics are:  
+* To focus on some characteristics of the sample  
+* To represent the data in a readable way  
+* To summarize the sample information  
+
+These summaries can be numerical or graphical, univariate or multivariate.
+For example the *5-number-summary* provides numerical summary of an univariate variable:   
+* Minimum or quantile at 0%: the smallest data, 0% of the data are
+smaller  
+* 1st quartile or quantile at 25%: a quarter of the data (25%) are
+smaller, the 75% of the data are greater.  
+* Median or quantile at 50%: half of the data (50%) are smaller, half
+are greater.   
+* 3rd quartile or quantile at 75%: a quarter of the data (25%) are
+greater, the 75% of the data are smaller.  
+* Maximum or quantile at 100%: The greatest data.   
+
+### Application to regression: variable of interest
+The variable of interest is assumed to follow approximately a normal distribution in the regression context. We should observe (approximately) this behaviour with *boxplot* or *histogram*. What is this behaviour?
+
+**Example 2:** Suppose we observe a sample of size 100 from a normal random variable $X\sim\mathcal{N}(0,1)$.
+```{r,fig.align='center', fig.height=6, fig.width=6, message=FALSE,cache=TRUE}
+# load a package
+require(gridExtra)
+
+# Generate normal random variates
+set.seed(123)
+x <- rnorm(100)
+
+# Plot the histogram and boxplot
+plot1 <- qplot(x, geom="histogram",bins=15)
+plot2 <- qplot(x, x=1, geom="boxplot") + xlab(NULL) + coord_flip()
+grid.arrange(plot1, plot2, ncol=1)
+```
+
+
+**CS:** Here is the 5-number-summary and the histogram/boxplot of the price.
+```{r,fig.align='center', fig.height=6, fig.width=6, message=FALSE,cache=TRUE}
+# 5-number-summary
+summary(data$Price)
+
+# Plot the histogram and boxplot
+plot1 <- qplot(data$Price, geom="histogram")
+plot2 <- qplot(data$Price, x=1, geom="boxplot") + xlab(NULL) + coord_flip()
+grid.arrange(plot1, plot2, ncol=1)
+```
+
+Here the price is right skewed. Let see what happens if we log-transform the variable.
+
+```{r,fig.align='center', fig.height=6, fig.width=6, message=FALSE,cache=TRUE}
+# load a package
+require(gridExtra)
+
+# Plot the histogram and boxplot
+plot1 <- qplot(log(data$Price), geom="histogram")
+plot2 <- qplot(log(data$Price), x=1, geom="boxplot") + xlab(NULL) + coord_flip()
+grid.arrange(plot1, plot2, ncol=1)
+```
+
+### Application to regression: continuous predictors
+Many assumptions on the predictors can be intuitively check via a bivariate graph, the **scatterplot**:   
+* Are the predictors (more or less) independent between them? We should observe a *widespread cloud* on a scatterplot.   
+* Are the predictors **linearly dependent** with the variable of interest? On a scatterplot, we should be able to imagine a line going through the points.   
+* The distance between the points and this imaginary line should be more or less constant, or saying it differently error should be **homoscedastic** (meaing *same variability*), otherwise we might have a problem of **heteroskedasticity**. In which case it might be a good option to make a transformation.   
+* Are there outliers on the data?   
+We can also use the **linear correlation** to measure the strength of the linear relationship. The correlation varies between -1 to 1. 1 represent a strong positive (downleft to upright) linear relationship. -1 represents a strong negative linear relationship. 0 represents no linear relationship.
+
+**CS:** Let see the scatterplot of *Mileage* against *Liter*.
+```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
+qplot(data$Mileage,data$Liter)
+```
+It seems hard to imagine a straight line. The correlation = `r round(cor(data$Mileage,data$Liter),4)`. Why the graph looks like that?
+
+**Example 3:** We receive some characteristics about cars. We look at the scatterplot of the variables *miles per gallon* versus *weights*.
+```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
+qplot(mpg,wt,data=mtcars)
+```
+The correlation is `r round(cor(mtcars$mpg,mtcars$wt),4)`.
+
+**Example 4:** Suppose that we observe the following:
+```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
+# Generate random values
+set.seed(1234)
+x <- rnorm(1000)
+y <- x * x + rnorm(1000)
+
+# Plot
+qplot(x,y)
+```
+The correlation is `r round(cor(x,y),4)`. Evidently both $x$ and $y$ have a relationship, but it is not linear, it is squared, or more generally we say **curvilinear**.
+
+**Example 5:** Suppose that we observe the following:
+```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
+# Generate random values
+set.seed(1234)
+x <- rnorm(1000)
+y <- x + rnorm(1000)
+
+# We add randomly some outliers
+y[sample(1000,10)] <- rnorm(10,mean=15)
+
+# Plot  
+qplot(x,y)
+```
+The correlation is `r round(cor(x,y),4)`. The **Spearman's rank correlation** is  `r round(cor(x,y,method="spearman"),4)`. We say that Spearman's rank correlation is **robust** to outliers.
+
+### Application to regression: discrete predictors
+If predictors are discrete (factors, few values, ...), scatterplot and 5-number-summary are not suitables. It may be more convenient to use **barplot** and **table**.
+
+**CS:** Let's look at the predictor Cylinder
+```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
+# Table
+table(data$Cylinder)
+
+# Barplot
+qplot(data$Cylinder, geom="bar")
+```
+
+Discrete predictors can be combined with a continuous predictor/variable of interest with multiple boxplots.
+
+**CS:** Let's look at the relation between Cylinder and Price.
+```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
+# Multiple boxplots
+ggplot(data=data, aes(x=Cylinder, y=Price, group=Cylinder, fill=Cylinder)) +
+  geom_boxplot()
+```
+
+# Inference
+While descriptive statistics describe characteristics of a **sample** (location, dispersion, graphs, ...), inferential statistics provide information on the underlying **population**. This task is much more useful than a simple description but also much more difficult.
+
+## Estimation by intervals
+The goal of **confidence intervals** is to quantify the uncertainty around the **point estimates** (single values) to be representative of the population. It gives a range such that the true value of the parameter in the population is contained in the interval with a given probability. The confidence probability is set by the user and is called the **confidence level**.
+
+**Example 2:** Suppose we observe a sample of size 100 from a normal random variable $X\sim\mathcal{N}(0,1)$. We are interested in the mean. The population mean is 0 here, but generally it is unknown. The sample mean, the point estimate, is `r set.seed(123); round(mean(rnorm(100)),4)`. A confidence interval at 95% is given by $[`r set.seed(123); round(mean(rnorm(100))-1.96/10,4)`,`r set.seed(123); round(mean(rnorm(100))+1.96/10,4)`]$. 
+
+In Example 2, we say that there is 95% probability that this interval contains the population mean (and not the converse). It is important to note that there is still 5% chance that this interval does not contain the population mean.
+
+More generally, a 1-$\alpha$% confidence interval for a sample mean is given by the general forumla $$ \Big[\bar{x} - z_{1-\alpha/2}\sqrt{\frac{\sigma^2}{n}};\;\bar{x} + z_{1-\alpha/2}\sqrt{\frac{\sigma^2}{n}}\Big], $$ where $z_\alpha$ is the $\alpha$-quantile of a standard Normal distribution (recall your probability classes). The user chooses the level $\alpha$. Generally the default value is $\alpha=0.05$, but it may vary depending the context. This formula assumes that the variance $\sigma^2$ is a known value. In most cases the **variance is unknown** and is estimated, which leads to the following modification $$ \Big[\bar{x} - t_{n-1;\;1-\alpha/2}\sqrt{\frac{\hat{\sigma}^2}{n}};\;\bar{x} + z_{n-1;\;1-\alpha/2}\sqrt{\frac{\hat{\sigma}^2}{n}}\Big], $$ where $t_{\text{df};\;\alpha}$ is the $\alpha$-quantile of the student distribution with $\text{df}$ degrees of freedom ($n$ is the sample size).
+
+#### Application to regression: confidence interval on a coefficient
+Regression coefficients can be treated as average, we can use the same formulas. The only difference is that the degrees of freedom is not $n-1$, but $n-p$ where $p$ is the number of regressors.
+
+**Example 1:** Recall that we try to explain the distance a car takes to stop with the speed of the car. The fitted linear regression is given by
+```{r}
+summary(estim_lm)
+```
+The column `Estimate` gives the point estimates: $\hat{\beta}_0,\hat{\beta}_1$. The next column `Std. Error` gives an estimate of the standard errors: $\sqrt{\hat{\sigma}^2_0/\text{df}},\sqrt{\hat{\sigma}^2_1/\text{df}}$. **Be careful, standard errors is not standard deviation, but standard deviation divided by the square root of the degrees of freedom!!** To construct a 95% confidence interval ($\alpha$=0.05), we need the sample size, here $n=50$, and the quantile of the student distribution, here $t_{n-2;\;1-\alpha/2}=t_{48;0.975}=`r round(qt(.975,df=48),4)`$. For the intercept we have $$ CI(\hat{\beta}_0,95\%) = \Big[-17.5791 - 2.0106\cdot6.7584;\;-17.5791 + 2.0106\cdot6.7584\Big] = \Big[-31.1675;\;-3.9907\Big].$$ And for the coefficient of speed, we have $$CI(\hat{\beta}_1,95\%) = \Big[3.9324 - 2.0106\cdot0.4155;\;3.9324 + 2.0106\cdot 0.4155\Big] = \Big[3.0970;\;4.7678\Big].$$
+
+## Hypothesis testing
+The objective of hypothesis testing is to answer a question about the population under study. It is a major element of statistical inference. Hypothesis testing is constructed in three parts:   
+1. What hypothesis am I testing?    
+2. What is my decision rule?   
+3. Based on the sample, what is my decision?   
+It is important to note that the two first parts are chosen first and independently of the sample (i.e. before looking at the data). The three parts are standard for every test.
+
+### Hypothesis
+A hypothesis testing is always constructed with a **null-hypothesis**, denoted $H_0$, and the **alternative hypothesis**, denoted $H_1$. $H_0$ is the default hypothesis, one chooses this hypothesis by default. Sometimes we want to prove $H_1$, that is we want to **reject $H_0$**, or sometimes we want to disprove $H_1$, i.e. we want to fail rejecting $H_0$.
+
+**Example 1:** We want to test whether the predictor *Speed* has no linear impact on the *Distance* (null-hypothesis) against *Speed* has an impact (alternative hypothesis). It is formalized as follows: $$ H_0\;:\;\beta_1=0, \\ H_1\;:\;\beta_1\neq0. $$
+
+For Example 1, if we reject $H_0$, it means that we believe the population $\beta_1$ is not 0, that is *Speed* has a linear impact on *Distance*. Of course the sample coefficient, $\hat{\beta}_1$, will never be exactly 0 even if the population coefficient is, this is why we need statistical inference!
+
+### Decision rule
+Taking the decision to reject or to not reject $H_0$ is risky. Before to make any decision, we need to agree on what risk we are ready to take. Here is summary of the existing risks:
+
+Decision / Population | $H_0$ is true     | $H_0$ is false
+--------------------- | ----------------- | -----------------
+Reject $H_0$          | Type I error      | Correct inference
+Fail to reject $H_0$  | Correct inference | Type II error
+
+or, in a trial:
+
+Decision / Reality | Innocent        | Guilty
+------------------ | --------------- | -----------------
+Guilty             | Serious mistake | Correct
+Innocent           | Correct         | Mistake
+
+We cannot eliminate these sources of error completely at the same time:   
+* A rule completely eliminating type I error would always conclude in favor of $H_0$ even when it is wrong ("every defendant is innocent")     
+* A rule completely eliminating type II error would always conclude in favor of $H_1$ even when it is wrong ("every defendant is guilty")    
+
+Consequently one has to choose the risk he/she is ready to take by choosing a **significant level**, denoted $\alpha$. The significance level $\alpha$ control the error of type I (the most serious one). It is common to choose $\alpha=5\%$. It means ''I am ready to be wrong 5\% of the time when rejecting $H_0$''.
+
+The $p$-value is a number obtained on the data. It determines the decision. The **decision rule** is the following:     
+* If the $p$-value is smaller than the significance level $\alpha$, we reject $H_0$. It means that we gathered enough evidence against $H_0$ and accept $H_1$. We call the test **significant**.   
+* If the $p$-value is greater than $\alpha$, the test is **unsignificant**, no conclusion can be reached based on the sample at hand.   
+
+More specifically, the $p$-value is the probability under $H_0$ of observing a **test statistic** more in favour of $H_1$ than the test statistic indeed observed. Generally $T$ denotes the test statistic (a random variable), and $t_\text{obs}$ the observed statistic on the sample. 
+
+Instead of comparing the $p$-value with the significance level, it is equivalent to compare $t_{\text{obs}}$ with a quantile of the distribution of $T$ depending on $\alpha$, denoted $T(\alpha)$. This quantile $T(\alpha)$ determines a **rejecting region**, which leads to the following **decision rule** (totally equivalent to the previous one):   
+* If $t_{\text{obs}}$ is included in the rejecting region, we reject $H_0$. It means that we gathered enough evidence against $H_0$ and accept $H_1$. We call the test **significant**.   
+* If $t_{\text{obs}}$ is not included in the rejection region, the test is **unsignificant**, no conclusion can be reached based on the sample at hand. 
+
+We will see how to compute $p$-values and rejection region in examples.
+
+### Test on a single mean
+We want to **test an average** with **known variance**. We have a sample of $n$ observations from the population with average $\mu$ (unknown) and variance $\sigma^2$ (known). The aim is to test if the population average is equal to an hypothetical value $\mu_0$ (chosen by the tester). The significance level is $\alpha$.   
+
+ Interest          |  Value                                                  
+------------------ | -----------------------------------------------------------
+Test statistic     | $T = \frac{\bar{X}-\mu_0}{\sqrt{\sigma^2 /n}}$
+$H_0$              | $\mu = \mu_0$
+$H_1$ (two-sided)  | $\mu\neq\mu_0$
+$p$-value          | $\mathbb{P}_{H_0}\big(\{T>\lvert t_{\text{obs}\rvert}\}\cup\{T<-\lvert t_{\text{obs}}\rvert\}\big) = 2-2\Phi(\lvert t_{\text{obs}}\rvert)$
+$T(\alpha)$        | $z_{1-\alpha/2}$
+Rejection region   | $(-\infty,-z_{1- \alpha/2}]\cup[z_{1- \alpha/2},+\infty)$
+
+
+where $z_\alpha$ denotes the $\alpha$-quantile of standard normal distribution and $\Phi(z)=\mathbb{P}(Z<z)$ is the cumulative distribution function of the standard normal distribution. Note the similitude between confidence interval and rejection region! 
+
+Here is a small illustration of the concepts. Suppose we test with a level $\alpha=5\%$ whether $\mu=\mu_0=0$. We know that $z_{1-\alpha/2}=1.96$ (check the table of the normal law if you are unsure). Suppose we compute the observed statistic and obtain $t_{\text{obs}} = -2.1$. We can then illustrate the $p$-value and rejection region:
+```{r,fig.align='center',fig.width=6,fig.height=8,cache=TRUE}
+# Values
+alpha <- 0.05
+tobs <- -2.1
+p_val <- 2 - 2 * pnorm(abs(tobs))
+p_val
+z_alpha <- qnorm(1 - alpha/2)
+z_alpha
+
+# Plot for p-value
+plot1 <- ggplot(data.frame(x = c(-3.5,3.5)), aes(x)) + 
+        stat_function(fun = dnorm, size=1.5) + 
+        stat_function(fun = dnorm, xlim = c(-3.5,-abs(tobs)), geom = "area", fill="red", alpha=0.5) + 
+        stat_function(fun = dnorm, xlim = c(abs(tobs),3.5), geom = "area", fill="red", alpha=0.5) + 
+        xlab("T") + ylab("density") + ggtitle("p-value for two-sided test",) +
+        annotate('text',x=-2.5,y=.2,label="p-value~is~0.0357",parse=TRUE,size=3,col='red') +
+        geom_segment(data=data.frame(x=c(-2.5,-2.45),y=c(.19,.19),xe=c(-2.5,1.9),ye=c(.03,.03)),
+                     mapping=aes(x=x,y=y,xend=xe,yend=ye), 
+                     arrow=arrow(), size=1, color="red") + 
+        annotate('text',x=-abs(tobs),y=-.02,label="-~'|'~t[obs]~'|'",parse=TRUE,size=3,col='red') + 
+        annotate('text',x=abs(tobs),y=-.02,label="'|'~t[obs]~'|'",parse=TRUE,size=3,col='red')
+
+# Plot for rejection region
+plot2 <- ggplot(data.frame(x = c(-3.5,3.5)), aes(x)) + 
+        stat_function(fun = dnorm, size=1.5) + 
+        stat_function(fun = dnorm, xlim = c(-3.5,-z_alpha), geom = "area", fill="red", alpha=0.5) + 
+        stat_function(fun = dnorm, xlim = c(z_alpha,3.5), geom = "area", fill="red", alpha=0.5) + 
+        xlab("T") + ylab("density") + ggtitle("rejection region for two-sided test",) +
+        geom_vline(xintercept = tobs, col="red") +
+        annotate('text',x=tobs-.15,y=.2,label="t[obs]",parse=TRUE,size=3,col='red')
+        
+# Both graphs
+grid.arrange(plot1, plot2)
+```
+The $p$-value is $<5\%$, so we would reject $H_0$ according to the decision rule. The $t_{\text{obs}}$ is included in the rejection region, so we would also reject $H_0$ according to the decision rule. Both the $p$-value and the rejection region leads to the same conclusion because both are exactly the same decision rule, they do not contradict each other!
+
+This test has the possibility to be oriented: it can be more precise on the conclusion.
+
+ Interest          |  Value                                                  
+------------------ | -----------------------------------------------------------
+$H_0$              | $\mu = \mu_0$
+$H_1$ (oriented)   | $\mu<\mu_0$ or $\mu>\mu_0$
+$p$-value          | $\mathbb{P}_{H_0}\big(T< t_{\text{obs}}\big) = \Phi( t_{\text{obs}})$ or $\mathbb{P}_{H_0}\big(T> t_{\text{obs}}\big) = 1-\Phi( t_{\text{obs}})$
+$T(\alpha)$        | $z_{1-\alpha}$
+Rejection region   | $(-\infty,-z_{1- \alpha}]$ or $[z_{1- \alpha},+\infty)$
+
+
+Let see how the previous illustration is modified if we make the alternative hypothesis that $H_1:\mu<\mu_0$ (here $\mu_0=0$).
+```{r,fig.align='center',fig.width=6,fig.height=8,cache=TRUE}
+# p-value
+p_val_1 <- pnorm(tobs)
+p_val_1
+z_alpha_ <- qnorm(1 - alpha)
+z_alpha_
+
+# Plot for p-value
+plot1 <- ggplot(data.frame(x = c(-3.5,3.5)), aes(x)) + 
+        stat_function(fun = dnorm, size=1.5) + 
+        stat_function(fun = dnorm, xlim = c(-3.5,tobs), geom = "area", fill="red", alpha=0.5) + 
+        xlab("T") + ylab("density") + ggtitle("p-value for oriented test",) +
+        annotate('text',x=-2.5,y=.2,label="p-value~is~0.0179",parse=TRUE,size=3,col='red') +
+        geom_segment(data=data.frame(x=-2.5,y=.19,xe=-2.5,ye=.03),
+                     mapping=aes(x=x,y=y,xend=xe,yend=ye), 
+                     arrow=arrow(), size=1, color="red") + 
+        annotate('text',x=tobs,y=-.02,label="t[obs]",parse=TRUE,size=3,col='red') 
+
+# Plot for rejection region
+plot2 <- ggplot(data.frame(x = c(-3.5,3.5)), aes(x)) + 
+        stat_function(fun = dnorm, size=1.5) + 
+        stat_function(fun = dnorm, xlim = c(-3.5,-z_alpha_), geom = "area", fill="red", alpha=0.5) + 
+        xlab("T") + ylab("density") + ggtitle("rejection region for oriented test",) +
+        geom_vline(xintercept = tobs, col="red") +
+        annotate('text',x=tobs-.15,y=.2,label="t[obs]",parse=TRUE,size=3,col='red')
+        
+# Both graphs
+grid.arrange(plot1, plot2)
+```
+
+Clearly we are more precise ($p$-value smaller) in this direction. Note that the $p$-value of the two-sided test is divided by 2 to obtain the $p$-value of this oriented test. What happens if the alternative hypothesis is $H_1:\mu>\mu_0$? Let see
+```{r,fig.align='center',fig.width=6,fig.height=8,cache=TRUE}
+# p-value
+p_val_2 <- 1-pnorm(tobs)
+p_val_2
+
+# Plot for p-value
+plot1 <- ggplot(data.frame(x = c(-3.5,3.5)), aes(x)) + 
+        stat_function(fun = dnorm, size=1.5) + 
+        stat_function(fun = dnorm, xlim = c(tobs,3.5), geom = "area", fill="red", alpha=0.5) + 
+        xlab("T") + ylab("density") + ggtitle("p-value for oriented test",) +
+        annotate('text',x=-2.5,y=.2,label="p-value~is~0.9821",parse=TRUE,size=3,col='red') +
+        geom_segment(data=data.frame(x=-2.5,y=.19,xe=-2,ye=.1),
+                     mapping=aes(x=x,y=y,xend=xe,yend=ye), 
+                     arrow=arrow(), size=1, color="red") + 
+        annotate('text',x=tobs,y=-.02,label="t[obs]",parse=TRUE,size=3,col='red') 
+
+# Plot for rejection region
+plot2 <- ggplot(data.frame(x = c(-3.5,3.5)), aes(x)) + 
+        stat_function(fun = dnorm, size=1.5) + 
+        stat_function(fun = dnorm, xlim = c(z_alpha_,3.5), geom = "area", fill="red", alpha=0.5) + 
+        xlab("T") + ylab("density") + ggtitle("rejection region for oriented test",) +
+        geom_vline(xintercept = tobs, col="red") +
+        annotate('text',x=tobs-.15,y=.2,label="t[obs]",parse=TRUE,size=3,col='red')
+        
+# Both graphs
+grid.arrange(plot1, plot2)
+```
+With this alternative, we could not reject $H_0$. Note that this $p$-value is obtained by taking 1 minus the $p$-value of the other oriented test. Of course, it is important that the alternative is carefully chosen before looking at the result. First, you choose the decision rule (hypthesis and $\alpha$) and only then compute the $p$-value or the rejection region.  
+
+
+**CS:** We read that a used car should cost 18'000\$. We want to test this assertion with case study data. We are willing to take 5% chance to be wrong when rejecting this hypothesis. The variance is assumed to be $\sigma^2=5\times 10^5$.
+
+ Interest          |  Value                                                  
+------------------ | -----------------------------------------------------------
+Observed statistic | $t_{\text{obs}} = \frac{21343- 18000}{\sqrt{5\times 10^5/804}}\approx 134.05$
+$H_0$              | $\mu = 18000$
+$H_1$              | $\mu\neq18000$
+$p$-value          | $2-2\Phi(134.05)\approx 0$
+$T(\alpha)$        | $z_{0.975}=1.96$
+Rejection region   | $(-\infty,-1.96]\cup[1.96,+\infty)$
+
+Since $p$-value<0.05, or equivalently $t_{\text{obs}}$ is included in the rejection region, we reject $H_0$ based on this data and a level of $\alpha=0.05$.
+
+Note that you can obtain the value for the $p$-value with the following code
+```{r}
+2 - 2 * pnorm(134.05)
+```
+
+If the **variance is unknown**, we need an estimate, i.e. $\hat{\sigma}^2$. The test is modified as follows (similar for oriented test)
+
+Interest           |  Value                                                  
+------------------ | -----------------------------------------------------------
+Test statistic     | $T = \frac{\bar{X}-\mu_0}{\sqrt{\hat{\sigma}^2 /n}}$
+$p$-value          | $\mathbb{P}_{H_0}\big(\{T>\lvert t_{\text{obs}\rvert}\}\cup\{T<-\lvert t_{\text{obs}}\rvert\}\big) = 2-2F_{n-1}(\lvert t_{\text{obs}}\rvert)$
+$T(\alpha)$        | $t_{n-1;\;1-\alpha/2}$
+Rejection region   | $(-\infty,-t_{n-1;\;1-\alpha/2}]\cup[t_{n-1;\;1-\alpha/2},+\infty)$
+
+Note that $F_{\text{df}}$ denotes the cumulative distribution function of the student-$t$ distribution with $\text{df}$ degrees of freedom (here $n-1$). As seen previously, $t_{\text{df};\;\alpha}$ is the $\alpha$-quantile of a student-$t$ distribution. This is the famous **$t$-test**!
+
+
+**CS:** We make the same test (with the testing hypothesis $H_0: \mu=18000$ and $H_1:\mu\neq18000$), but this time the variance is estimated. We obtain $\hat{\sigma}^2 \approx 9.8\times10^7$.
+ 
+ Interest          |  Value                                                  
+------------------ | -----------------------------------------------------------
+Observed statistic | $t_{\text{obs}} \approx \frac{21343- 18000}{\sqrt{9.8\times 10^7/804}}= 9.5753$
+$p$-value          | $2-2F_{803}(9.5753)\approx 0$
+$T(\alpha)$        | $t_{803;\;0.975}\approx 1.96$
+Rejection region   | $(-\infty,-1.96]\cup[1.96,+\infty)$
+
+Note that you can compute the $p$-value using `R`
+```{r}
+2 - 2 * pt(9.5753, df = 803)
+```
+
+Or you can directly use the `t.test()` function
+```{r}
+t.test(x = data$Price, mu = 18000, alternative = "two.sided")
+```
+What is the conclusion of the test?
+
+If you suspect your data has outliers, the mean might be influenced (see previous section), and it might be a good idea to consider a robust alternative. **Wilcoxon's signed-rank test** is an alternative choice to the $t$-test. The testing hypothesis are the same, but values of interest are too complicated to obtain (for the scope of this class).
+
+From previous example, we can perform a Wilcoxon test by using the `wilcox.test()` function as follows
+```{r}
+wilcox.test(x = data$Price, mu = 18000, alternative = "two.sided")
+```
+
+#### Application to regression: test on a single coefficient
+Testing for a single regression coefficient uses the same framework as testing a single mean. The difference is in the degrees of freedom, previously we had $\text{df}=n-1$, now in regression we have $\text{df}=n-p$ where $p$ is the total number of regressors.
+
+**Example 1:** We want to test whether the predictor *Speed* has a null coefficient at a level of $\alpha=5\%$. (What are the hypothesis?)
+
+ Interest          |  Value                                                  
+------------------ | -----------------------------------------------------------
+Observed statistic | $t_{\text{obs}} \approx \frac{3.9324}{0.4155}= 9.4643$
+$p$-value          | $2-2F_{48}(9.4643)\approx 1.49\times10^{-12}$
+$T(\alpha)$        | $t_{48;\;0.975}\approx 2.0106$
+Rejection region   | $(-\infty,-2.0106]\cup[2.0106,+\infty)$
+
+Clearly, there is enough evidence to reject $H_0$, the test is significant, we conclude that $\beta_1\neq0$ with a significant level of 5\%.
+What would you have said if you were provided only the confidence interval?
+
+Compare the values with the `R` output:
+```{r}
+summary(estim_lm)
+```
+
+### Test on two averages
+We see two different situations of interest: a test on the averages of two populations and a test on the average of the same population but in two different situations.
+
+#### Two populations
+We want to make a test on the difference in average, denoted $\delta$, between two population with different variances, i.e. $\sigma^2_1\neq\sigma^2_2$. There are two samples size are $n_1$ and $n_2$, the sample averages are $\bar{x}_1$ and $\bar{x}_2$, and the sample standard deviations are $\hat{\sigma}_1$ and $\hat{\sigma}_2$.
+
+ Interest          |  Value                                                  
+------------------ | ----------------------------------------------------------
+Test statistic     | $T = \frac{(\bar{x}_1-\bar{x}_2)-\delta}{\sqrt{\hat{\sigma}^2_1/n_1 + \hat{\sigma}^2_2/n_2}}$
+$H_0$              | $\mu_1-\mu_2 = \delta$
+$H_1$ (two-sided)  | $\mu_1-\mu_2 \neq \delta$ (also possible to orientate the test)
+$p$-value          | $\mathbb{P}_{H_0}\big(\{T>\lvert t_{\text{obs}\rvert}\}\cup\{T<-\lvert t_{\text{obs}}\rvert\}\big) = 2-2F_{\text{df}}(\lvert t_{\text{obs}}\rvert)$
+$T(\alpha)$        | $t_{\text{df};\;1-\alpha/2}$
+Rejection region   | $(-\infty,-t_{\text{df};\;1-\alpha/2}]\cup[t_{\text{df};\;1-\alpha/2},+\infty)$
+
+Here the degrees of freedom is a bit more complicated, it is obtained by the following formula: $$ \text{df} = \frac{(\hat{\sigma}^2_1/n_1 + \hat{\sigma}^2_2/n_2)^2}{(\hat{\sigma}^2_1/n_1)^2/(n_1-1) + (\hat{\sigma}^2_2/n_2)^2/(n_2-1)} $$
+This is the Welch $t$-test.
+
+**CS:** We want to test whether there is a price difference between cars with 4 and 6 cylinders at a significance level of $\alpha=10\%$. We are testing the hypothesis $$ H_0:\mu_1-\mu_2=0 $$ against $$ H_1:\mu_1-\mu_2\neq0 $$
+Here is a simple `R` code to obtain the necessary values on the sample
+```{r,warning=FALSE,message=FALSE}
+# load the dplyr package (first it needs to be installed)
+require(dplyr)
+
+# Get the seeked values (you don't need knitr::kable(.) function in your code)
+knitr::kable(data %>% group_by(Cylinder) %>% summarize(averages=mean(Price), variances=var(Price), n=length(Price)))
+```
+
+From these values, we obtain the observed test statistic $t_{\text{obs}} \approx `r round((17862.56-20081.40)/sqrt(61324307/394+21448227/310),4)`$ and the degrees of freedom $\text{df}\approx `r round((61324307/394+21448227/310)^2/((61324307/394)^2/393+(21448227/310)^2/309),4)`$. As a consequence we can compute the $p$-value:
+```{r}
+2 - 2*pt(4.6795, df=655.3507)
+```
+and the rejection region from the quantile:
+```{r}
+qt(0.975, df=655.3507)
+```
+A more straighforward solution is to use directly the `t.test(.)` function in `R`:
+```{r}
+t.test(x = data$Price[data$Cylinder==4], y = data$Price[data$Cylinder==6], mu = 0, alternative = "two.sided")
+```
+It was not obvious from the boxplot that there is a mean difference of price between four and six cylinders. From this hypothesis testing and sample, we can reject $H_0$ at a level of $\alpha=0.1$ in favour of $H_1$, the test is significant.
+
+Similarly a Wilcoxon signed-rank test can be perform if outliers are suspected in the data
+```{r}
+wilcox.test(x = data$Price[data$Cylinder==4], y = data$Price[data$Cylinder==6], mu = 0, alternative = "two.sided")
+```
+
+#### One population, two different situations
+In this situation, we want to test the average of a population before and after a change occurs. For example, patients before and after a treatment. In this case, we create one sample by taking the difference of the two samples (before/after). It is possible because the same individuals (or testing units) are p The values we are interested in for the test are the same as the test one a single mean.
+
+**Example 6** We are interested in the effect of a soporific drug on 10 patients. The study wants to show an increase in extra hours of sleep and a risk of 10\% is acceptable to reach this conclusion.
+```{r, cache=TRUE, fig.align="center", fig.height=4, fig.width=6}
+# load dataset
+data(sleep)
+
+# Creates the new dataset
+df <- data.frame(
+        sample1 = sleep$extra[sleep$group==1],
+        sample2=sleep$extra[sleep$group==2],
+        new_sample = sleep$extra[sleep$group==1] - sleep$extra[sleep$group==2]
+        )
+knitr::kable(df)
+
+# Graph
+ggplot(data=sleep, aes(x=group, y=extra, group=group, fill=group)) +
+        geom_boxplot()
+
+# Paired t-test
+t.test(extra ~ group, mu = 0, alternative = "less", paired = TRUE, data = sleep) 
+# "extra ~ group" can be read as "extra by group".
+# Here it is equivalent to "x = extra[group==1], y = extra[group==2]"
+```
+
+### ANOVA
+The ANalysis Of VAriance (ANOVA) regroups many tests and models in statistics. In this class I only discuss the **one-way ANOVA** test. The one-way ANOVA test corresponds to the following situation: we have a sample separated into $k$ factors. We want to test whether under the null-hypothesis the sample is drawn from one population, in which case each sub-samples are assumed to have the same mean, against the alternatives that the sub-samples are drawn from more than one population. This test further assumes that each sub-samples are normally distributed and homoskedastic (same variances) under $H_0$. 
+
+ Interest          |  Value                                                  
+------------------ | -------------------------------------------------
+Test statistic     | $T = \frac{\text{MS}_\text{Treatment}}{\text{MS}_{\text{Residuals}}}$, where $\text{MS}$ means ``mean squares''.
+$H_0$              | $\mu_1 = \mu_2 = \dots = \mu_k$   (all averages are equal)
+$H_1$              | At least one difference
+$p$-value          | $\mathbb{P}_{H_0}\big(T>t_{\text{obs}}\big) = 1 - F_{\text{df}_1;\;\text{df}_2}(t_{\text{obs}})$
+$T(\alpha)$        | $t_{\text{df}_1;\;\text{df}_2;\;1-\alpha}$
+Rejection region   | $[t_{\text{df}_1;\;\text{df}_2;\;1-\alpha},+\infty)$
+
+First, remark this test cannot be oriented (no options on the alternative). The distribution $F_{\text{df}_1;\;\text{df}_2}$ is the $F$ distribution, also known as *Fisher-Snedecor distribution*. It has two parameters, the degrees of freedom. Here $\text{df}_1 = k - 1$ and $\text{df}_2 = n - k$, where $k$ is the number of factors and $n$ the total sample size. The $\text{MS}$ is obtained by dividing the sum of squares by the degrees of freedom. 
+
+In order to compute the sum of squares, we use the following relation: $$ \text{SS}_{\text{Total}} = \text{SS}_{\text{Treatment}} + \text{SS}_{\text{Residuals}}, $$ where $\text{SS}$ stands for **S**um of **S**quares. The idea is that the total variability can be decomposed into the variability **within** each subgroup (Residuals) and the variability **betweem** subgroups (Treatment). It is easy to derive the total sum of squares. Let $\hat{\mu}$ denotes the overall sample average. Then $$ \text{SS}_{\text{Total}} = \sum_{i=1}^n (x_i - \hat{\mu})^2$$ Now we can denote $\hat{\mu}_j$ and $n_j, j=1,\dots,k$ the $k$ subgroup means and sample sizes. The treatment sum of squares is given by $$ \text{SS}_{\text{Treatment}} = \sum_{j=1}^k n_j\cdot(\hat{\mu}_j - \hat{\mu})^2 $$ The residual sum of squares is directly obtained by taking the difference between total and treatment sum of squares.
+
+**Example 5:** Here is a minimal example to construct the one-way ANOVA test. Suppose we want to test under the null-hypothesis that there is no treatment effect (all average equals) at a level of $\alpha=5\%$.
+
+Treatment       | Observations          | Sample size   | Average
+--------------- | --------------------- | ------------- | ---------------
+A               | $3\;\;\;5\;\;\;7$     | 3             |        5  
+B               | $4\;\;\;2$            | 2             |        3  
+C               | $1\;\;\;7$            | 2             |        4       
+Overall         |                       | 7             | `r (mu <- round(mean(c(3,5,7,4,2,1,7)),4))`         
+
+The total sum of squares is obtained by $$ \text{SS}_{\text{Total}} = 3^2+5^2+7^2+4^2+2^2+1^2+7^2 - 4.1429^2 \approx `r (ss_tot <- round(sum(c(3,5,7,4,2,1,7)^2) - mu,4))` $$ and the treatment sum of squares by $$ \text{SS}_{\text{Treatment}} = 3(5-4.1429)^2 + 2(3-4.1429)^2 + 2(4-4.1429)^2 \approx `r (ss_tr <- round(3*(5-mu)^2 + 2*(3-mu)^2  + 2*(4-mu)^2,4))`$$ By deduction, we have also the residuals sum of squares given by $$ \text{SS}_{\text{Residuals}} = \text{SS}_{\text{Total}} - \text{SS}_{\text{Treatment}} = `r ss_tot - ss_tr` $$ We can now construct this nice table
+
+Quantity                       | Value
+------------------------------ | --------------
+$\text{df}_1$                  | $2 (=3-1)$  
+$\text{df}_2$                  | $4 (=7-3)$  
+$\text{SS}_{\text{Treatment}}$ | `r ss_tr`
+$\text{SS}_{\text{Residuals}}$ | `r ss_tot - ss_tr`  
+$\text{MS}_{\text{Treatment}}$ | `r (ms_tr <- round(ss_tr / 2,4))` 
+$\text{MS}_{\text{Residuals}}$ | `r (ms_rs <- round((ss_tot - ss_tr) / 4,4))`
+$t_{\text{obs}}$               | `r (tobs <- round(ms_tr / ms_rs,4))`  
+
+The $p$-value can be obtained using the following line of code
+```{r}
+1 - pf(tobs, df1 = 2, df2 = 4) # tobs is already set
+```
+We can also compute $T(\alpha)$
+```{r}
+(t_alpha <- qf(0.95, df1 = 2, df2 = 4))
+```
+Hence the rejection region is $[`r round(t_alpha,4)`;\;+\infty)$.
+
+By looking at the $p$-value (or equivalently the rejection region), we can say that there is not enough evidence to conclude the test at a level of 5\%.
+
+**CS:** We want to test if the price for all cars is equivalent regardless the type of the cars for level of significance of $\alpha=5\%$.
+```{r,fig.align='center',fid.width=6,fig.height=4,cache=TRUE}
+# Multiple boxplots
+ggplot(data=data, aes(x=Type, y=Price, group=Type, fill=Type)) +
+  geom_boxplot()
+
+# Perform an ANOVA test
+anova_test <- aov(Price ~ Type, data = data)
+summary(anova_test)
+```
+
+From the `R` summary of the `aov(.)` function we can read
+
+Quantity                       | Value
+------------------------------ | --------------
+$\text{df}_1$                  | $4 (=5-1)$  
+$\text{df}_2$                  | $799 (=804-5)$  
+$\text{SS}_{\text{Treatment}}$ | $2.409\times10^{10}$  
+$\text{SS}_{\text{Residuals}}$ | $5.437\times10^{10}$  
+$\text{MS}_{\text{Treatment}}$ | $6.023\times10^{9}$  $(= \text{SS}_{\text{Treatment}} / \text{df}_1)$  
+$\text{MS}_{\text{Residuals}}$ | $6.805\times10^{7}$  $(= \text{SS}_{\text{Residuals}} / \text{df}_2)$  
+$t_{\text{obs}}$               | $88.51$ $(= \text{MS}_{\text{Treatment}} / \text{MS}_{\text{Residuals}})$  
+$p$-value                      | $<2\times10^{-16}$ $(=1-F_{4;\;799}(88.51))$  
+
+What is the conclusion?
+
+If you suspect the presence of outliers (from the graph for example), there is a test that is more robust to outliers, the **Kruskal-Wallis** test. Additionnaly, it does not assume normality of the subgroups (but it is less powerfull). You can use this test by running the `R` code:
+```{r}
+kruskal.test(Price ~ Type, data = data)
+```
+
+
+### Multiple pairwise comparison
+If the one-way ANOVA is conclusive, it can be interesting to know more precisely for which pair we have a difference: we can make multiple pairwise comparison. But one should be careful with the significance level! If you accept a level of $\alpha$ for every single test, the global level you are accepting is not $\alpha$. 
+
+Suppose that you accept globally $\alpha = 5\%$, what should be the individual level of significance $\alpha_I$? You know that for one test the probability to be non-significant is $1-\alpha_I$. Now if you run $c$ pairs of tests, the probability that none of them are significant is $(1-\alpha_I)^c$ if you assume independence between the tests (just take their product). In this context, Sidak proposes that $\alpha$ corresponds to the probability that at least one of the test is significant under the null-hypothesis, i.e. $$ \mathbb{P}_{H_0}(\text{at least one test significant}) = \alpha.$$ Because this probability is 1 minus the probability that no tests are significant, the correction is obtained $$ \alpha = 1 - (1 - \alpha_I)^c \Rightarrow \alpha_I = 1 - (1 - \alpha)^{1/c}. $$
+This is the **Dunn-Sidak correction**. It should be mentionned (once again) that $\alpha$ controls the error rate only when all the null-hypothesis are true, i.e. it controls the type I error.
+
+For example if I want to compare $8$ pairs with an $\alpha=5\%$, then the individual level of significance using the Dunn-Sidak correction is $\alpha_I = `r round(1 - .95^(1/8),4)`$ (much smaller)! It means that by comparing each $p$-values with a level of $\alpha_I$, we globally accept a level of $\alpha$.
+
+**CS:** The one-way ANOVA test of the cars price by type was significant. We test pairwise with a global level of significance $\alpha=5\%$.  
+
+There are five types of cars ($k=5$). How many pairs are we comparing? Recall from your math course that we have $ c = \binom{k}{2} $ pairs. Here $c=10$. The Dunn-Sidak correction is $\alpha_I = 1 - 0.95^{0.1} = `r round(1 - .95^.1,4)`$. To make all the comparison, we can use the `pairwise.t.test(.)` function in `R`: 
+```{r}
+pairwise.t.test(x = data$Price, g = data$Type, p.adjust.method = "none", pool.sd = FALSE)
+```
+With the Dunn-Sidak correction, we reject $H_0$ for each pair except _Wagon_ against _Sedan_ types of cars.
+
+If instead of a one-way ANOVA test you used the robust alternative, the Kruskal-Wallis test. It would make more sense to make the pairwise comparisons with a robust test as well, the Wilcoxon's signed-rank test. It can be easily performed in `R` using the `pairwise.wilcox.test(.)` function:
+```{r}
+pairwise.wilcox.test(x = data$Price, g = data$Type, p.adjust.method = "none")
+```
+With theses tests, we reject $H_0$ for every pairs at level of significance of $\alpha_I = `r round(100 * (1 - .95^.1),2)`\%$. Looking more closely to the boxplots, we see that few outliers appears for the _Sedan_ of cars. If we look at the five-numbers-summary
+```{r}
+summary(data$Price[data$Type=="Sedan"])
+```
+we see that outliers have an influence on the average (`mean` $\gg$ `median`) making certainly the $t$-test vulnerable, whereas the Wilcoxon test is less influenced.
+
+### Some practical recommendations
+* **How should I orientate the test?** Orienting a test gives you a more precise answer but it should be decided before looking at the data.  
+* **What should be my significance level $\alpha$?** If no precision is given, a default value for this class is $5\%$. Never change $\alpha$ after performing a test (although tempting).   
+* **Robust or not robust?** First, always check the data with descriptive techniques such as graph to have an intuition. If it is evident there are outliers, perform a robust test (or the converse). If it is not clear, run both robust and non-robust test. The non-robust test is generally more powerfull but at the price of being more sensitive.  
+* **Can I trust the results?** Statistical test is a useful tool, but is should be used with caution. They are based on assumptions (we discussed some) that are not always met. A descriptive analysis should help you appreciate these assumptions, and therefore the validity of the test.  
+
+# Multivariate Regression model
+(coming soon)  
+
+# Prediction
+(coming soon)
+
+# References
+* Reboulleau, J. and Boldi, M.-O. (2016) ''Multivariate statistics''.
+* Kuiper, S. (2008) ''Introduction to Multiple Regression: How Much Is Your Car Worth?'' *Journal of Statistics Education* Volume 16, Number 3.   
+* Kuffner, T. and Walker, S. (2017) ''Why are p-values controversial?'' *The American Statistician* (just-accepted) http://dx.doi.org/10.1080/00031305.2016.1277161   
