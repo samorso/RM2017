@@ -1,0 +1,72 @@
+---
+title: "Multivariate statistics"
+subtitle: "Homeworks"
+author: "Samuel Orso"
+date: "`r Sys.Date()`"
+output: 
+ prettydoc::html_pretty:
+  theme: architect
+  highlight: github
+  toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+# Before we get started
+### Formalities
+
+### Few more wo`R`ds
+
+# Introduction: Multivariate regression
+### Preambule
+
+### From mathematics to statistics
+
+### Formalization
+
+### Case study: how much is the car worth?
+
+# Descriptive analysis
+
+### Application to regression: variable of interest
+
+### Application to regression: continuous predictors
+
+### Application to regression: discrete predictors
+
+# Inference
+
+## Estimation by intervals
+
+#### Application to regression: confidence interval on a coefficient
+
+## Hypothesis testing
+
+### Hypothesis
+
+### Decision rule
+
+### Test on a single mean
+
+#### Application to regression: test on a single coefficient
+
+### Test on two averages
+
+#### Two populations
+
+#### One population, two different situations
+
+### ANOVA
+
+### Multiple pairwise comparison
+
+### Some practical recommendations
+
+# Multivariate Regression model
+(coming soon)  
+
+# Prediction
+(coming soon)

@@ -1,0 +1,42 @@
+---
+title: "Multivariate statistics"
+subtitle: "In-class exercises"
+author: "Samuel Orso"
+date: "`r Sys.Date()`"
+output: 
+ prettydoc::html_pretty:
+  theme: architect
+  highlight: github
+  toc: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+# Before we get started
+<div id="ex1">
+**Exercise 1:** Install `R` and `RStudio` on your personal laptop and reproduce the same code as in this subsection of the course.
+</div>
+
+# Introduction: Multivariate regression
+<div id="ex2">
+**Exercice 2:** Reproduce the same lines of code as **Example 1** on your laptop.
+</div>
+
+<div id="ex3">
+**Exercice 3:** By helping yourself with the previous examples, explaine the *Price* (variable of interest) by the *Mileage* (predictor):   
+1. Write the regression equation.   
+2. Fit the regression using the `lm(.)` function.   
+3. Using the `summary(.)` function, write the estimated regression equation.   
+4. You observe a new car with mileage equals to 32500. Predict the price value.  
+</div>
+
+# Descriptive analysis
+
+# Inference
+
+# Multivariate Regression model
+(coming soon)  
+
+# Prediction
+(coming soon)

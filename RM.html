@@ -124,11 +124,15 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 * Lecturer: Samuel Orso (<a href="mailto:Samuel.Orso@unige.ch">Samuel.Orso@unige.ch</a>)<br />
 * In-class: 20 hours over 5 sessions<br />
 * Evaluation: two group projects (~4 students randomly assigned) (20%) and a final exam (80%)<br />
-* Class material on <a href="https://cyberlearn.hes-so.ch/" class="uri">https://cyberlearn.hes-so.ch/</a></p>
+* Class material on <a href="https://cyberlearn.hes-so.ch/" class="uri">https://cyberlearn.hes-so.ch/</a><br />
+* The most current version of the course is available on <a href="https://samorso.github.io/RM2017/RM.html" class="uri">https://samorso.github.io/RM2017/RM.html</a></p>
 <p>This course serves as an introduction to multivariate statistics with an emphasis on the multivariate regression and its applications. In class, we cover the theory and part of the exercises. The course is self-contained. There exists a large choice of textbooks for self-studying. Here are some options:<br />
 * <em>Managerial statistics</em> (2002). S.C. Albright, W.L. Winston, C.J. Zappe.<br />
 * <em>Managerial statistics</em> (2012). G. Keller.<br />
 * <em>Statistics for Business and Economics</em> (2011). D.R. Anderson, D.J. Sweeney, T.A. Williams.</p>
+<p>I split the exercises into two categories:<br />
+1. In-class exercises: you will have time during the class to solve these exercises, then I correct it with you.<br />
+2. Homeworks: you have to solve these exercices by your own at home. You receive a detailed solution. In principle I will not give further correction.</p>
 </div>
 <div id="few-more-words" class="section level3">
 <h3>Few more wo<code>R</code>ds</h3>
@@ -146,6 +150,10 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>The gray block is the <code>R</code> code that I wrote (here a simple addition of 1 + 2). The white block is the output from <code>R</code> (here 3). This course follows the principle of <em>reproducibility</em>: you can copy/paste the blocks of code from the slides to your own computer (using <code>R</code> of course) to reproduce the same examples used in the slides and familiarize yourself with coding in <code>R</code>. When you begin, you will certainly make a lot of mistakes. Doing mistakes and trying to solve it will help you to learn a lot. Some googling is helpful. <code>R</code> can also help you if you ask appropriately For example if you want to know more about the function <code>mean()</code>, you can write:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">?mean</code></pre></div>
 <p>For less effort (but less gain as well), you can use <code>R-commander</code> (<a href="http://www.rcommander.com/" class="uri">http://www.rcommander.com/</a>) in addition to <code>R/RStudio</code>. It is a graphcial user interface that can prevent you from writing the codes.</p>
+<p><code>R</code> has a core software with basic (but very useful) functionnalities. It has also tons of external libraries developped by researchers and developpers. These libraries are freely available and easy to install. If you want to reproduce the code in the slides, you will need to install few libraries: <code>ggplot2</code>, <code>gridExtra</code>, <code>dplyr</code>. To install a library you can use the following code</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;ggplot2&quot;</span>)</code></pre></div>
+<p>The installation is done only once. If you want to use the library, every time you use <code>R</code> you need to ask explicitly (but only once per session):</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(ggplot2)</code></pre></div>
 </div>
 </div>
 <div id="introduction-multivariate-regression" class="section level1">
