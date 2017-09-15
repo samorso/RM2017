@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Formal information:  
 * Lecturer: Samuel Orso (Samuel.Orso@unige.ch)  
 * In-class: 20 hours over 5 sessions  
-* Evaluation: two group projects (~4 students randomly assigned) (20%) and a final exam (80%)  
+* Evaluation: two group projects (~2+2 students) (25%) and a final exam (75%)  
 * Class material on https://cyberlearn.hes-so.ch/   
 * The most current version of the course is available on https://samorso.github.io/RM2017/RM.html   
 
@@ -63,6 +63,8 @@ The installation is done only once. If you want to use the library, every time y
 require(ggplot2)
 ```
 
+[In-class: exercise 1](https://samorso.github.io/RM2017/Inclass.html#ex1)
+
 # Introduction: Multivariate regression
 ### Preambule
 Multivariate regression aims at modelling the relationship between one **variable of interest** and many (i.e. multivariate) potential **explanatory variables** (or **predictors**). We will use the multivariate regression for two purposes:    
@@ -85,10 +87,12 @@ ggplot(cars, aes(x = speed, y = dist)) +
   geom_point() +
   stat_smooth(method = "lm", col = "red")
 ```
-The main line is the **regression line**. The gray area around the regression line is the confidence interval (more on that later). The points are the observations. ''Of course'' the points are not on the line. Two reasons for that might be:  
+The main line is the **regression line**. The gray area around the regression line is the confidence interval (more on that later). The points are the observations. ''Of course'' the points are not on the line. Two reasons for that might be:
 1. Both the stopping distance and the speed are random variables;  
 2. The relation between the variable of interest and the explanatory variable is not **linear**.  
 The regression line is interpreted as follows: the faster the car drives, the more distance the car needs to stop, which seems to make sense. What else could we consider to explain the stopping distance?
+
+[In-class: exercise 2](https://samorso.github.io/RM2017/Inclass.html#ex2)
 
 ### From mathematics to statistics
 You certainly remember the line equation from your math courses: $$ y = ax + b,$$ where $b$ is the intercept and $a$ the slope. Of course it can be extended to more than one $x$'s. This is somehow the ''ideal'' model that we believe to hold when we work with regression. If we could observe this *idealized* model, we should observe something like:
@@ -223,6 +227,9 @@ data <- read.csv(file="kuiper.csv",sep=",")
 # Check the first six lines
 knitr::kable(head(data))
 ```
+
+[In-class: exercise 3](https://samorso.github.io/RM2017/Inclass.html#ex3)
+[Homework: exercise 1](https://samorso.github.io/RM2017/hmw.html#ex1)
 
 # Descriptive analysis
 The aims of descriptive statistics are:  

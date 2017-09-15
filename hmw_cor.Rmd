@@ -14,56 +14,49 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-# Before we get started
-### Formalities
-
-### Few more wo`R`ds
-
 # Introduction: Multivariate regression
-### Preambule
+<div id="ex1">
+**Exercise 1:** Will be revealed soon.
+```{r,cache=TRUE,eval=TRUE,echo=FALSE,message=FALSE,warnings=FALSE,results='hide',fig.align='center',fig.height=4,fig.width=6,fig.show='hide'}
+# to load the data
+# data(women)
 
-### From mathematics to statistics
+# see the dataset
+# women
 
-### Formalization
+# read explanations about the dataset
+# ?women
 
-### Case study: how much is the car worth?
+# 3. Plot
+require(ggplot2)
+ggplot(women, aes(x = height, y = weight)) + 
+  geom_point()
+
+# 5. Fit the regression
+fit_lm <- lm(weight ~ height, data = women)
+
+# 6. Summary
+summary(fit_lm)
+
+# 7. Change of unit using grid package (install it befor)
+# install.package("grid")
+require(grid)
+new_x <- convertX(unit(173,"cm"),"inches")
+
+# predict using R code, by hand is ok
+predict(fit_lm,newdata = data.frame(height = as.numeric(new_x)))
+```
+
+<!-- 4. The regression equation is $$ \text{weight}_i = \beta_0 + \beta_1 \text{height}_i + \varepsilon_i,\quad i = 1,\dots,15.$$ -->
+
+<!-- 6. The estimated regression equation is $$ \widehat{\text{weight}}_i = `r round(fit_lm$coefficients[1],2)` + `r round(fit_lm$coefficients[2],2)` \text{height}_i,\quad i = 1,\dots,15. $$ -->
+
+<!-- 7. We simply replace the new *Height* in the estimated regression equation to obtain the predicted weight $\widehat{\text{weight}}^{\text{new}}$. The new *Height* needs to be changed to the right unit (from meters to inches). 173 cm is about `r round(as.numeric(new_x),2)` inches (see `R` code). We thus have $$ \widehat{\text{weight}}^{\text{new}} =  `r round(fit_lm$coefficients[1],2)` + `r round(fit_lm$coefficients[2],2)` \text{height}^{\text{new}} \approx `r round(round(fit_lm$coefficients[1],2) + round(fit_lm$coefficients[2],2) * round(as.numeric(new_x),2),2)`. $$ -->
+</div>
 
 # Descriptive analysis
 
-### Application to regression: variable of interest
-
-### Application to regression: continuous predictors
-
-### Application to regression: discrete predictors
-
 # Inference
-
-## Estimation by intervals
-
-#### Application to regression: confidence interval on a coefficient
-
-## Hypothesis testing
-
-### Hypothesis
-
-### Decision rule
-
-### Test on a single mean
-
-#### Application to regression: test on a single coefficient
-
-### Test on two averages
-
-#### Two populations
-
-#### One population, two different situations
-
-### ANOVA
-
-### Multiple pairwise comparison
-
-### Some practical recommendations
 
 # Multivariate Regression model
 (coming soon)  
