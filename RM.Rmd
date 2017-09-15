@@ -309,7 +309,7 @@ It seems hard to imagine a straight line. The correlation = `r round(cor(data$Mi
 ```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
 qplot(mpg,wt,data=mtcars)
 ```
-The correlation is `r round(cor(mtcars$mpg,mtcars$wt),4)`.
+The correlation is `r round(cor(mtcars$mpg,mtcars$wt),4)` (you can use the function `cor(x,y)`).
 
 **Example 4:** Suppose that we observe the following:
 ```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
@@ -338,6 +338,8 @@ qplot(x,y)
 ```
 The correlation is `r round(cor(x,y),4)`. The **Spearman's rank correlation** is  `r round(cor(x,y,method="spearman"),4)`. We say that Spearman's rank correlation is **robust** to outliers.
 
+[In-class: exercise 4](https://samorso.github.io/RM2017/Inclass.html#ex4)
+
 ### Application to regression: discrete predictors
 If predictors are discrete (factors, few values, ...), scatterplot and 5-number-summary are not suitables. It may be more convenient to use **barplot** and **table**.
 
@@ -358,6 +360,9 @@ Discrete predictors can be combined with a continuous predictor/variable of inte
 ggplot(data=data, aes(x=Cylinder, y=Price, group=Cylinder, fill=Cylinder)) +
   geom_boxplot()
 ```
+
+[In-class: exercise 5](https://samorso.github.io/RM2017/Inclass.html#ex5)
+[Homework: exercise 2](https://samorso.github.io/RM2017/hmw.html#ex2)
 
 # Inference
 While descriptive statistics describe characteristics of a **sample** (location, dispersion, graphs, ...), inferential statistics provide information on the underlying **population**. This task is much more useful than a simple description but also much more difficult.

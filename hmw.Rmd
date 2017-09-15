@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Introduction: Multivariate regression
 <div id="ex1">
 **Exercise 1:** You receive the data on the *Height* and *Weight* of some women aged between 30 to 39
-1. Load the data in `R` using the command `data(women)`. (The dataset is also available in *.csv on Cyberlearn).      
+1. Load the data in `R` using the command `data(women)`. (The dataset is also available in *.csv on (on [cyberlearn](https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591))).      
 2. Read the description of this dataset by running the command `?women`.   
 3. Using the commands seen in the course, plot the *Height* against the *Weight*.   
 4. You are interested in explaining the *Weight* by the *Height*. Write the regression equation.   
@@ -24,11 +24,23 @@ knitr::opts_chunk$set(echo = TRUE)
 6. From the `summary(.)` of this linear regression, write the estimated model.   
 7. Suppose you observe a new women who measures 1.73 meters, predict her *Weight*.  
 (For the last point, you may want to use the `grid` package).
-</div>
 
 You will find the correction [here](https://samorso.github.io/RM2017/hmw_cor.html#ex1)
+</div>
 
 # Descriptive analysis
+<div id=ex2>
+**Exercise 2:** Use the `ski.csv` dataset available on  [cyberlearn](https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591).  
+1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `ski <- read.csv(file="ski.csv", header=TRUE, sep=";")`.   
+2. Produce multiple boxplots.   
+3. Produce a scatterplot and add the regression line and confidence interval (use the code of **Example 1** in the Introduction).   
+4. Compute the linear and Spearman's correlations. Is there any outliers effect on the correlation?   
+5. Fit the linear regression of *Tickets* explaines by *Temperature*.   
+6. Write the estimated regression equation.   
+7. With this model, predict the number of tickets that will be sold for a temperature of -2.5 degrees.   
+
+You will find the correction [here](https://samorso.github.io/RM2017/hmw_cor.html#ex2)
+</div>
 
 # Inference
 

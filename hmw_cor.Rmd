@@ -55,6 +55,48 @@ predict(fit_lm,newdata = data.frame(height = as.numeric(new_x)))
 </div>
 
 # Descriptive analysis
+<div id="ex2">
+**Exercise 2** Will be revealed soon.
+```{r,cache=TRUE,eval=TRUE,echo=FALSE,message=FALSE,warnings=FALSE,results='hide',fig.align='center',fig.height=4,fig.width=6,fig.show='hide'}
+# 1.
+# set the workind directoy (for me)
+setwd("~/Documents/Teaching/RM/")
+
+# to load the data
+ski <- read.csv(file = "ski.csv", header = TRUE, sep = ";")
+
+# see the dataset
+head(ski)
+
+# 2.
+# load the ggplot2 package for plots
+require(ggplot2)
+require(gridExtra)
+plot1 <- qplot(ski$Temperature, x=1, geom = "boxplot") + xlab(NULL) + coord_flip()
+plot2 <- qplot(ski$Tickets, x=1, geom = "boxplot") + xlab(NULL) + coord_flip()
+grid.arrange(plot1, plot2, ncol=1)
+
+# 3.
+ggplot(data = ski, aes(x = Temperature, y = Tickets)) + 
+  geom_point() + 
+  stat_smooth(method = "lm", col = "red")
+
+# 4.
+cor(ski)
+cor(ski, method = "spearman")
+# Both linear and correlation are very close numerically. It does not seem to have outliers. Also on the boxplots and scatterplot, no points seem to be outliers.
+
+# 5. 
+fit_lm <- lm(Tickets ~ Temperature, data = ski)
+summary(fit_lm)
+
+# 7.
+predict(fit_lm, newdata = data.frame(Temperature = -2.5))
+```
+
+<!-- 6. The estimated regression equation is $$ \widehat{\text{Tickets}}_i = `r round(fit_lm$coefficients[1],2)` + `r round(fit_lm$coefficients[2],2)` \text{Temperature}_i,\quad i = 1,\dots,`r nrow(ski)`$$. -->
+
+</div>
 
 # Inference
 

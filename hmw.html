@@ -56,7 +56,7 @@
 <div id="introduction-multivariate-regression" class="section level1">
 <h1>Introduction: Multivariate regression</h1>
 <div id="ex1">
-<p><strong>Exercise 1:</strong> You receive the data on the <em>Height</em> and <em>Weight</em> of some women aged between 30 to 39 1. Load the data in <code>R</code> using the command <code>data(women)</code>. (The dataset is also available in <em>.csv on Cyberlearn).<br />
+<p><strong>Exercise 1:</strong> You receive the data on the <em>Height</em> and <em>Weight</em> of some women aged between 30 to 39 1. Load the data in <code>R</code> using the command <code>data(women)</code>. (The dataset is also available in <em>.csv on (on <a href="https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591">cyberlearn</a>)).<br />
 2. Read the description of this dataset by running the command <code>?women</code>.<br />
 3. Using the commands seen in the course, plot the </em>Height* against the <em>Weight</em>.<br />
 4. You are interested in explaining the <em>Weight</em> by the <em>Height</em>. Write the regression equation.<br />
@@ -64,11 +64,22 @@
 6. From the <code>summary(.)</code> of this linear regression, write the estimated model.<br />
 7. Suppose you observe a new women who measures 1.73 meters, predict her <em>Weight</em>.<br />
 (For the last point, you may want to use the <code>grid</code> package).</p>
-</div>
 <p>You will find the correction <a href="https://samorso.github.io/RM2017/hmw_cor.html#ex1">here</a></p>
+</div>
 </div>
 <div id="descriptive-analysis" class="section level1">
 <h1>Descriptive analysis</h1>
+<div id="ex2">
+<p><strong>Exercise 2:</strong> Use the <code>ski.csv</code> dataset available on <a href="https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591">cyberlearn</a>.<br />
+1. Load the dataset in <code>R</code>. First set the working directory (where you want to work with <code>R</code> in your computer) by using the <code>setwd(&quot;my directory&quot;)</code> commands. Then load the dataset using the command <code>ski &lt;- read.csv(file=&quot;ski.csv&quot;, header=TRUE, sep=&quot;;&quot;)</code>.<br />
+2. Produce multiple boxplots.<br />
+3. Produce a scatterplot and add the regression line and confidence interval (use the code of <strong>Example 1</strong> in the Introduction).<br />
+4. Compute the linear and Spearman’s correlations. Is there any outliers effect on the correlation?<br />
+5. Fit the linear regression of <em>Tickets</em> explaines by <em>Temperature</em>.<br />
+6. Write the estimated regression equation.<br />
+7. With this model, predict the number of tickets that will be sold for a temperature of -2.5 degrees.</p>
+<p>You will find the correction <a href="https://samorso.github.io/RM2017/hmw_cor.html#ex2">here</a></p>
+</div>
 </div>
 <div id="inference" class="section level1">
 <h1>Inference</h1>

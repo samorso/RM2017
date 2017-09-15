@@ -32,6 +32,22 @@ knitr::opts_chunk$set(echo = TRUE)
 </div>
 
 # Descriptive analysis
+<div id="ex4">
+**Exercise 4:** The dataset `marathon.csv` (on [cyberlearn](https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591)) contains a sample of time (minutes) at marathon of Boston [Keller].   
+1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `marathon <- read.csv(file="marathon.csv", header=TRUE, sep=";")`.   
+2. Compute the average, the standard deviation and the 5-number-summary.  
+3. Make the boxplot of the data. What are the outliers?   
+4. Build the histogram of the data. Describe the shape of the distribution? Determine approximately the mode of the distribution.   
+</div>
+
+<div id="ex5">
+**Exercise 5:** The dataset `fastfood.csv` (on [cyberlearn](https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591)) contains measures of times in second of services at several drives.   
+1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `fastfood <- read.csv(file="fastfood.csv", header=TRUE, sep=";")`.  
+2. Produce a barplot illustrating the number of measures per drives.   
+3. Produce a boxplot per drive.   
+4. Produce a scatterplot between drives.  
+5. Compute the linear and Spearman's correlations between the drives, use the function `cor(.)` and `cor( . , method = "spearman")`.   
+</div>
 
 # Inference
 
