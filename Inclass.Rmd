@@ -50,6 +50,22 @@ knitr::opts_chunk$set(echo = TRUE)
 </div>
 
 # Inference
+<div id="ex6">
+**Exercise 6:** Reperform **Example 1**, but with the **CS** dataset when explaining the *Price* with the *Mileage* and a level of significance $\alpha=8\%$.   
+1. You need to specify the testing hypothesis, compute $t_{\text{obs}}$, the $p$-value, $T(8\%)$ and the rejection region.  
+2. Try to make a graph of the rejection region. You need to change `dnorm` to `dt` and use another argument: `args = list(df = ?)`, where `?` is the number of degrees of freedom.   
+3. Conclude the test based on the rejection region.  
+</div>
+
+<div id="ex7">
+**Exercise 7:** In a chain of supermarkets, you want to know if a product is enhanced when installed in front or in the middle. The data set of product sales (a soda) is in `sales.csv`. We consider that being in front is a privilege, which is applied to a product if there is clear evidence that this position improves sales.  
+1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `sales <- read.csv(file="sales.csv", header=TRUE, sep=";")`.  
+2. Which test should you pick? What are the null and alternative hypothesis?  
+3. Make a test for two populations. Use directly the `R` function `t.test(.)` and inspire yourself from the course. What is your conclusion?   
+4. Same as 3 but with a one population test. What am I assuming when making this test?   
+5. Repeat 3 and 4 with the Wilcoxon's signed-rank test. Is the conclusion different? How can you check if there are outliers?   
+</div>
+
 
 # Multivariate Regression model
 (coming soon)  

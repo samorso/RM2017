@@ -43,6 +43,19 @@ You will find the correction [here](https://samorso.github.io/RM2017/hmw_cor.htm
 </div>
 
 # Inference
+<div id="ex3">
+**Exercise 3:** In motherhood, waiting times between the birth and the exit of 44 mothers were measured. Use the `hosptial.csv` dataset available on  [cyberlearn](https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591).  
+1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `hospital <- read.csv(file="hospital.csv", header=TRUE, sep=";")`.   
+2. Construct a confidence interval at a confidence level of 95\% for the average waiting time assuming the standard deviation is 1.   
+3. Same as 2, but with an estimate of the standard deviation.  
+4. Restart points 2 and 3 with a confidence level at 90\%, but before, do you expect the confidence intervals will be shorter or longer?  
+
+You will find the correction [here](https://samorso.github.io/RM2017/hmw_cor.html#ex3)
+</div>
+
+<div id="ex4">
+**Exercise 4:** Repeat the in-class Exercise 7 with 
+</div>
 
 # Multivariate Regression model
 (coming soon)  

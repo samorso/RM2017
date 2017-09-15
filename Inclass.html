@@ -93,6 +93,20 @@
 </div>
 <div id="inference" class="section level1">
 <h1>Inference</h1>
+<div id="ex6">
+<p><strong>Exercise 6:</strong> Reperform <strong>Example 1</strong>, but with the <strong>CS</strong> dataset when explaining the <em>Price</em> with the <em>Mileage</em> and a level of significance <span class="math inline">\(\alpha=8\%\)</span>.<br />
+1. You need to specify the testing hypothesis, compute <span class="math inline">\(t_{\text{obs}}\)</span>, the <span class="math inline">\(p\)</span>-value, <span class="math inline">\(T(8\%)\)</span> and the rejection region.<br />
+2. Try to make a graph of the rejection region. You need to change <code>dnorm</code> to <code>dt</code> and use another argument: <code>args = list(df = ?)</code>, where <code>?</code> is the number of degrees of freedom.<br />
+3. Conclude the test based on the rejection region.</p>
+</div>
+<div id="ex7">
+<p><strong>Exercise 7:</strong> In a chain of supermarkets, you want to know if a product is enhanced when installed in front or in the middle. The data set of product sales (a soda) is in <code>sales.csv</code>. We consider that being in front is a privilege, which is applied to a product if there is clear evidence that this position improves sales.<br />
+1. Load the dataset in <code>R</code>. First set the working directory (where you want to work with <code>R</code> in your computer) by using the <code>setwd(&quot;my directory&quot;)</code> commands. Then load the dataset using the command <code>sales &lt;- read.csv(file=&quot;sales.csv&quot;, header=TRUE, sep=&quot;;&quot;)</code>.<br />
+2. Which test should you pick? What are the null and alternative hypothesis?<br />
+3. Make a test for two populations. Use directly the <code>R</code> function <code>t.test(.)</code> and inspire yourself from the course. What is your conclusion?<br />
+4. Same as 3 but with a one population test. What am I assuming when making this test?<br />
+5. Repeat 3 and 4 with the Wilcoxon’s signed-rank test. Is the conclusion different? How can you check if there are outliers?</p>
+</div>
 </div>
 <div id="multivariate-regression-model" class="section level1">
 <h1>Multivariate Regression model</h1>

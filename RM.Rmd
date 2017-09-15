@@ -21,7 +21,7 @@ Formal information:
 * In-class: 20 hours over 5 sessions  
 * Evaluation: two group projects (~2+2 students) (25%) and a final exam (75%)  
 * Class material on https://cyberlearn.hes-so.ch/   
-* The most current version of the course is available on https://samorso.github.io/RM2017/RM.html   
+* The most current version of the course is available on https://samorso.github.io/RM2017/RM.html (if you encounter any bug, you can report it [here](https://github.com/samorso/RM2017/issues)).   
 
 This course serves as an introduction to multivariate statistics with an emphasis on the multivariate regression and its applications. In class, we cover the theory and part of the exercises. The course is self-contained. There exists a large choice of textbooks for self-studying. Here are some options:  
 * *Managerial statistics* (2002). S.C. Albright, W.L. Winston, C.J. Zappe.  
@@ -29,8 +29,8 @@ This course serves as an introduction to multivariate statistics with an emphasi
 * *Statistics for Business and Economics* (2011). D.R. Anderson, D.J. Sweeney, T.A. Williams.  
 
 I split the exercises into two categories:  
-1. In-class exercises: you will have time during the class to solve these exercises, then I correct it with you.  
-2. Homeworks: you have to solve these exercices by your own at home. You receive a detailed solution. In principle I will not give further correction.  
+1. In-class exercises: you will have time during the class to solve these exercises, then I correct it with you. You can find them [here](https://samorso.github.io/RM2017/Inclass.html)  
+2. Homeworks: you have to solve these exercices by your own at home. You receive a detailed solution. In principle I will not give further correction. You can find the exercises [here](https://samorso.github.io/RM2017/hmw.html) and their correction [here](https://samorso.github.io/RM2017/hmw_cor.html)
 
 ### Few more wo`R`ds
 This class has been entierely written using `R/RStudio` open source statistical softwares. The students are strongly encouraged to learn how to use these softwares by themselves as it will ease their learning process. Also we believe it will be an asset on your CV and for the rest of your careers. Many web sources exist for learning `R`:  
@@ -361,8 +361,8 @@ ggplot(data=data, aes(x=Cylinder, y=Price, group=Cylinder, fill=Cylinder)) +
   geom_boxplot()
 ```
 
-[In-class: exercise 5](https://samorso.github.io/RM2017/Inclass.html#ex5)
-[Homework: exercise 2](https://samorso.github.io/RM2017/hmw.html#ex2)
+[In-class: exercise 5](https://samorso.github.io/RM2017/Inclass.html#ex5)   
+[Homework: exercise 2](https://samorso.github.io/RM2017/hmw.html#ex2)   
 
 # Inference
 While descriptive statistics describe characteristics of a **sample** (location, dispersion, graphs, ...), inferential statistics provide information on the underlying **population**. This task is much more useful than a simple description but also much more difficult.
@@ -384,6 +384,8 @@ Regression coefficients can be treated as average, we can use the same formulas.
 summary(estim_lm)
 ```
 The column `Estimate` gives the point estimates: $\hat{\beta}_0,\hat{\beta}_1$. The next column `Std. Error` gives an estimate of the standard errors: $\sqrt{\hat{\sigma}^2_0/\text{df}},\sqrt{\hat{\sigma}^2_1/\text{df}}$. **Be careful, standard errors is not standard deviation, but standard deviation divided by the square root of the degrees of freedom!!** To construct a 95% confidence interval ($\alpha$=0.05), we need the sample size, here $n=50$, and the quantile of the student distribution, here $t_{n-2;\;1-\alpha/2}=t_{48;0.975}=`r round(qt(.975,df=48),4)`$. For the intercept we have $$ CI(\hat{\beta}_0,95\%) = \Big[-17.5791 - 2.0106\cdot6.7584;\;-17.5791 + 2.0106\cdot6.7584\Big] = \Big[-31.1675;\;-3.9907\Big].$$ And for the coefficient of speed, we have $$CI(\hat{\beta}_1,95\%) = \Big[3.9324 - 2.0106\cdot0.4155;\;3.9324 + 2.0106\cdot 0.4155\Big] = \Big[3.0970;\;4.7678\Big].$$
+
+[Homework: exercise 3](https://samorso.github.io/RM2017/hmw.html#ex3)   
 
 ## Hypothesis testing
 The objective of hypothesis testing is to answer a question about the population under study. It is a major element of statistical inference. Hypothesis testing is constructed in three parts:   
@@ -634,6 +636,8 @@ Compare the values with the `R` output:
 summary(estim_lm)
 ```
 
+[In-class: exercise 6](https://samorso.github.io/RM2017/Inclass.html#ex6)   
+
 ### Test on two averages
 We see two different situations of interest: a test on the averages of two populations and a test on the average of the same population but in two different situations.
 
@@ -706,6 +710,8 @@ t.test(extra ~ group, mu = 0, alternative = "less", paired = TRUE, data = sleep)
 # "extra ~ group" can be read as "extra by group".
 # Here it is equivalent to "x = extra[group==1], y = extra[group==2]"
 ```
+
+[In-class: exercise 7](https://samorso.github.io/RM2017/Inclass.html#ex7)   
 
 ### ANOVA
 The ANalysis Of VAriance (ANOVA) regroups many tests and models in statistics. In this class I only discuss the **one-way ANOVA** test. The one-way ANOVA test corresponds to the following situation: we have a sample separated into $k$ factors. We want to test whether under the null-hypothesis the sample is drawn from one population, in which case each sub-samples are assumed to have the same mean, against the alternatives that the sub-samples are drawn from more than one population. This test further assumes that each sub-samples are normally distributed and homoskedastic (same variances) under $H_0$. 

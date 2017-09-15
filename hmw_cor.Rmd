@@ -99,6 +99,36 @@ predict(fit_lm, newdata = data.frame(Temperature = -2.5))
 </div>
 
 # Inference
+<div id="ex3">
+**Exercise 3:** Will be revealed soon.
+```{r,cache=TRUE,eval=TRUE,echo=FALSE,message=FALSE,warnings=FALSE,results='hide'}
+# set the workind directoy (for me)
+setwd("~/Documents/Teaching/RM/")
+
+# to load the data
+hospital <- read.csv(file = "hospital.csv", header = TRUE, sep = ";")
+
+# see the dataset
+head(hospital)
+
+# We need the average and the standard deviation
+mean(hospital$Days)
+sd(hospital$Days)
+
+# We can also compute the quantiles (or use the tables)
+qnorm(.975)
+qnorm(.95)
+qt(.975, df = 43)
+qt(.95, df = 43)
+```
+
+<!-- 2. We have $\bar{x} = `r (mu <- round(mean(hospital$Days),4))`$ and the quantile $z_{0.975} = `r (z_a <- round(qnorm(.975),4))`$. The 95\% confidence interval is therefore $$ \text{CI}(\bar{x},95\%) = [`r mu` - `r z_a`/\sqrt{44};\; `r mu` + `r z_a`/\sqrt{44}] = [`r round(mu-z_a/sqrt(44),4)`;\;`r round(mu+z_a/sqrt(44),4)`] $$   -->
+<!-- 3. The standard deviation is estimated at $\hat{\sigma}\approx `r (sig <- round(sd(hospital$Days),4))`$ and the quantile $t_{43;\;0.975} = `r (t_a <- round(qt(.975,df=43),4))`$. The 95\% confidence interval is therefore $$ \text{CI}(\bar{x},95\%) = [`r mu` - `r t_a`\;`r sig`/\sqrt{44};\; `r mu` + `r t_a`\;`r sig` /\sqrt{44}] = [`r round(mu-t_a*sig/sqrt(44),4)`;\;`r round(mu+t_a*sig/sqrt(44),4)`] $$   -->
+<!-- 4. Clearly if the confidence level decreases, there is a lower probability that the confidence interval will contain the true value, it translates into a shorter interval. The quantiles are modifies as follows $z_{0.95} = `r (z_a <- round(qnorm(.95),4))`$ and $t_{43;\;0.95} = `r (t_a <- round(qt(.95,df=43),4))`$. The new confidence intervals are $$ \text{CI}(\bar{x},90\%) = [`r mu` - `r z_a`/\sqrt{44};\; `r mu` + `r z_a`/\sqrt{44}] = [`r round(mu-z_a/sqrt(44),4)`;\;`r round(mu+z_a/sqrt(44),4)`] $$ and  $$ \text{CI}(\bar{x},90\%) = [`r mu` - `r t_a`\;`r sig`/\sqrt{44};\; `r mu` + `r t_a`\;`r sig` /\sqrt{44}] = [`r round(mu-t_a*sig/sqrt(44),4)`;\;`r round(mu+t_a*sig/sqrt(44),4)`] $$   -->
+
+</div>
+
+
 
 # Multivariate Regression model
 (coming soon)  
