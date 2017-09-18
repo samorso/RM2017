@@ -8,6 +8,7 @@ output:
   theme: architect
   highlight: github
   toc: true
+  df_print: kable
 ---
 
 ```{r setup, include=FALSE}
@@ -62,10 +63,20 @@ knitr::opts_chunk$set(echo = TRUE)
 1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `sales <- read.csv(file="sales.csv", header=TRUE, sep=";")`.  
 2. Which test should you pick? What are the null and alternative hypothesis?  
 3. Make a test for two populations. Use directly the `R` function `t.test(.)` and inspire yourself from the course. What is your conclusion?   
-4. Same as 3 but with a one population test. What am I assuming when making this test?   
-5. Repeat 3 and 4 with the Wilcoxon's signed-rank test. Is the conclusion different? How can you check if there are outliers?   
+4. Same as 3 but with a paired $t$-test. What am I assuming when making this test?   
+5. Repeat 3 and 4 with the Wilcoxon's signed-rank test. Is the conclusion different? How can you check if there are outliers? Have you found any?   
 </div>
 
+
+<div id="ex8">  
+**Exercise 8:** We are interested in the difference of delays of airplaines at NYC in 2013.   
+1. Load the data from the package `nycflights13`. Install and call the package.    
+2. The data you are interested is called `flights`, run the command `flights` and `?flights` to understand the data.    
+3. Construct a boxplot of `arr_delay` agains `carrier`. You can find to which company the `carrier` refers to in `airlines` data (just enter `airlines` in `R`).    
+4. Perform an one-way ANOVA test of `arr_delay` per `carrier`. What are the hypothesis? What is your conclusion?    
+5. Perform multiple comparisons. What is the Dunn-Sidak correction? How many pairs? For which pair can you conclude the test?   
+6. Restart 4 and 5 with Kruskal-Wallis and Wilcoxon tests? Are there contradictions? If yes, why?  
+</div>
 
 # Multivariate Regression model
 (coming soon)  

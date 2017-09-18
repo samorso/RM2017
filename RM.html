@@ -12,7 +12,7 @@
 
 <meta name="author" content="Samuel Orso" />
 
-<meta name="date" content="2017-09-15" />
+<meta name="date" content="2017-09-18" />
 
 <title>Multivariate statistics</title>
 
@@ -73,7 +73,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <h1 class="title toc-ignore">Multivariate statistics</h1>
 <h2 class="subtitle">Reserach Methods I, HES-SO, MScBA</h2>
 <h3 class="author">Samuel Orso</h3>
-<h3 class="date">2017-09-15</h3>
+<h3 class="date">2017-09-18</h3>
 </div>
 </header>
 
@@ -313,7 +313,8 @@ hat_sigma_eps &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span c
 data &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="dt">file=</span><span class="st">&quot;kuiper.csv&quot;</span>,<span class="dt">sep=</span><span class="st">&quot;,&quot;</span>)
 
 <span class="co"># Check the first six lines</span>
-knitr::<span class="kw">kable</span>(<span class="kw">head</span>(data))</code></pre></div>
+<span class="kw">head</span>(data)</code></pre></div>
+<div class="kable-table">
 <table>
 <thead>
 <tr class="header">
@@ -418,6 +419,7 @@ knitr::<span class="kw">kable</span>(<span class="kw">head</span>(data))</code><
 </tr>
 </tbody>
 </table>
+</div>
 <p><a href="https://samorso.github.io/RM2017/Inclass.html#ex3">In-class: exercise 3</a> <a href="https://samorso.github.io/RM2017/hmw.html#ex1">Homework: exercise 1</a></p>
 </div>
 </div>
@@ -1044,8 +1046,9 @@ plot2 &lt;-<span class="st"> </span><span class="kw">ggplot</span>(<span class="
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># load the dplyr package (first it needs to be installed)</span>
 <span class="kw">require</span>(dplyr)
 
-<span class="co"># Get the seeked values (you don't need knitr::kable(.) function in your code)</span>
-knitr::<span class="kw">kable</span>(data %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Cylinder) %&gt;%<span class="st"> </span><span class="kw">summarize</span>(<span class="dt">averages=</span><span class="kw">mean</span>(Price), <span class="dt">variances=</span><span class="kw">var</span>(Price), <span class="dt">n=</span><span class="kw">length</span>(Price)))</code></pre></div>
+<span class="co"># Get the seeked values </span>
+data %&gt;%<span class="st"> </span><span class="kw">group_by</span>(Cylinder) %&gt;%<span class="st"> </span><span class="kw">summarize</span>(<span class="dt">averages=</span><span class="kw">mean</span>(Price), <span class="dt">variances=</span><span class="kw">var</span>(Price), <span class="dt">n=</span><span class="kw">length</span>(Price))</code></pre></div>
+<div class="kable-table">
 <table>
 <thead>
 <tr class="header">
@@ -1076,6 +1079,7 @@ knitr::<span class="kw">kable</span>(data %&gt;%<span class="st"> </span><span c
 </tr>
 </tbody>
 </table>
+</div>
 <p>From these values, we obtain the observed test statistic <span class="math inline">\(t_{\text{obs}} \approx -4.6795\)</span> and the degrees of freedom <span class="math inline">\(\text{df}\approx 655.3507\)</span>. As a consequence we can compute the <span class="math inline">\(p\)</span>-value:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> -<span class="st"> </span><span class="dv">2</span>*<span class="kw">pt</span>(<span class="fl">4.6795</span>, <span class="dt">df=</span><span class="fl">655.3507</span>)</code></pre></div>
 <pre><code>## [1] 3.49529e-06</code></pre>
@@ -1118,7 +1122,8 @@ df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
         <span class="dt">sample2=</span>sleep$extra[sleep$group==<span class="dv">2</span>],
         <span class="dt">new_sample =</span> sleep$extra[sleep$group==<span class="dv">1</span>] -<span class="st"> </span>sleep$extra[sleep$group==<span class="dv">2</span>]
         )
-knitr::<span class="kw">kable</span>(df)</code></pre></div>
+df</code></pre></div>
+<div class="kable-table">
 <table>
 <thead>
 <tr class="header">
@@ -1180,6 +1185,7 @@ knitr::<span class="kw">kable</span>(df)</code></pre></div>
 </tr>
 </tbody>
 </table>
+</div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Graph</span>
 <span class="kw">ggplot</span>(<span class="dt">data=</span>sleep, <span class="kw">aes</span>(<span class="dt">x=</span>group, <span class="dt">y=</span>extra, <span class="dt">group=</span>group, <span class="dt">fill=</span>group)) +
 <span class="st">        </span><span class="kw">geom_boxplot</span>()</code></pre></div>
@@ -1199,6 +1205,8 @@ knitr::<span class="kw">kable</span>(df)</code></pre></div>
 ##                   -1.58</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># &quot;extra ~ group&quot; can be read as &quot;extra by group&quot;.</span>
 <span class="co"># Here it is equivalent to &quot;x = extra[group==1], y = extra[group==2]&quot;</span></code></pre></div>
+<p><a href="https://samorso.github.io/RM2017/Inclass.html#ex7">In-class: exercise 7</a><br />
+<a href="https://samorso.github.io/RM2017/hmw.html#ex4">Homework: exercise 4</a></p>
 </div>
 </div>
 <div id="anova" class="section level3">
@@ -1287,7 +1295,7 @@ knitr::<span class="kw">kable</span>(df)</code></pre></div>
 </tr>
 </tbody>
 </table>
-<p>The total sum of squares is obtained by <span class="math display">\[ \text{SS}_{\text{Total}} = 3^2+5^2+7^2+4^2+2^2+1^2+7^2 - 4.1429^2 \approx 148.8571 \]</span> and the treatment sum of squares by <span class="math display">\[ \text{SS}_{\text{Treatment}} = 3(5-4.1429)^2 + 2(3-4.1429)^2 + 2(4-4.1429)^2 \approx 4.8571\]</span> By deduction, we have also the residuals sum of squares given by <span class="math display">\[ \text{SS}_{\text{Residuals}} = \text{SS}_{\text{Total}} - \text{SS}_{\text{Treatment}} = 144 \]</span> We can now construct this nice table</p>
+<p>The total sum of squares is obtained by <span class="math display">\[ \text{SS}_{\text{Total}} = (3-4.1419)^2+(5-4.1419)^2+(7-4.1419)^2+(4-4.1419)^2+(2-4.1419)^2+(1-4.1419)^2+(7)^2 \approx 32.8571 \]</span> and the treatment sum of squares by <span class="math display">\[ \text{SS}_{\text{Treatment}} = 3(5-4.1429)^2 + 2(3-4.1429)^2 + 2(4-4.1429)^2 \approx 4.8571\]</span> By deduction, we have also the residuals sum of squares given by <span class="math display">\[ \text{SS}_{\text{Residuals}} = \text{SS}_{\text{Total}} - \text{SS}_{\text{Treatment}} = 28 \]</span> We can now construct this nice table</p>
 <table>
 <thead>
 <tr class="header">
@@ -1310,7 +1318,7 @@ knitr::<span class="kw">kable</span>(df)</code></pre></div>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\text{SS}_{\text{Residuals}}\)</span></td>
-<td align="left">144</td>
+<td align="left">28</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\(\text{MS}_{\text{Treatment}}\)</span></td>
@@ -1318,17 +1326,17 @@ knitr::<span class="kw">kable</span>(df)</code></pre></div>
 </tr>
 <tr class="even">
 <td align="left"><span class="math inline">\(\text{MS}_{\text{Residuals}}\)</span></td>
-<td align="left">36</td>
+<td align="left">7</td>
 </tr>
 <tr class="odd">
 <td align="left"><span class="math inline">\(t_{\text{obs}}\)</span></td>
-<td align="left">0.0675</td>
+<td align="left">0.3469</td>
 </tr>
 </tbody>
 </table>
 <p>The <span class="math inline">\(p\)</span>-value can be obtained using the following line of code</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span> -<span class="st"> </span><span class="kw">pf</span>(tobs, <span class="dt">df1 =</span> <span class="dv">2</span>, <span class="dt">df2 =</span> <span class="dv">4</span>) <span class="co"># tobs is already set</span></code></pre></div>
-<pre><code>## [1] 0.9357696</code></pre>
+<pre><code>## [1] 0.7262244</code></pre>
 <p>We can also compute <span class="math inline">\(T(\alpha)\)</span></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">(t_alpha &lt;-<span class="st"> </span><span class="kw">qf</span>(<span class="fl">0.95</span>, <span class="dt">df1 =</span> <span class="dv">2</span>, <span class="dt">df2 =</span> <span class="dv">4</span>))</code></pre></div>
 <pre><code>## [1] 6.944272</code></pre>
@@ -1409,7 +1417,7 @@ anova_test &lt;-<span class="st"> </span><span class="kw">aov</span>(Price ~<spa
 <p>Suppose that you accept globally <span class="math inline">\(\alpha = 5\%\)</span>, what should be the individual level of significance <span class="math inline">\(\alpha_I\)</span>? You know that for one test the probability to be non-significant is <span class="math inline">\(1-\alpha_I\)</span>. Now if you run <span class="math inline">\(c\)</span> pairs of tests, the probability that none of them are significant is <span class="math inline">\((1-\alpha_I)^c\)</span> if you assume independence between the tests (just take their product). In this context, Sidak proposes that <span class="math inline">\(\alpha\)</span> corresponds to the probability that at least one of the test is significant under the null-hypothesis, i.e. <span class="math display">\[ \mathbb{P}_{H_0}(\text{at least one test significant}) = \alpha.\]</span> Because this probability is 1 minus the probability that no tests are significant, the correction is obtained <span class="math display">\[ \alpha = 1 - (1 - \alpha_I)^c \Rightarrow \alpha_I = 1 - (1 - \alpha)^{1/c}. \]</span> This is the <strong>Dunn-Sidak correction</strong>. It should be mentionned (once again) that <span class="math inline">\(\alpha\)</span> controls the error rate only when all the null-hypothesis are true, i.e. it controls the type I error.</p>
 <p>For example if I want to compare <span class="math inline">\(8\)</span> pairs with an <span class="math inline">\(\alpha=5\%\)</span>, then the individual level of significance using the Dunn-Sidak correction is <span class="math inline">\(\alpha_I = 0.0064\)</span> (much smaller)! It means that by comparing each <span class="math inline">\(p\)</span>-values with a level of <span class="math inline">\(\alpha_I\)</span>, we globally accept a level of <span class="math inline">\(\alpha\)</span>.</p>
 <p><strong>CS:</strong> The one-way ANOVA test of the cars price by type was significant. We test pairwise with a global level of significance <span class="math inline">\(\alpha=5\%\)</span>.</p>
-<p>There are five types of cars (<span class="math inline">\(k=5\)</span>). How many pairs are we comparing? Recall from your math course that we have $ c =  $ pairs. Here <span class="math inline">\(c=10\)</span>. The Dunn-Sidak correction is <span class="math inline">\(\alpha_I = 1 - 0.95^{0.1} = 0.0051\)</span>. To make all the comparison, we can use the <code>pairwise.t.test(.)</code> function in <code>R</code>:</p>
+<p>There are five types of cars (<span class="math inline">\(k=5\)</span>). How many pairs are we comparing? Recall from your math course that we have <span class="math display">\[ c = \begin{pmatrix} k \\ 2 \end{pmatrix} \]</span> pairs. Here <span class="math inline">\(c=10\)</span>. The Dunn-Sidak correction is <span class="math inline">\(\alpha_I = 1 - 0.95^{0.1} = 0.0051\)</span>. To make all the comparison, we can use the <code>pairwise.t.test(.)</code> function in <code>R</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pairwise.t.test</span>(<span class="dt">x =</span> data$Price, <span class="dt">g =</span> data$Type, <span class="dt">p.adjust.method =</span> <span class="st">&quot;none&quot;</span>, <span class="dt">pool.sd =</span> <span class="ot">FALSE</span>)</code></pre></div>
 <pre><code>## 
 ##  Pairwise comparisons using t tests with non-pooled SD 
@@ -1443,6 +1451,8 @@ anova_test &lt;-<span class="st"> </span><span class="kw">aov</span>(Price ~<spa
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##    8639   14870   18884   21068   24908   51154</code></pre>
 <p>we see that outliers have an influence on the average (<code>mean</code> <span class="math inline">\(\gg\)</span> <code>median</code>) making certainly the <span class="math inline">\(t\)</span>-test vulnerable, whereas the Wilcoxon test is less influenced.</p>
+<p><a href="https://samorso.github.io/RM2017/Inclass.html#ex8">In-class: exercise 8</a><br />
+<a href="https://samorso.github.io/RM2017/hmw.html#ex5">Homework: exercise 5</a></p>
 </div>
 <div id="some-practical-recommendations" class="section level3">
 <h3>Some practical recommendations</h3>

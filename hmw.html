@@ -12,7 +12,7 @@
 
 <meta name="author" content="Samuel Orso" />
 
-<meta name="date" content="2017-09-15" />
+<meta name="date" content="2017-09-18" />
 
 <title>Multivariate statistics</title>
 
@@ -35,7 +35,7 @@
 <h1 class="title toc-ignore">Multivariate statistics</h1>
 <h2 class="subtitle">Homeworks</h2>
 <h3 class="author">Samuel Orso</h3>
-<h3 class="date">2017-09-15</h3>
+<h3 class="date">2017-09-18</h3>
 </div>
 </header>
 
@@ -92,7 +92,16 @@
 <p>You will find the correction <a href="https://samorso.github.io/RM2017/hmw_cor.html#ex3">here</a></p>
 </div>
 <div id="ex4">
-<p><strong>Exercise 4:</strong> Repeat the in-class Exercise 7 with</p>
+<p><strong>Exercise 4:</strong> Repeat (if possible) the in-class Exercise 7 with the <code>waiting_time.csv</code> dataset (available on <a href="https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591">cyberlearn</a>) by starting with a descriptive analysis. Here is the story. In a fast food, you rearrange the manufacturing process of several products and services. On paper, your reorganization is effective and reduces the waiting time. To check if this is true in practice, you compare the waiting time of customers (in seconds) between the start of the command and the final operation. There are two samples, one measured before the change, the other after. The changes will be maintained only if there is clear evidence of their effectiveness.</p>
+</div>
+<div id="ex5">
+<p><strong>Exercise 5:</strong> For a promotional campaign, a local airline company measures the impact on the increased ticket sales per dollar spent on four medias. The comapny wants to know whether there are differences between medias, and in particular which media has the best increase. To perform the analysis, use the <code>medias.csv</code> dataset available on <a href="https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591">cyberlearn</a>.<br />
+1. Load the dataset in <code>R</code>. First set the working directory (where you want to work with <code>R</code> in your computer) by using the <code>setwd(&quot;my directory&quot;)</code> commands. Then load the dataset using the command <code>media &lt;- read.csv(file=&quot;medias.csv&quot;, header=TRUE, sep=&quot;;&quot;)</code>.<br />
+2. Construct multiple boxplot and comment. In particular, how would you orientate the pairwise alternatives? Are there outliers?<br />
+3. Perform a one-way ANOVA test by constructing the table. Give the working hypothesis. Inspire yourself from the in-class examples and conclude the test.<br />
+4. Check your result by running the <code>R</code> command <code>aov(.)</code> (see the course for details).<br />
+5. Run pairwise comparisons in <code>R</code> by applying the Dunn-Sidak correction, give full details.<br />
+6. Do 4 and 5 using Kruskal-Wallis and Wilcoxon tests. Are there any contradictions?</p>
 </div>
 </div>
 <div id="multivariate-regression-model" class="section level1">

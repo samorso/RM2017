@@ -8,6 +8,7 @@ output:
   theme: architect
   highlight: github
   toc: true
+  df_print: kable
 ---
 
 ```{r setup, include=FALSE}
@@ -54,7 +55,17 @@ You will find the correction [here](https://samorso.github.io/RM2017/hmw_cor.htm
 </div>
 
 <div id="ex4">
-**Exercise 4:** Repeat the in-class Exercise 7 with 
+**Exercise 4:** Repeat (if possible) the in-class Exercise 7 with the `waiting_time.csv` dataset (available on  [cyberlearn](https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591)) by starting with a descriptive analysis. Here is the story. In a fast food, you rearrange the manufacturing process of several products and services. On paper, your reorganization is effective and reduces the waiting time. To check if this is true in practice, you compare the waiting time of customers (in seconds) between the start of the command and the final operation. There are two samples, one measured before the change, the other after. The changes will be maintained only if there is clear evidence of their effectiveness.
+</div>
+
+<div id="ex5">
+**Exercise 5:** For a promotional campaign, a local airline company measures the impact on the increased ticket sales per dollar spent on four medias. The comapny wants to know whether there are differences between medias, and in particular which media has the best increase. To perform the analysis, use the `medias.csv` dataset available on  [cyberlearn](https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591).       
+1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `media <- read.csv(file="medias.csv", header=TRUE, sep=";")`.   
+2. Construct multiple boxplot and comment. In particular, how would you orientate the pairwise alternatives? Are there outliers?      
+3. Perform a one-way ANOVA test by constructing the table. Give the working hypothesis. Inspire yourself from the in-class examples and conclude the test.       
+4. Check your result by running the `R` command `aov(.)` (see the course for details).   
+5. Run pairwise comparisons in `R` by applying the Dunn-Sidak correction, give full details.   
+6. Do 4 and 5 using Kruskal-Wallis and Wilcoxon tests. Are there any contradictions?    
 </div>
 
 # Multivariate Regression model

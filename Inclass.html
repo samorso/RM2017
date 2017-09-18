@@ -12,7 +12,7 @@
 
 <meta name="author" content="Samuel Orso" />
 
-<meta name="date" content="2017-09-15" />
+<meta name="date" content="2017-09-18" />
 
 <title>Multivariate statistics</title>
 
@@ -35,7 +35,7 @@
 <h1 class="title toc-ignore">Multivariate statistics</h1>
 <h2 class="subtitle">In-class exercises</h2>
 <h3 class="author">Samuel Orso</h3>
-<h3 class="date">2017-09-15</h3>
+<h3 class="date">2017-09-18</h3>
 </div>
 </header>
 
@@ -104,8 +104,17 @@
 1. Load the dataset in <code>R</code>. First set the working directory (where you want to work with <code>R</code> in your computer) by using the <code>setwd(&quot;my directory&quot;)</code> commands. Then load the dataset using the command <code>sales &lt;- read.csv(file=&quot;sales.csv&quot;, header=TRUE, sep=&quot;;&quot;)</code>.<br />
 2. Which test should you pick? What are the null and alternative hypothesis?<br />
 3. Make a test for two populations. Use directly the <code>R</code> function <code>t.test(.)</code> and inspire yourself from the course. What is your conclusion?<br />
-4. Same as 3 but with a one population test. What am I assuming when making this test?<br />
-5. Repeat 3 and 4 with the Wilcoxon’s signed-rank test. Is the conclusion different? How can you check if there are outliers?</p>
+4. Same as 3 but with a paired <span class="math inline">\(t\)</span>-test. What am I assuming when making this test?<br />
+5. Repeat 3 and 4 with the Wilcoxon’s signed-rank test. Is the conclusion different? How can you check if there are outliers? Have you found any?</p>
+</div>
+<div id="ex8">
+<p><strong>Exercise 8:</strong> We are interested in the difference of delays of airplaines at NYC in 2013.<br />
+1. Load the data from the package <code>nycflights13</code>. Install and call the package.<br />
+2. The data you are interested is called <code>flights</code>, run the command <code>flights</code> and <code>?flights</code> to understand the data.<br />
+3. Construct a boxplot of <code>arr_delay</code> agains <code>carrier</code>. You can find to which company the <code>carrier</code> refers to in <code>airlines</code> data (just enter <code>airlines</code> in <code>R</code>).<br />
+4. Perform an one-way ANOVA test of <code>arr_delay</code> per <code>carrier</code>. What are the hypothesis? What is your conclusion?<br />
+5. Perform multiple comparisons. What is the Dunn-Sidak correction? How many pairs? For which pair can you conclude the test?<br />
+6. Restart 4 and 5 with Kruskal-Wallis and Wilcoxon tests? Are there contradictions? If yes, why?</p>
 </div>
 </div>
 <div id="multivariate-regression-model" class="section level1">

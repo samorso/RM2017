@@ -12,7 +12,7 @@
 
 <meta name="author" content="Samuel Orso" />
 
-<meta name="date" content="2017-09-15" />
+<meta name="date" content="2017-09-18" />
 
 <title>Multivariate statistics</title>
 
@@ -35,7 +35,7 @@
 <h1 class="title toc-ignore">Multivariate statistics</h1>
 <h2 class="subtitle">Homeworks - correction</h2>
 <h3 class="author">Samuel Orso</h3>
-<h3 class="date">2017-09-15</h3>
+<h3 class="date">2017-09-18</h3>
 </div>
 </header>
 
@@ -76,6 +76,32 @@
 <!-- 2. We have $\bar{x} = 1.3864$ and the quantile $z_{0.975} = 1.96$. The 95\% confidence interval is therefore $$ \text{CI}(\bar{x},95\%) = [1.3864 - 1.96/\sqrt{44};\; 1.3864 + 1.96/\sqrt{44}] = [1.0909;\;1.6819] $$   -->
 <!-- 3. The standard deviation is estimated at $\hat{\sigma}\approx 0.5793$ and the quantile $t_{43;\;0.975} = 2.0167$. The 95\% confidence interval is therefore $$ \text{CI}(\bar{x},95\%) = [1.3864 - 2.0167\;0.5793/\sqrt{44};\; 1.3864 + 2.0167\;0.5793 /\sqrt{44}] = [1.2103;\;1.5625] $$   -->
 <!-- 4. Clearly if the confidence level decreases, there is a lower probability that the confidence interval will contain the true value, it translates into a shorter interval. The quantiles are modifies as follows $z_{0.95} = 1.6449$ and $t_{43;\;0.95} = 1.6811$. The new confidence intervals are $$ \text{CI}(\bar{x},90\%) = [1.3864 - 1.6449/\sqrt{44};\; 1.3864 + 1.6449/\sqrt{44}] = [1.1384;\;1.6344] $$ and  $$ \text{CI}(\bar{x},90\%) = [1.3864 - 1.6811\;0.5793/\sqrt{44};\; 1.3864 + 1.6811\;0.5793 /\sqrt{44}] = [1.2396;\;1.5332] $$   -->
+</div>
+<div id="ex4">
+<p><strong>Exercise 4:</strong> Will be revealed soon.</p>
+<!-- 2. It is not clear from the description that we have the exact same clients before/after the change of process. Somehow, it would make more sense to have different clients. Additionnaly,from the descriptive analysis, we can see that the number of clients is inequal. A $t$-test for two different means seems more adequate. Since we are expecting a decrease in waiting time after the change, we should orientate the alternative hypothesis. We make the following hypothesis: $$ H_0:\mu_{\text{Before}} = \mu_{\text{After}} $$ agains $$ H_1: \mu_{\text{Before}} > \mu_{\text{After}} $$ Since there are no indications, we take a default significance level of $\alpha=5\%$.    -->
+<!-- 3. Based on the sample and a level of $\alpha=5\%$, we reject $H_0$. We conclude the waiting time decreased significantly after the change of process.     -->
+<!-- 4. As already mentionned, the number of unit is different between after/before, so a paired $t$-test is not possible.     -->
+<!-- 5. On the boxplot we can see two potential outliers that may influence the mean of the groupe before. This influence may bias the $p$-value towards rejecting the null. The $t$-test and Wilcoxon test do not contradict each, both reject $H_0$ at level of significance of 5\%.  -->
+</div>
+<div id="ex5">
+<p><strong>Exercise 5:</strong> Will be revealed soon.</p>
+<!-- 2. There is a clear distinction between `Media` on `Impact`, we have the following order: `Website` > `Television` > `Radio` > `Newspaper`. The distinction between the two last is less evident as `Radio` is more disperse. This order will be uses for pairwise comparisons to answer the question of research. There are no reasons to believe outliers are present in this dataset.    -->
+<!-- 3. We have $H_0 :$ all averages are equals agains $H_1:$ at least one difference. We work with a level of significance of $\alpha=0.05$. First we compute the total sum of squares. Then, the treatment sum of squares, from which we can deduce the residual some of squares. Here we can do it by hand, since the dataset is of reasonable size, or by using `R` (see the code). We obtain -->
+<!-- Quantity                       | Value -->
+<!-- ------------------------------ | -------------- -->
+<!-- $\text{df}_1$                  | $3$   -->
+<!-- $\text{df}_2$                  | $36$   -->
+<!-- $\text{SS}_{\text{Treatment}}$ | 125.7113675     -->
+<!-- $\text{SS}_{\text{Residuals}}$ | 179.03691   -->
+<!-- $\text{MS}_{\text{Treatment}}$ | 41.9038 -->
+<!-- $\text{MS}_{\text{Residuals}}$ | 4.9732 -->
+<!-- $t_{\text{obs}}$               | 8.4259  -->
+<!-- $p$-value                      | 2\times 10^{-4} -->
+<!-- We can clearly reject $H_0$ based on this sample and a level of significance of $\alpha=5\%$.     -->
+<!-- 4. Same results up to rounding errors.    -->
+<!-- 5. The Dunn-Sidak correction is obtained by $$ \alpha_I = 1 - 0.95^{1/6} \approx 0.0085  $$ since there are six different pairs. We cannot conclude on the difference between `Radio` and `Newspaper`, and `Radio` and `Television`, all the other differences are significant with the Dunn-Sidak correction based on this sample. In particular, we can conclude that the `Website` is has the best Impact.   -->
+<!-- 6. Since there is no reason to fear influenced from outliers, it seems unnecessary to perform Kruskal-Wallis Wilcoxon tests. Anyway, we perform these tests and found no contradictions. -->
 </div>
 </div>
 <div id="multivariate-regression-model" class="section level1">

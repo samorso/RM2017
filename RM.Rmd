@@ -8,6 +8,7 @@ output:
   theme: architect
   highlight: github
   toc: true
+  df_print: kable
 ---
 
 ```{r setup, include=FALSE}
@@ -214,18 +215,7 @@ getwd() # to check the current directory
 data <- read.csv(file="kuiper.csv",sep=",")
 
 # Check the first six lines
-knitr::kable(head(data))
-```
-
-```{r,eval=FALSE,echo=FALSE}
-# Set the working directory of R to your own directory 
-setwd("D:/Dropbox/PhD/HEG/RM") # in my case, in your computer you should indicate your own path
-
-# load the dataset
-data <- read.csv(file="kuiper.csv",sep=",")
-
-# Check the first six lines
-knitr::kable(head(data))
+head(data)
 ```
 
 [In-class: exercise 3](https://samorso.github.io/RM2017/Inclass.html#ex3)
@@ -662,8 +652,8 @@ Here is a simple `R` code to obtain the necessary values on the sample
 # load the dplyr package (first it needs to be installed)
 require(dplyr)
 
-# Get the seeked values (you don't need knitr::kable(.) function in your code)
-knitr::kable(data %>% group_by(Cylinder) %>% summarize(averages=mean(Price), variances=var(Price), n=length(Price)))
+# Get the seeked values 
+data %>% group_by(Cylinder) %>% summarize(averages=mean(Price), variances=var(Price), n=length(Price))
 ```
 
 From these values, we obtain the observed test statistic $t_{\text{obs}} \approx `r round((17862.56-20081.40)/sqrt(61324307/394+21448227/310),4)`$ and the degrees of freedom $\text{df}\approx `r round((61324307/394+21448227/310)^2/((61324307/394)^2/393+(21448227/310)^2/309),4)`$. As a consequence we can compute the $p$-value:
@@ -699,7 +689,7 @@ df <- data.frame(
         sample2=sleep$extra[sleep$group==2],
         new_sample = sleep$extra[sleep$group==1] - sleep$extra[sleep$group==2]
         )
-knitr::kable(df)
+df
 
 # Graph
 ggplot(data=sleep, aes(x=group, y=extra, group=group, fill=group)) +
@@ -712,6 +702,7 @@ t.test(extra ~ group, mu = 0, alternative = "less", paired = TRUE, data = sleep)
 ```
 
 [In-class: exercise 7](https://samorso.github.io/RM2017/Inclass.html#ex7)   
+[Homework: exercise 4](https://samorso.github.io/RM2017/hmw.html#ex4)  
 
 ### ANOVA
 The ANalysis Of VAriance (ANOVA) regroups many tests and models in statistics. In this class I only discuss the **one-way ANOVA** test. The one-way ANOVA test corresponds to the following situation: we have a sample separated into $k$ factors. We want to test whether under the null-hypothesis the sample is drawn from one population, in which case each sub-samples are assumed to have the same mean, against the alternatives that the sub-samples are drawn from more than one population. This test further assumes that each sub-samples are normally distributed and homoskedastic (same variances) under $H_0$. 
@@ -738,7 +729,7 @@ B               | $4\;\;\;2$            | 2             |        3
 C               | $1\;\;\;7$            | 2             |        4       
 Overall         |                       | 7             | `r (mu <- round(mean(c(3,5,7,4,2,1,7)),4))`         
 
-The total sum of squares is obtained by $$ \text{SS}_{\text{Total}} = 3^2+5^2+7^2+4^2+2^2+1^2+7^2 - 4.1429^2 \approx `r (ss_tot <- round(sum(c(3,5,7,4,2,1,7)^2) - mu,4))` $$ and the treatment sum of squares by $$ \text{SS}_{\text{Treatment}} = 3(5-4.1429)^2 + 2(3-4.1429)^2 + 2(4-4.1429)^2 \approx `r (ss_tr <- round(3*(5-mu)^2 + 2*(3-mu)^2  + 2*(4-mu)^2,4))`$$ By deduction, we have also the residuals sum of squares given by $$ \text{SS}_{\text{Residuals}} = \text{SS}_{\text{Total}} - \text{SS}_{\text{Treatment}} = `r ss_tot - ss_tr` $$ We can now construct this nice table
+The total sum of squares is obtained by $$ \text{SS}_{\text{Total}} = (3-4.1419)^2+(5-4.1419)^2+(7-4.1419)^2+(4-4.1419)^2+(2-4.1419)^2+(1-4.1419)^2+(7)^2 \approx `r (ss_tot <- round(sum((c(3,5,7,4,2,1,7)-mu)^2),4))` $$ and the treatment sum of squares by $$ \text{SS}_{\text{Treatment}} = 3(5-4.1429)^2 + 2(3-4.1429)^2 + 2(4-4.1429)^2 \approx `r (ss_tr <- round(3*(5-mu)^2 + 2*(3-mu)^2  + 2*(4-mu)^2,4))`$$ By deduction, we have also the residuals sum of squares given by $$ \text{SS}_{\text{Residuals}} = \text{SS}_{\text{Total}} - \text{SS}_{\text{Treatment}} = `r ss_tot - ss_tr` $$ We can now construct this nice table
 
 Quantity                       | Value
 ------------------------------ | --------------
@@ -804,7 +795,7 @@ For example if I want to compare $8$ pairs with an $\alpha=5\%$, then the indivi
 
 **CS:** The one-way ANOVA test of the cars price by type was significant. We test pairwise with a global level of significance $\alpha=5\%$.  
 
-There are five types of cars ($k=5$). How many pairs are we comparing? Recall from your math course that we have $ c = \binom{k}{2} $ pairs. Here $c=10$. The Dunn-Sidak correction is $\alpha_I = 1 - 0.95^{0.1} = `r round(1 - .95^.1,4)`$. To make all the comparison, we can use the `pairwise.t.test(.)` function in `R`: 
+There are five types of cars ($k=5$). How many pairs are we comparing? Recall from your math course that we have $$ c = \begin{pmatrix} k \\ 2 \end{pmatrix} $$ pairs. Here $c=10$. The Dunn-Sidak correction is $\alpha_I = 1 - 0.95^{0.1} = `r round(1 - .95^.1,4)`$. To make all the comparison, we can use the `pairwise.t.test(.)` function in `R`: 
 ```{r}
 pairwise.t.test(x = data$Price, g = data$Type, p.adjust.method = "none", pool.sd = FALSE)
 ```
@@ -819,6 +810,9 @@ With theses tests, we reject $H_0$ for every pairs at level of significance of $
 summary(data$Price[data$Type=="Sedan"])
 ```
 we see that outliers have an influence on the average (`mean` $\gg$ `median`) making certainly the $t$-test vulnerable, whereas the Wilcoxon test is less influenced.
+
+[In-class: exercise 8](https://samorso.github.io/RM2017/Inclass.html#ex8)   
+[Homework: exercise 5](https://samorso.github.io/RM2017/hmw.html#ex5)  
 
 ### Some practical recommendations
 * **How should I orientate the test?** Orienting a test gives you a more precise answer but it should be decided before looking at the data.  

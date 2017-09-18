@@ -8,6 +8,7 @@ output:
   theme: architect
   highlight: github
   toc: true
+  df_print: kable
 ---
 
 ```{r setup, include=FALSE}
@@ -128,7 +129,106 @@ qt(.95, df = 43)
 
 </div>
 
+<div id="ex4">
+**Exercise 4:** Will be revealed soon.
+```{r,cache=TRUE,eval=TRUE,echo=FALSE,message=FALSE,warnings=FALSE,results='hide',fig.align='center',fig.height=4,fig.width=6,fig.show='hide'}
+# 1.
+# set the workind directoy (for me)
+setwd("~/Documents/Teaching/RM/")
 
+# to load the data
+wt <- read.csv(file = "waiting_time.csv", header = TRUE, sep = ";")
+
+# see the dataset
+head(wt)
+
+# Descriptive analysis
+require(ggplot2)
+require(dplyr)
+
+ggplot(wt, aes(y = Time, x = When, group = When, fill = When)) +
+  geom_boxplot()
+
+wt %>% group_by(When) %>% summarise(n = length(Time), average = mean(Time), median = median(Time),
+                                    max = max(Time), min = min(Time), variance = var(Time))
+
+# 3.
+t.test(Time ~ When, mu = 0, alternative = "less", data = wt)
+
+# 4.
+# t.test(Time ~ When, mu = 0, alternative = "less", data = wt, paired = TRUE)
+
+# 5. 
+wilcox.test(Time ~ When, mu = 0, alternative = "less", data = wt)
+```
+
+<!-- 2. It is not clear from the description that we have the exact same clients before/after the change of process. Somehow, it would make more sense to have different clients. Additionnaly,from the descriptive analysis, we can see that the number of clients is inequal. A $t$-test for two different means seems more adequate. Since we are expecting a decrease in waiting time after the change, we should orientate the alternative hypothesis. We make the following hypothesis: $$ H_0:\mu_{\text{Before}} = \mu_{\text{After}} $$ agains $$ H_1: \mu_{\text{Before}} > \mu_{\text{After}} $$ Since there are no indications, we take a default significance level of $\alpha=5\%$.    -->
+<!-- 3. Based on the sample and a level of $\alpha=5\%$, we reject $H_0$. We conclude the waiting time decreased significantly after the change of process.     -->
+<!-- 4. As already mentionned, the number of unit is different between after/before, so a paired $t$-test is not possible.     -->
+<!-- 5. On the boxplot we can see two potential outliers that may influence the mean of the groupe before. This influence may bias the $p$-value towards rejecting the null. The $t$-test and Wilcoxon test do not contradict each, both reject $H_0$ at level of significance of 5\%.  -->
+</div>
+
+<div id="ex5">
+**Exercise 5:** Will be revealed soon.
+```{r,cache=TRUE,eval=TRUE,echo=FALSE,message=FALSE,warnings=FALSE,results='hide',fig.align='center',fig.height=4,fig.width=6,fig.show='hide'}
+# 1.
+# set the workind directoy (for me)
+setwd("~/Documents/Teaching/RM/")
+
+# to load the data
+media <- read.csv(file = "medias.csv", header = TRUE, sep = ";")
+
+# see the dataset
+head(media)
+
+# Descriptive analysis
+require(ggplot2)
+require(dplyr)
+
+ggplot(media, aes(y = Impact, x = Media, group = Media, fill = Media)) +
+  geom_boxplot()
+
+tbl <- media %>% group_by(Media) %>% summarise(n = length(Impact), average = mean(Impact), variance = var(Impact))
+tbl
+
+# 3.
+(avg_overall <- mean(media$Impact))
+(ss_total <- sum((media$Impact- avg_overall)^2))
+(ss_treat <- sum(tbl$n * (tbl$average - avg_overall)^2))
+(ss_res <- ss_total - ss_treat)
+
+# 4.
+anova_test <- aov(Impact ~ Media, data = media)
+summary(anova_test)
+
+# 5. 
+pairwise.t.test(media$Impact, media$Media, alternative = "greater", p.adjust.method = "none", pool.sd = FALSE)
+
+# 6.
+kruskal.test(Impact ~ Media, data = media)
+pairwise.wilcox.test(media$Impact, media$Media, alternative = "greater", p.adjust.method = "none")
+```
+
+
+<!-- 2. There is a clear distinction between `Media` on `Impact`, we have the following order: `Website` > `Television` > `Radio` > `Newspaper`. The distinction between the two last is less evident as `Radio` is more disperse. This order will be uses for pairwise comparisons to answer the question of research. There are no reasons to believe outliers are present in this dataset.    -->
+<!-- 3. We have $H_0 :$ all averages are equals agains $H_1:$ at least one difference. We work with a level of significance of $\alpha=0.05$. First we compute the total sum of squares. Then, the treatment sum of squares, from which we can deduce the residual some of squares. Here we can do it by hand, since the dataset is of reasonable size, or by using `R` (see the code). We obtain -->
+
+<!-- Quantity                       | Value -->
+<!-- ------------------------------ | -------------- -->
+<!-- $\text{df}_1$                  | $3$   -->
+<!-- $\text{df}_2$                  | $36$   -->
+<!-- $\text{SS}_{\text{Treatment}}$ | `r ss_treat`     -->
+<!-- $\text{SS}_{\text{Residuals}}$ | `r ss_res`   -->
+<!-- $\text{MS}_{\text{Treatment}}$ | `r (ms_treat <- round(ss_treat/3,4))` -->
+<!-- $\text{MS}_{\text{Residuals}}$ | `r (ms_res <- round(ss_res/36,4))` -->
+<!-- $t_{\text{obs}}$               | `r (tobs <- round(ms_treat / ms_res,4))`  -->
+<!-- $p$-value                      | `r round(1 - pf(tobs,df1=3,df2=36),4)` -->
+
+<!-- We can clearly reject $H_0$ based on this sample and a level of significance of $\alpha=5\%$.     -->
+<!-- 4. Same results up to rounding errors.    -->
+<!-- 5. The Dunn-Sidak correction is obtained by $$ \alpha_I = 1 - 0.95^{1/6} \approx `r round(1 - 0.95^(1/6),4)`  $$ since there are six different pairs. We cannot conclude on the difference between `Radio` and `Newspaper`, and `Radio` and `Television`, all the other differences are significant with the Dunn-Sidak correction based on this sample. In particular, we can conclude that the `Website` is has the best Impact.   -->
+<!-- 6. Since there is no reason to fear influenced from outliers, it seems unnecessary to perform Kruskal-Wallis Wilcoxon tests. Anyway, we perform these tests and found no contradictions. -->
+</div>
 
 # Multivariate Regression model
 (coming soon)  
