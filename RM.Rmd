@@ -32,19 +32,19 @@ This course serves as an introduction to multivariate statistics with an emphasi
 ### How do we work?
 I split the exercises into two categories:  
 1. In-class exercises: you will have time during the class to solve these exercises, then I correct it with you. You can find them [here](https://samorso.github.io/RM2017/Inclass.html)  
-2. Homeworks: you have to solve these exercices by your own at home. You receive a detailed solution. In principle I will not give further correction. You can find the exercises [here](https://samorso.github.io/RM2017/hmw.html) and their correction [here](https://samorso.github.io/RM2017/hmw_cor.html)
+2. Homework: you have to solve these exercises by your own at home. You receive a detailed solution. In principle I will not give further correction. You can find the exercises [here](https://samorso.github.io/RM2017/hmw.html) and their correction [here](https://samorso.github.io/RM2017/hmw_cor.html)
 
-At the end of each Chapter, I will submit you a quizz. The quizz does not count for your grade but serves as a training for the final exam. You can answer the quizz from your laptot or cell phones. If you intend to use your cell phone, you must install the application `i-nigma`.
+At the end of each Chapter, I will submit you a quiz. The quiz does not count for your grade but serves as a training for the final exam. You can answer the quiz from your laptop or cell phones. If you intend to use your cell phone, you must install the application `i-nigma`.
 
 ### Few more wo`R`ds
-This class has been entierely written using `R/RStudio` open source statistical softwares. The students are strongly encouraged to learn how to use these softwares by themselves as it will ease their learning process. Also we believe it will be an asset on your CV and for the rest of your careers. Many web sources exist for learning `R`:  
+This class has been entirely written using `R/RStudio` open source statistical software. The students are strongly encouraged to learn how to use these software by themselves as it will ease their learning process. Also we believe it will be an asset on your CV and for the rest of your careers. Many web sources exist for learning `R`:  
 * https://www.rstudio.com/  
 * https://www.coursera.org/learn/r-programming/  
 * https://www.datacamp.com/  
 * http://www.r-exercises.com/  
 * and many more ...  
 
-Note that it is **possible** to make the exercises with other softwares (e.g. Excel), but is is **essential** that you understand the outputs from `R` (as presented in class) for the final examination. For the project you can choose.
+Note that it is **possible** to make the exercises with other software (e.g. Excel), but is is **essential** that you understand the outputs from `R` (as presented in class) for the final examination. For the project you can choose.
 
 To get started, install `R` from https://www.r-project.org/ and `RStudio` https://www.rstudio.com/. Along the document, you will see some windows like the following:
 ```{r}
@@ -56,9 +56,9 @@ The gray block is the `R` code that I wrote (here a simple addition of 1 + 2). T
 ?mean
 ```
 
-For less effort (but less gain as well), you can use `R-commander` (http://www.rcommander.com/) in addition to `R/RStudio`. It is a graphcial user interface that can prevent you from writing the codes.
+For less effort (but less gain as well), you can use `R-commander` (http://www.rcommander.com/) in addition to `R/RStudio`. It is a graphical user interface that can prevent you from writing the codes.
 
-`R` has a core software with basic (but very useful) functionnalities. It has also tons of external libraries developped by researchers and developpers. These libraries are freely available and easy to install. If you want to reproduce the code in the slides, you will need to install few libraries: `ggplot2`, `gridExtra`, `dplyr`. To install a library you can use the following code
+`R` has a core software with basic (but very useful) functionalities. It has also tons of external libraries developed by researchers and developers. These libraries are freely available and easy to install. If you want to reproduce the code in the slides, you will need to install few libraries: `ggplot2`, `gridExtra`, `dplyr`. To install a library you can use the following code
 ```{r,eval=FALSE}
 install.packages("ggplot2")
 ```
@@ -70,7 +70,7 @@ require(ggplot2)
 [In-class: exercise 1](https://samorso.github.io/RM2017/Inclass.html#ex1)
 
 # Introduction: Multivariate regression
-### Preambule
+### Preamble
 Multivariate regression aims at modelling the relationship between one **variable of interest** and many (i.e. multivariate) potential **explanatory variables** (or **predictors**). We will use the multivariate regression for two purposes:    
 1. Verifying a theory   
 2. Predicting  
@@ -243,7 +243,7 @@ greater, the 75% of the data are smaller.
 * Maximum or quantile at 100%: The greatest data.   
 
 ### Application to regression: variable of interest
-The variable of interest is assumed to follow approximately a normal distribution in the regression context. We should observe (approximately) this behaviour with *boxplot* or *histogram*. What is this behaviour?
+The variable of interest is assumed to follow approximately a normal distribution in the regression context. We should observe (approximately) this behavior with *boxplot* or *histogram*. What is this behavior?
 
 **Example 2:** Suppose we observe a sample of size 100 from a normal random variable $X\sim\mathcal{N}(0,1)$.
 ```{r,fig.align='center', fig.height=6, fig.width=6, message=FALSE,cache=TRUE}
@@ -290,7 +290,7 @@ Many assumptions on the predictors can be intuitively check via a bivariate grap
 * Are the predictors **linearly dependent** with the variable of interest? On a scatterplot, we should be able to imagine a line going through the points.   
 * The distance between the points and this imaginary line should be more or less constant, or saying it differently error should be **homoscedastic** (meaing *same variability*), otherwise we might have a problem of **heteroskedasticity**. In which case it might be a good option to make a transformation.   
 * Are there outliers on the data?   
-We can also use the **linear correlation** to measure the strength of the linear relationship. The correlation varies between -1 to 1. 1 represent a strong positive (downleft to upright) linear relationship. -1 represents a strong negative linear relationship. 0 represents no linear relationship.
+We can also use the **linear correlation** to measure the strength of the linear relationship. The correlation varies between -1 to 1. 1 represent a strong positive (down-left to upright) linear relationship. -1 represents a strong negative linear relationship. 0 represents no linear relationship.
 
 **CS:** Let see the scatterplot of *Mileage* against *Liter*.
 ```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
@@ -334,7 +334,7 @@ The correlation is `r round(cor(x,y),4)`. The **Spearman's rank correlation** is
 [In-class: exercise 4](https://samorso.github.io/RM2017/Inclass.html#ex4)
 
 ### Application to regression: discrete predictors
-If predictors are discrete (factors, few values, ...), scatterplot and 5-number-summary are not suitables. It may be more convenient to use **barplot** and **table**.
+If predictors are discrete (factors, few values, ...), scatterplot and 5-number-summary are not suitable. It may be more convenient to use **barplot** and **table**.
 
 **CS:** Let's look at the predictor Cylinder
 ```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
@@ -367,7 +367,7 @@ The goal of **confidence intervals** is to quantify the uncertainty around the *
 
 In Example 2, we say that there is 95% probability that this interval contains the population mean (and not the converse). It is important to note that there is still 5% chance that this interval does not contain the population mean.
 
-More generally, a 1-$\alpha$% confidence interval for a sample mean is given by the general forumla $$ \Big[\bar{x} - z_{1-\alpha/2}\sqrt{\frac{\sigma^2}{n}};\;\bar{x} + z_{1-\alpha/2}\sqrt{\frac{\sigma^2}{n}}\Big], $$ where $z_\alpha$ is the $\alpha$-quantile of a standard Normal distribution (recall your probability classes). The user chooses the level $\alpha$. Generally the default value is $\alpha=0.05$, but it may vary depending the context. This formula assumes that the variance $\sigma^2$ is a known value. In most cases the **variance is unknown** and is estimated, which leads to the following modification $$ \Big[\bar{x} - t_{n-1;\;1-\alpha/2}\sqrt{\frac{\hat{\sigma}^2}{n}};\;\bar{x} + z_{n-1;\;1-\alpha/2}\sqrt{\frac{\hat{\sigma}^2}{n}}\Big], $$ where $t_{\text{df};\;\alpha}$ is the $\alpha$-quantile of the student distribution with $\text{df}$ degrees of freedom ($n$ is the sample size).
+More generally, a 1-$\alpha$% confidence interval for a sample mean is given by the general formula $$ \Big[\bar{x} - z_{1-\alpha/2}\sqrt{\frac{\sigma^2}{n}};\;\bar{x} + z_{1-\alpha/2}\sqrt{\frac{\sigma^2}{n}}\Big], $$ where $z_\alpha$ is the $\alpha$-quantile of a standard Normal distribution (recall your probability classes). The user chooses the level $\alpha$. Generally the default value is $\alpha=0.05$, but it may vary depending the context. This formula assumes that the variance $\sigma^2$ is a known value. In most cases the **variance is unknown** and is estimated, which leads to the following modification $$ \Big[\bar{x} - t_{n-1;\;1-\alpha/2}\sqrt{\frac{\hat{\sigma}^2}{n}};\;\bar{x} + z_{n-1;\;1-\alpha/2}\sqrt{\frac{\hat{\sigma}^2}{n}}\Big], $$ where $t_{\text{df};\;\alpha}$ is the $\alpha$-quantile of the student distribution with $\text{df}$ degrees of freedom ($n$ is the sample size).
 
 #### Application to regression: confidence interval on a coefficient
 Regression coefficients can be treated as average, we can use the same formulas. The only difference is that the degrees of freedom is not $n-1$, but $n-p$ where $p$ is the number of regressors.
@@ -419,7 +419,7 @@ The $p$-value is a number obtained on the data. It determines the decision. The 
 * If the $p$-value is smaller than the significance level $\alpha$, we reject $H_0$. It means that we gathered enough evidence against $H_0$ and accept $H_1$. We call the test **significant**.   
 * If the $p$-value is greater than $\alpha$, the test is **unsignificant**, no conclusion can be reached based on the sample at hand.   
 
-More specifically, the $p$-value is the probability under $H_0$ of observing a **test statistic** more in favour of $H_1$ than the test statistic indeed observed. Generally $T$ denotes the test statistic (a random variable), and $t_\text{obs}$ the observed statistic on the sample. 
+More specifically, the $p$-value is the probability under $H_0$ of observing a **test statistic** more in favor of $H_1$ than the test statistic indeed observed. Generally $T$ denotes the test statistic (a random variable), and $t_\text{obs}$ the observed statistic on the sample. 
 
 Instead of comparing the $p$-value with the significance level, it is equivalent to compare $t_{\text{obs}}$ with a quantile of the distribution of $T$ depending on $\alpha$, denoted $T(\alpha)$. This quantile $T(\alpha)$ determines a **rejecting region**, which leads to the following **decision rule** (totally equivalent to the previous one):   
 * If $t_{\text{obs}}$ is included in the rejecting region, we reject $H_0$. It means that we gathered enough evidence against $H_0$ and accept $H_1$. We call the test **significant**.   
@@ -667,11 +667,11 @@ and the rejection region from the quantile:
 ```{r}
 qt(0.975, df=655.3507)
 ```
-A more straighforward solution is to use directly the `t.test(.)` function in `R`:
+A more straightforward solution is to use directly the `t.test(.)` function in `R`:
 ```{r}
 t.test(x = data$Price[data$Cylinder==4], y = data$Price[data$Cylinder==6], mu = 0, alternative = "two.sided")
 ```
-It was not obvious from the boxplot that there is a mean difference of price between four and six cylinders. From this hypothesis testing and sample, we can reject $H_0$ at a level of $\alpha=0.1$ in favour of $H_1$, the test is significant.
+It was not obvious from the boxplot that there is a mean difference of price between four and six cylinders. From this hypothesis testing and sample, we can reject $H_0$ at a level of $\alpha=0.1$ in favor of $H_1$, the test is significant.
 
 Similarly a Wilcoxon signed-rank test can be perform if outliers are suspected in the data
 ```{r}
@@ -708,7 +708,7 @@ t.test(extra ~ group, mu = 0, alternative = "less", paired = TRUE, data = sleep)
 [Homework: exercise 4](https://samorso.github.io/RM2017/hmw.html#ex4)  
 
 ### ANOVA
-The ANalysis Of VAriance (ANOVA) regroups many tests and models in statistics. In this class I only discuss the **one-way ANOVA** test. The one-way ANOVA test corresponds to the following situation: we have a sample separated into $k$ factors. We want to test whether under the null-hypothesis the sample is drawn from one population, in which case each sub-samples are assumed to have the same mean, against the alternatives that the sub-samples are drawn from more than one population. This test further assumes that each sub-samples are normally distributed and homoskedastic (same variances) under $H_0$. 
+The ANalysis Of VAriance (ANOVA) regroups many tests and models in statistics. In this class I only discuss the **one-way ANOVA** test. The one-way ANOVA test corresponds to the following situation: we have a sample separated into $k$ factors. We want to test whether under the null-hypothesis the sample is drawn from one population, in which case each sub-samples are assumed to have the same mean, against the alternatives that the sub-samples are drawn from more than one population. This test further assumes that each sub-samples are normally distributed and homeostatic (same variances) under $H_0$. 
 
  Interest          |  Value                                                  
 ------------------ | -------------------------------------------------
@@ -782,7 +782,7 @@ $p$-value                      | $<2\times10^{-16}$ $(=1-F_{4;\;799}(88.51))$
 
 What is the conclusion?
 
-If you suspect the presence of outliers (from the graph for example), there is a test that is more robust to outliers, the **Kruskal-Wallis** test. Additionnaly, it does not assume normality of the subgroups (but it is less powerfull). You can use this test by running the `R` code:
+If you suspect the presence of outliers (from the graph for example), there is a test that is more robust to outliers, the **Kruskal-Wallis** test. Additionally, it does not assume normality of the subgroups (but it is less powerful). You can use this test by running the `R` code:
 ```{r}
 kruskal.test(Price ~ Type, data = data)
 ```
@@ -792,7 +792,7 @@ kruskal.test(Price ~ Type, data = data)
 If the one-way ANOVA is conclusive, it can be interesting to know more precisely for which pair we have a difference: we can make multiple pairwise comparison. But one should be careful with the significance level! If you accept a level of $\alpha$ for every single test, the global level you are accepting is not $\alpha$. 
 
 Suppose that you accept globally $\alpha = 5\%$, what should be the individual level of significance $\alpha_I$? You know that for one test the probability to be non-significant is $1-\alpha_I$. Now if you run $c$ pairs of tests, the probability that none of them are significant is $(1-\alpha_I)^c$ if you assume independence between the tests (just take their product). In this context, Sidak proposes that $\alpha$ corresponds to the probability that at least one of the test is significant under the null-hypothesis, i.e. $$ \mathbb{P}_{H_0}(\text{at least one test significant}) = \alpha.$$ Because this probability is 1 minus the probability that no tests are significant, the correction is obtained $$ \alpha = 1 - (1 - \alpha_I)^c \Rightarrow \alpha_I = 1 - (1 - \alpha)^{1/c}. $$
-This is the **Dunn-Sidak correction**. It should be mentionned (once again) that $\alpha$ controls the error rate only when all the null-hypothesis are true, i.e. it controls the type I error.
+This is the **Dunn-Sidak correction**. It should be mentioned (once again) that $\alpha$ controls the error rate only when all the null-hypothesis are true, i.e. it controls the type I error.
 
 For example if I want to compare $8$ pairs with an $\alpha=5\%$, then the individual level of significance using the Dunn-Sidak correction is $\alpha_I = `r round(1 - .95^(1/8),4)`$ (much smaller)! It means that by comparing each $p$-values with a level of $\alpha_I$, we globally accept a level of $\alpha$.
 
@@ -820,7 +820,7 @@ we see that outliers have an influence on the average (`mean` $\gg$ `median`) ma
 ### Some practical recommendations
 * **How should I orientate the test?** Orienting a test gives you a more precise answer but it should be decided before looking at the data.  
 * **What should be my significance level $\alpha$?** If no precision is given, a default value for this class is $5\%$. Never change $\alpha$ after performing a test (although tempting).   
-* **Robust or not robust?** First, always check the data with descriptive techniques such as graph to have an intuition. If it is evident there are outliers, perform a robust test (or the converse). If it is not clear, run both robust and non-robust test. The non-robust test is generally more powerfull but at the price of being more sensitive.  
+* **Robust or not robust?** First, always check the data with descriptive techniques such as graph to have an intuition. If it is evident there are outliers, perform a robust test (or the converse). If it is not clear, run both robust and non-robust test. The non-robust test is generally more powerful but at the price of being more sensitive.  
 * **Can I trust the results?** Statistical test is a useful tool, but is should be used with caution. They are based on assumptions (we discussed some) that are not always met. A descriptive analysis should help you appreciate these assumptions, and therefore the validity of the test.  
 
 # Multivariate Regression model
