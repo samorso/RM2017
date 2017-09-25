@@ -49,5 +49,8 @@ Your project is spread into two parts:
 
 
 ## Questions for multivariate statistics part
+(coming soon)
 
 ## Questions for management science part
+(coming soon)
+
