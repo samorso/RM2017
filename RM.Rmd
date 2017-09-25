@@ -821,7 +821,7 @@ we see that outliers have an influence on the average (`mean` $\gg$ `median`) ma
 * **How should I orientate the test?** Orienting a test gives you a more precise answer but it should be decided before looking at the data.  
 * **What should be my significance level $\alpha$?** If no precision is given, a default value for this class is $5\%$. Never change $\alpha$ after performing a test (although tempting).   
 * **Robust or not robust?** First, always check the data with descriptive techniques such as graph to have an intuition. If it is evident there are outliers, perform a robust test (or the converse). If it is not clear, run both robust and non-robust test. The non-robust test is generally more powerful but at the price of being more sensitive.  
-* **Can I trust the results?** Statistical test is a useful tool, but is should be used with caution. They are based on assumptions (we discussed some) that are not always met. A descriptive analysis should help you appreciate these assumptions, and therefore the validity of the test.  
+* **Can I trust the results?** Statistical test is a useful tool, but it should be used with caution. They are based on assumptions (we discussed some) that are not always met. A descriptive analysis should help you appreciate these assumptions, and therefore the validity of the test.  
 
 # Multivariate Regression model
 (coming soon)  
