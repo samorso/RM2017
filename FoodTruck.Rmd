@@ -40,12 +40,12 @@ Your project is spread into two parts:
 1. First Part: Training part   
 
     + Group: You build a group of 2 person for the first part of this work. You are requested to announce your group members, your class (English or French) and your respective email addresses by latest the 06.10.2017 and send an email to sacha.varone@hesge.ch   
-    + Work: You all access the same training dataset through [Cyberlearn](https://cyberlearn.hes-so.ch/course/view.php?id=8943). With your colleague, you work on the data and try to answer the questions written in the project presentation.  No report is requested for this first part.     
+    + Work: You all access the same training dataset through [Cyberlearn](https://cyberlearn.hes-so.ch/course/view.php?id=8943). With your colleague, you work on the data and try to answer the questions written in the project presentation. No report is requested for this first part.     
     
 2. Second Part: Report and Evaluation part    
 
     + Group: On the 15th of November, we constitute groups of 4 students, by mixing random groups of your class. 
-    + Work: You receive a new set of data. These data are specific for your Group and differs from other Groups. With this new set of data you answer the questions written in the project presentation. You write a report of maximum 4 pages (meaning 2 sheets recto-verso) per course (statistics, management science). The deadline to submit your report is December 15th.  In case of late submission, a penalty of -0.2/day will be automatically applied. If no report is submitted, the group will receive the grade 0. 
+    + Work: You receive a new set of data. These data are specific for your Group and differs from other Groups. With this new set of data you answer the questions written in the project presentation. You write a report of maximum 4 pages (meaning 2 sheets recto-verso) per course (statistics, management science). The deadline to submit your report is December 15th. In case of late submission, a penalty of -0.2/day will be automatically applied. If no report is submitted, the group will receive the grade 0. 
 
 
 ## Questions for multivariate statistics part
