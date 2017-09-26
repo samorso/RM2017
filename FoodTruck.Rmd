@@ -75,7 +75,7 @@ Here are information about the menu, price in CHF, volume in cm3, weight in kg, 
 d_f <- data.frame(
   Menu = c("Earth","Surprise","BlueLake"),
   Price = c(8,10,15),
-  Volume = c(5e-4,8e-4,1.2e-4),
+  Volume = c(5e-4,8e-4,1.2e-3),
   Weight = c(.4,.6,.5)
 )
 d_f
