@@ -19,6 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 _Goodfood_ sells three different menus: _Earth_, _Surprise_ and _BlueLake_. It uses four different types of ingredients to produce the menus: _Pasta_, _Rice_, _Vegetable_ and _Fish_. A key component for a succesful business is to have an appropriate stock management. In ordre to know the quantities for each type of menu that have to be prepared each week, historical data from a similar food truck is provided [here](https://cyberlearn.hes-so.ch/mod/resource/view.php?id=8943). The futur number of menus sold at HealthyFood is suppose to be similar.  
 
 The historical data of Goodfood comprises twelve variables:    
+
 * *day*: The dates in the format 'yyyy-mm-dd'.   
 * *week_day*: The day of the week.   
 * *max_temp*: The daily maximal temperature in degrees Celsius.   
