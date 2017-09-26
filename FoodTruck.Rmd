@@ -32,6 +32,65 @@ The historical data of Goodfood comprises twelve variables:
 * *Earth*: The amount of _Earth_ menu sold.   
 * *BlueLake*: The amount of _BlueLake_ menu sold.   
 
+## Questions for multivariate statistics part
+1. Make an exploratory analysis of the dataset, in particular answer the questions: 
+
+    + What are the predictors, what are the response variables? What is their nature (factors, numeric, ordinal, ...)?   
+    + Do you think there are problems of outliers, multicollinearity, non-linearity?   
+    
+2. Perform a one-way ANOVA test of `BlueLake` per `week_day`. Give all the necessary details (testing hypothesis, conclusion). Perform a multiple pairwise comparison. Repeat for the two other menus.   
+
+3. Based on previous points, what regression model would you like to fit to explain the quantities of menus sold? Would you transform variables? Make a robust regression? Other? Write down the regression models you intend to fit.    
+
+4. Based on your answer at point 3, fit three regression models, one per menu. Write down the estimated regression equations.   
+
+5. Analyse the residuals of your regressions. Are the assumptions met? Would make any modifications to the proposed model at point 3?    
+
+
+## Questions for management science part
+In order to get a general understanding of the dataset, answer the following questions:    
+
+1. How many menus are sold per product and per week?    
+2. Can you plan a daily schedule of sold menus?   
+
+In order to satisfy the customers at the best price, Goodfood decides to have a service level agreement (SLA) at 0.9 for each of its products. This means that at least 90\% of the customers should be able to get what they like.   
+
+3. Compute the quantity of each menu that satisfies the SLA, per day.    
+
+The business model supposes a weekly trend all along the year in a first approach. Therefore, the stock management policy can be considered as non dynamic (i.e., the same stock management policy is applied each week).   
+
+Goodfood has the following menu recipe requirements: Surprise requires at least 40\% Vegetable, at least 30\% Rice; Earth requires at least 60\% Pasta and no more than 10\% Fish; BlueLake requires no more than 60\% Fish but at least 30\% Pasta. 
+
+The Food Truck contains a 2 m3 fridge (the shape of the menu or fridge is ignored as a first estimation). Goodfood wants to respect the SLA. The costs of the ingredients in kg are the following:
+```{r,echo=F}
+d_f <- data.frame(
+  Ingredients = c("Pasta","Rice","Vegetable","Fish"),
+  Cost = c(2,2.75,8,15)
+)
+d_f
+```
+
+Here are information about the menu, price in CHF, volume in cm3, weight in kg, for 1 unit of menu.   
+```{r,echo=F}
+d_f <- data.frame(
+  Menu = c("Earth","Surprise","BlueLake"),
+  Price = c(8,10,15),
+  Volume = c(5e-4,8e-4,1.2e-4),
+  Weight = c(.4,.6,.5)
+)
+d_f
+```
+
+Goodfood wants to know the amount of each menu it should prepare each week to maximize its profit. 
+
+4. Formulate a linear programming model for this problem.   
+
+    + Express the variables.
+    + Express the objective function (in terms of revenue and cost).
+    + Express the constraints (recipe instructions, ressources limitations, product quantities).
+  
+5. Solve the problem.    
+6. What is your managerial analysis of this situation?
 
 ## Work process
 
@@ -39,18 +98,11 @@ Your project is spread into two parts:
 
 1. First Part: Training part   
 
-    + Group: You build a group of 2 person for the first part of this work. You are requested to announce your group members, your class (English or French) and your respective email addresses by latest the 06.10.2017 and send an email to sacha.varone@hesge.ch   
-    + Work: You all access the same training dataset through [Cyberlearn](https://cyberlearn.hes-so.ch/course/view.php?id=8943). With your colleague, you work on the data and try to answer the questions written in the project presentation. No report is requested for this first part.     
-    
+     + Group: You build a group of 2 person for the first part of this work. You are requested to announce your group members, your class (English or French) and your respective email addresses by latest the 06.10.2017 and send an email to sacha.varone@hesge.ch and Samuel.Orso@unige.ch    
+     + Work: You all access the same training dataset through [Cyberlearn](https://cyberlearn.hes-so.ch/course/view.php?id=8943). With your colleague, you work on the data and try to answer the questions written in the project presentation. No report is requested for this first part.            
+     
 2. Second Part: Report and Evaluation part    
 
-    + Group: On the 15th of November, we constitute groups of 4 students, by mixing random groups of your class. 
-    + Work: You receive a new set of data. These data are specific for your Group and differs from other Groups. With this new set of data you answer the questions written in the project presentation. You write a report of maximum 4 pages (meaning 2 sheets recto-verso) per course (statistics, management science). The deadline to submit your report is December 15th. In case of late submission, a penalty of -0.2/day will be automatically applied. If no report is submitted, the group will receive the grade 0. 
-
-
-## Questions for multivariate statistics part
-(coming soon)
-
-## Questions for management science part
-(coming soon)
+     + Group: On the 15th of November, we constitute groups of 4 students, by mixing random groups of your class.  
+     + Work: You receive a new set of data. These data are specific for your Group and differs from other Groups. With this new set of data you answer the questions written in the project presentation. You write a report of maximum 4 pages (meaning 2 sheets recto-verso) per course (statistics, management science). The deadline to submit your report is December 15th. In case of late submission, a penalty of -0.2/day will be automatically applied. If no report is submitted, the group will receive the grade 0.
 

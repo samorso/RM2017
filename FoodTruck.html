@@ -12,7 +12,7 @@
 
 <meta name="author" content="Samuel Orso, Sacha Varone" />
 
-<meta name="date" content="2017-09-25" />
+<meta name="date" content="2017-09-26" />
 
 <title>HealthyFood</title>
 
@@ -35,7 +35,7 @@
 <h1 class="title toc-ignore">HealthyFood</h1>
 <h2 class="subtitle">a food truck problem</h2>
 <h3 class="author">Samuel Orso, Sacha Varone</h3>
-<h3 class="date">2017-09-25</h3>
+<h3 class="date">2017-09-26</h3>
 </div>
 </header>
 
@@ -43,9 +43,9 @@
 <div id="TOC" class="toc">
 <ul>
 <li><a href="#presentation">Presentation</a></li>
-<li><a href="#work-process">Work process</a></li>
 <li><a href="#questions-for-multivariate-statistics-part">Questions for multivariate statistics part</a></li>
 <li><a href="#questions-for-management-science-part">Questions for management science part</a></li>
+<li><a href="#work-process">Work process</a></li>
 </ul>
 </div>
 
@@ -69,30 +69,128 @@
 * <em>Earth</em>: The amount of <em>Earth</em> menu sold.<br />
 * <em>BlueLake</em>: The amount of <em>BlueLake</em> menu sold.</p>
 </div>
+<div id="questions-for-multivariate-statistics-part" class="section level2">
+<h2>Questions for multivariate statistics part</h2>
+<ol style="list-style-type: decimal">
+<li><p>Make an exploratory analysis of the dataset, in particular answer the questions:</p>
+<ul>
+<li>What are the predictors, what are the response variables? What is their nature (factors, numeric, ordinal, …)?<br />
+</li>
+<li>Do you think there are problems of outliers, multicollinearity, non-linearity?</li>
+</ul></li>
+<li><p>Perform a one-way ANOVA test of <code>BlueLake</code> per <code>week_day</code>. Give all the necessary details (testing hypothesis, conclusion). Perform a multiple pairwise comparison. Repeat for the two other menus.</p></li>
+<li><p>Based on previous points, what regression model would you like to fit to explain the quantities of menus sold? Would you transform variables? Make a robust regression? Other? Write down the regression models you intend to fit.</p></li>
+<li><p>Based on your answer at point 3, fit three regression models, one per menu. Write down the estimated regression equations.</p></li>
+<li><p>Analyse the residuals of your regressions. Are the assumptions met? Would make any modifications to the proposed model at point 3?</p></li>
+</ol>
+</div>
+<div id="questions-for-management-science-part" class="section level2">
+<h2>Questions for management science part</h2>
+<p>In order to get a general understanding of the dataset, answer the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>How many menus are sold per product and per week?<br />
+</li>
+<li>Can you plan a daily schedule of sold menus?</li>
+</ol>
+<p>In order to satisfy the customers at the best price, Goodfood decides to have a service level agreement (SLA) at 0.9 for each of its products. This means that at least 90% of the customers should be able to get what they like.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>Compute the quantity of each menu that satisfies the SLA, per day.</li>
+</ol>
+<p>The business model supposes a weekly trend all along the year in a first approach. Therefore, the stock management policy can be considered as non dynamic (i.e., the same stock management policy is applied each week).</p>
+<p>Goodfood has the following menu recipe requirements: Surprise requires at least 40% Vegetable, at least 30% Rice; Earth requires at least 60% Pasta and no more than 10% Fish; BlueLake requires no more than 60% Fish but at least 30% Pasta.</p>
+The Food Truck contains a 2 m3 fridge (the shape of the menu or fridge is ignored as a first estimation). Goodfood wants to respect the SLA. The costs of the ingredients in kg are the following:
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Ingredients</th>
+<th align="right">Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Pasta</td>
+<td align="right">2.00</td>
+</tr>
+<tr class="even">
+<td align="left">Rice</td>
+<td align="right">2.75</td>
+</tr>
+<tr class="odd">
+<td align="left">Vegetable</td>
+<td align="right">8.00</td>
+</tr>
+<tr class="even">
+<td align="left">Fish</td>
+<td align="right">15.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+Here are information about the menu, price in CHF, volume in cm3, weight in kg, for 1 unit of menu.<br />
+
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="left">Menu</th>
+<th align="right">Price</th>
+<th align="right">Volume</th>
+<th align="right">Weight</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Earth</td>
+<td align="right">8</td>
+<td align="right">0.00050</td>
+<td align="right">0.4</td>
+</tr>
+<tr class="even">
+<td align="left">Surprise</td>
+<td align="right">10</td>
+<td align="right">0.00080</td>
+<td align="right">0.6</td>
+</tr>
+<tr class="odd">
+<td align="left">BlueLake</td>
+<td align="right">15</td>
+<td align="right">0.00012</td>
+<td align="right">0.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Goodfood wants to know the amount of each menu it should prepare each week to maximize its profit.</p>
+<ol start="4" style="list-style-type: decimal">
+<li><p>Formulate a linear programming model for this problem.</p>
+<ul>
+<li>Express the variables.</li>
+<li>Express the objective function (in terms of revenue and cost).</li>
+<li>Express the constraints (recipe instructions, ressources limitations, product quantities).</li>
+</ul></li>
+<li>Solve the problem.<br />
+</li>
+<li><p>What is your managerial analysis of this situation?</p></li>
+</ol>
+</div>
 <div id="work-process" class="section level2">
 <h2>Work process</h2>
 <p>Your project is spread into two parts:</p>
 <ol style="list-style-type: decimal">
 <li><p>First Part: Training part</p>
 <ul>
-<li>Group: You build a group of 2 person for the first part of this work. You are requested to announce your group members, your class (English or French) and your respective email addresses by latest the 06.10.2017 and send an email to <a href="mailto:sacha.varone@hesge.ch">sacha.varone@hesge.ch</a><br />
+<li>Group: You build a group of 2 person for the first part of this work. You are requested to announce your group members, your class (English or French) and your respective email addresses by latest the 06.10.2017 and send an email to <a href="mailto:sacha.varone@hesge.ch">sacha.varone@hesge.ch</a> and <a href="mailto:Samuel.Orso@unige.ch">Samuel.Orso@unige.ch</a><br />
 </li>
-<li>Work: You all access the same training dataset through <a href="https://cyberlearn.hes-so.ch/course/view.php?id=8943">Cyberlearn</a>. With your colleague, you work on the data and try to answer the questions written in the project presentation. No report is requested for this first part.</li>
+<li>Work: You all access the same training dataset through <a href="https://cyberlearn.hes-so.ch/course/view.php?id=8943">Cyberlearn</a>. With your colleague, you work on the data and try to answer the questions written in the project presentation. No report is requested for this first part.</li>
 </ul></li>
 <li><p>Second Part: Report and Evaluation part</p>
 <ul>
-<li>Group: On the 15th of November, we constitute groups of 4 students, by mixing random groups of your class.</li>
-<li>Work: You receive a new set of data. These data are specific for your Group and differs from other Groups. With this new set of data you answer the questions written in the project presentation. You write a report of maximum 4 pages (meaning 2 sheets recto-verso) per course (statistics, management science). The deadline to submit your report is December 15th. In case of late submission, a penalty of -0.2/day will be automatically applied. If no report is submitted, the group will receive the grade 0.</li>
+<li>Group: On the 15th of November, we constitute groups of 4 students, by mixing random groups of your class.<br />
+</li>
+<li>Work: You receive a new set of data. These data are specific for your Group and differs from other Groups. With this new set of data you answer the questions written in the project presentation. You write a report of maximum 4 pages (meaning 2 sheets recto-verso) per course (statistics, management science). The deadline to submit your report is December 15th. In case of late submission, a penalty of -0.2/day will be automatically applied. If no report is submitted, the group will receive the grade 0.</li>
 </ul></li>
 </ol>
-</div>
-<div id="questions-for-multivariate-statistics-part" class="section level2">
-<h2>Questions for multivariate statistics part</h2>
-<p>(coming soon)</p>
-</div>
-<div id="questions-for-management-science-part" class="section level2">
-<h2>Questions for management science part</h2>
-<p>(coming soon)</p>
 </div>
     </section>
   </div>
