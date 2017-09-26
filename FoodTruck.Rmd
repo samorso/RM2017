@@ -46,52 +46,6 @@ The historical data of Goodfood comprises twelve variables:
 
 5. Analyse the residuals of your regressions. Are the assumptions met? Would make any modifications to the proposed model at point 3?    
 
-
-## Questions for management science part
-In order to get a general understanding of the dataset, answer the following questions:    
-
-1. How many menus are sold per product and per week?    
-2. Can you plan a daily schedule of sold menus?   
-
-In order to satisfy the customers at the best price, Goodfood decides to have a service level agreement (SLA) at 0.9 for each of its products. This means that at least 90\% of the customers should be able to get what they like.   
-
-3. Compute the quantity of each menu that satisfies the SLA, per day.    
-
-The business model supposes a weekly trend all along the year in a first approach. Therefore, the stock management policy can be considered as non dynamic (i.e., the same stock management policy is applied each week).   
-
-Goodfood has the following menu recipe requirements: Surprise requires at least 40\% Vegetable, at least 30\% Rice; Earth requires at least 60\% Pasta and no more than 10\% Fish; BlueLake requires no more than 60\% Fish but at least 30\% Pasta. 
-
-The Food Truck contains a 2 m3 fridge (the shape of the menu or fridge is ignored as a first estimation). Goodfood wants to respect the SLA. The costs of the ingredients in kg are the following:
-```{r,echo=F}
-d_f <- data.frame(
-  Ingredients = c("Pasta","Rice","Vegetable","Fish"),
-  Cost = c(2,2.75,8,15)
-)
-d_f
-```
-
-Here are information about the menu, price in CHF, volume in cm3, weight in kg, for 1 unit of menu.   
-```{r,echo=F}
-d_f <- data.frame(
-  Menu = c("Earth","Surprise","BlueLake"),
-  Price = c(8,10,15),
-  Volume = c(5e-4,8e-4,1.2e-3),
-  Weight = c(.4,.6,.5)
-)
-d_f
-```
-
-Goodfood wants to know the amount of each menu it should prepare each week to maximize its profit. 
-
-4. Formulate a linear programming model for this problem.   
-
-    + Express the variables.
-    + Express the objective function (in terms of revenue and cost).
-    + Express the constraints (recipe instructions, ressources limitations, product quantities).
-  
-5. Solve the problem.    
-6. What is your managerial analysis of this situation?
-
 ## Work process
 
 Your project is spread into two parts:   

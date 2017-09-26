@@ -44,7 +44,6 @@
 <ul>
 <li><a href="#presentation">Presentation</a></li>
 <li><a href="#questions-for-multivariate-statistics-part">Questions for multivariate statistics part</a></li>
-<li><a href="#questions-for-management-science-part">Questions for management science part</a></li>
 <li><a href="#work-process">Work process</a></li>
 </ul>
 </div>
@@ -82,96 +81,6 @@
 <li><p>Based on previous points, what regression model would you like to fit to explain the quantities of menus sold? Would you transform variables? Make a robust regression? Other? Write down the regression models you intend to fit.</p></li>
 <li><p>Based on your answer at point 3, fit three regression models, one per menu. Write down the estimated regression equations.</p></li>
 <li><p>Analyse the residuals of your regressions. Are the assumptions met? Would make any modifications to the proposed model at point 3?</p></li>
-</ol>
-</div>
-<div id="questions-for-management-science-part" class="section level2">
-<h2>Questions for management science part</h2>
-<p>In order to get a general understanding of the dataset, answer the following questions:</p>
-<ol style="list-style-type: decimal">
-<li>How many menus are sold per product and per week?<br />
-</li>
-<li>Can you plan a daily schedule of sold menus?</li>
-</ol>
-<p>In order to satisfy the customers at the best price, Goodfood decides to have a service level agreement (SLA) at 0.9 for each of its products. This means that at least 90% of the customers should be able to get what they like.</p>
-<ol start="3" style="list-style-type: decimal">
-<li>Compute the quantity of each menu that satisfies the SLA, per day.</li>
-</ol>
-<p>The business model supposes a weekly trend all along the year in a first approach. Therefore, the stock management policy can be considered as non dynamic (i.e., the same stock management policy is applied each week).</p>
-<p>Goodfood has the following menu recipe requirements: Surprise requires at least 40% Vegetable, at least 30% Rice; Earth requires at least 60% Pasta and no more than 10% Fish; BlueLake requires no more than 60% Fish but at least 30% Pasta.</p>
-The Food Truck contains a 2 m3 fridge (the shape of the menu or fridge is ignored as a first estimation). Goodfood wants to respect the SLA. The costs of the ingredients in kg are the following:
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th align="left">Ingredients</th>
-<th align="right">Cost</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Pasta</td>
-<td align="right">2.00</td>
-</tr>
-<tr class="even">
-<td align="left">Rice</td>
-<td align="right">2.75</td>
-</tr>
-<tr class="odd">
-<td align="left">Vegetable</td>
-<td align="right">8.00</td>
-</tr>
-<tr class="even">
-<td align="left">Fish</td>
-<td align="right">15.00</td>
-</tr>
-</tbody>
-</table>
-</div>
-Here are information about the menu, price in CHF, volume in cm3, weight in kg, for 1 unit of menu.<br />
-
-<div class="kable-table">
-<table>
-<thead>
-<tr class="header">
-<th align="left">Menu</th>
-<th align="right">Price</th>
-<th align="right">Volume</th>
-<th align="right">Weight</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">Earth</td>
-<td align="right">8</td>
-<td align="right">0.0005</td>
-<td align="right">0.4</td>
-</tr>
-<tr class="even">
-<td align="left">Surprise</td>
-<td align="right">10</td>
-<td align="right">0.0008</td>
-<td align="right">0.6</td>
-</tr>
-<tr class="odd">
-<td align="left">BlueLake</td>
-<td align="right">15</td>
-<td align="right">0.0012</td>
-<td align="right">0.5</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Goodfood wants to know the amount of each menu it should prepare each week to maximize its profit.</p>
-<ol start="4" style="list-style-type: decimal">
-<li><p>Formulate a linear programming model for this problem.</p>
-<ul>
-<li>Express the variables.</li>
-<li>Express the objective function (in terms of revenue and cost).</li>
-<li>Express the constraints (recipe instructions, ressources limitations, product quantities).</li>
-</ul></li>
-<li>Solve the problem.<br />
-</li>
-<li><p>What is your managerial analysis of this situation?</p></li>
 </ol>
 </div>
 <div id="work-process" class="section level2">
