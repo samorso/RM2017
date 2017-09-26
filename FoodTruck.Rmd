@@ -53,7 +53,7 @@ Your project is spread into two parts:
 
 1. First Part: Training part   
 
-     + Group: You build a group of 2 person for the first part of this work. You are requested to announce your group members, your class (English or French) and your respective email addresses by latest the 06.10.2017 and send an email to sacha.varone@hesge.ch and Samuel.Orso@unige.ch    
+     + Group: You build a group of 2 person for the first part of this work. You are requested to register your group members on [Cyberlearn](https://cyberlearn.hes-so.ch/mod/moodecgrpmanagement/view.php?id=731084) by latest the 06.10.2017 (module/Project reports/Groups composition)    
      + Work: You all access the same training dataset through [Cyberlearn](https://cyberlearn.hes-so.ch/course/view.php?id=8943). With your colleague, you work on the data and try to answer the questions written in the project presentation. No report is requested for this first part.            
      
 2. Second Part: Report and Evaluation part    
