@@ -17,8 +17,8 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Introduction: Multivariate regression
 <div id="ex1">
-**Exercise 1:** Will be revealed soon.
-```{r,cache=TRUE,eval=TRUE,echo=FALSE,message=FALSE,warnings=FALSE,results='hide',fig.align='center',fig.height=4,fig.width=6,fig.show='hide'}
+**Exercise 1:** 
+```{r,cache=TRUE,eval=TRUE,echo=TRUE,message=FALSE,warnings=FALSE,fig.align='center',fig.height=4,fig.width=6}
 # to load the data
 # data(women)
 
@@ -48,11 +48,11 @@ new_x <- convertX(unit(173,"cm"),"inches")
 predict(fit_lm,newdata = data.frame(height = as.numeric(new_x)))
 ```
 
-<!-- 4. The regression equation is $$ \text{weight}_i = \beta_0 + \beta_1 \text{height}_i + \varepsilon_i,\quad i = 1,\dots,15.$$ -->
+4. The regression equation is $$ \text{weight}_i = \beta_0 + \beta_1 \text{height}_i + \varepsilon_i,\quad i = 1,\dots,15.$$
 
-<!-- 6. The estimated regression equation is $$ \widehat{\text{weight}}_i = `r round(fit_lm$coefficients[1],2)` + `r round(fit_lm$coefficients[2],2)` \text{height}_i,\quad i = 1,\dots,15. $$ -->
+6. The estimated regression equation is $$ \widehat{\text{weight}}_i = `r round(fit_lm$coefficients[1],2)` + `r round(fit_lm$coefficients[2],2)`\; \text{height}_i,\quad i = 1,\dots,15. $$
 
-<!-- 7. We simply replace the new *Height* in the estimated regression equation to obtain the predicted weight $\widehat{\text{weight}}^{\text{new}}$. The new *Height* needs to be changed to the right unit (from meters to inches). 173 cm is about `r round(as.numeric(new_x),2)` inches (see `R` code). We thus have $$ \widehat{\text{weight}}^{\text{new}} =  `r round(fit_lm$coefficients[1],2)` + `r round(fit_lm$coefficients[2],2)` \text{height}^{\text{new}} \approx `r round(round(fit_lm$coefficients[1],2) + round(fit_lm$coefficients[2],2) * round(as.numeric(new_x),2),2)`. $$ -->
+7. We simply replace the new *Height* in the estimated regression equation to obtain the predicted weight $\widehat{\text{weight}}^{\text{new}}$. The new *Height* needs to be changed to the right unit (from meters to inches). 173 cm is about `r round(as.numeric(new_x),2)` inches (see `R` code). We thus have $$ \widehat{\text{weight}}^{\text{new}} =  `r round(fit_lm$coefficients[1],2)` + `r round(fit_lm$coefficients[2],2)`\; \text{height}^{\text{new}} \approx `r round(round(fit_lm$coefficients[1],2) + round(fit_lm$coefficients[2],2) * round(as.numeric(new_x),2),2)`. $$
 </div>
 
 # Descriptive analysis

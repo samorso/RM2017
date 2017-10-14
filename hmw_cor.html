@@ -12,12 +12,50 @@
 
 <meta name="author" content="Samuel Orso" />
 
-<meta name="date" content="2017-09-18" />
+<meta name="date" content="2017-10-14" />
 
 <title>Multivariate statistics</title>
 
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 
 
@@ -35,7 +73,7 @@
 <h1 class="title toc-ignore">Multivariate statistics</h1>
 <h2 class="subtitle">Homeworks - correction</h2>
 <h3 class="author">Samuel Orso</h3>
-<h3 class="date">2017-09-18</h3>
+<h3 class="date">2017-10-14</h3>
 </div>
 </header>
 
@@ -56,10 +94,58 @@
 <div id="introduction-multivariate-regression" class="section level1">
 <h1>Introduction: Multivariate regression</h1>
 <div id="ex1">
-<p><strong>Exercise 1:</strong> Will be revealed soon.</p>
-<!-- 4. The regression equation is $$ \text{weight}_i = \beta_0 + \beta_1 \text{height}_i + \varepsilon_i,\quad i = 1,\dots,15.$$ -->
-<!-- 6. The estimated regression equation is $$ \widehat{\text{weight}}_i = -87.52 + 3.45 \text{height}_i,\quad i = 1,\dots,15. $$ -->
-<!-- 7. We simply replace the new *Height* in the estimated regression equation to obtain the predicted weight $\widehat{\text{weight}}^{\text{new}}$. The new *Height* needs to be changed to the right unit (from meters to inches). 173 cm is about 68.11 inches (see `R` code). We thus have $$ \widehat{\text{weight}}^{\text{new}} =  -87.52 + 3.45 \text{height}^{\text{new}} \approx 147.46. $$ -->
+<p><strong>Exercise 1:</strong></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># to load the data</span>
+<span class="co"># data(women)</span>
+
+<span class="co"># see the dataset</span>
+<span class="co"># women</span>
+
+<span class="co"># read explanations about the dataset</span>
+<span class="co"># ?women</span>
+
+<span class="co"># 3. Plot</span>
+<span class="kw">require</span>(ggplot2)
+<span class="kw">ggplot</span>(women, <span class="kw">aes</span>(<span class="dt">x =</span> height, <span class="dt">y =</span> weight)) +<span class="st"> </span>
+<span class="st">  </span><span class="kw">geom_point</span>()</code></pre></div>
+<p><img src="data:image/png;base64,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" style="display: block; margin: auto;" /></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 5. Fit the regression</span>
+fit_lm &lt;-<span class="st"> </span><span class="kw">lm</span>(weight ~<span class="st"> </span>height, <span class="dt">data =</span> women)
+
+<span class="co"># 6. Summary</span>
+<span class="kw">summary</span>(fit_lm)</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = weight ~ height, data = women)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -1.7333 -1.1333 -0.3833  0.7417  3.1167 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) -87.51667    5.93694  -14.74 1.71e-09 ***
+## height        3.45000    0.09114   37.85 1.09e-14 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.525 on 13 degrees of freedom
+## Multiple R-squared:  0.991,  Adjusted R-squared:  0.9903 
+## F-statistic:  1433 on 1 and 13 DF,  p-value: 1.091e-14</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 7. Change of unit using grid package (install it befor)</span>
+<span class="co"># install.package(&quot;grid&quot;)</span>
+<span class="kw">require</span>(grid)
+new_x &lt;-<span class="st"> </span><span class="kw">convertX</span>(<span class="kw">unit</span>(<span class="dv">173</span>,<span class="st">&quot;cm&quot;</span>),<span class="st">&quot;inches&quot;</span>)
+
+<span class="co"># predict using R code, by hand is ok</span>
+<span class="kw">predict</span>(fit_lm,<span class="dt">newdata =</span> <span class="kw">data.frame</span>(<span class="dt">height =</span> <span class="kw">as.numeric</span>(new_x)))</code></pre></div>
+<pre><code>##        1 
+## 147.4636</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li><p>The regression equation is <span class="math display">\[ \text{weight}_i = \beta_0 + \beta_1 \text{height}_i + \varepsilon_i,\quad i = 1,\dots,15.\]</span></p></li>
+<li><p>The estimated regression equation is <span class="math display">\[ \widehat{\text{weight}}_i = -87.52 + 3.45\; \text{height}_i,\quad i = 1,\dots,15. \]</span></p></li>
+<li>We simply replace the new <em>Height</em> in the estimated regression equation to obtain the predicted weight <span class="math inline">\(\widehat{\text{weight}}^{\text{new}}\)</span>. The new <em>Height</em> needs to be changed to the right unit (from meters to inches). 173 cm is about 68.11 inches (see <code>R</code> code). We thus have <span class="math display">\[ \widehat{\text{weight}}^{\text{new}} =  -87.52 + 3.45\; \text{height}^{\text{new}} \approx 147.46. \]</span></li>
+</ol>
 </div>
 </div>
 <div id="descriptive-analysis" class="section level1">
