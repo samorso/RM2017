@@ -103,8 +103,8 @@ or equivalently you can write $$\hat{y}_i = `r round(fit_lm$coefficients[1],2)` 
 
 # Inference
 <div id="ex3">
-**Exercise 3:** Will be revealed soon.
-```{r,cache=TRUE,eval=TRUE,echo=FALSE,message=FALSE,warnings=FALSE,results='hide'}
+**Exercise 3:** 
+```{r,cache=F,eval=TRUE,echo=T,message=FALSE,warnings=FALSE}
 # set the workind directoy (for me)
 setwd("~/Documents/Teaching/RM/")
 
@@ -125,15 +125,15 @@ qt(.975, df = 43)
 qt(.95, df = 43)
 ```
 
-<!-- 2. We have $\bar{x} = `r (mu <- round(mean(hospital$Days),4))`$ and the quantile $z_{0.975} = `r (z_a <- round(qnorm(.975),4))`$. The 95\% confidence interval is therefore $$ \text{CI}(\bar{x},95\%) = [`r mu` - `r z_a`/\sqrt{44};\; `r mu` + `r z_a`/\sqrt{44}] = [`r round(mu-z_a/sqrt(44),4)`;\;`r round(mu+z_a/sqrt(44),4)`] $$   -->
-<!-- 3. The standard deviation is estimated at $\hat{\sigma}\approx `r (sig <- round(sd(hospital$Days),4))`$ and the quantile $t_{43;\;0.975} = `r (t_a <- round(qt(.975,df=43),4))`$. The 95\% confidence interval is therefore $$ \text{CI}(\bar{x},95\%) = [`r mu` - `r t_a`\;`r sig`/\sqrt{44};\; `r mu` + `r t_a`\;`r sig` /\sqrt{44}] = [`r round(mu-t_a*sig/sqrt(44),4)`;\;`r round(mu+t_a*sig/sqrt(44),4)`] $$   -->
-<!-- 4. Clearly if the confidence level decreases, there is a lower probability that the confidence interval will contain the true value, it translates into a shorter interval. The quantiles are modifies as follows $z_{0.95} = `r (z_a <- round(qnorm(.95),4))`$ and $t_{43;\;0.95} = `r (t_a <- round(qt(.95,df=43),4))`$. The new confidence intervals are $$ \text{CI}(\bar{x},90\%) = [`r mu` - `r z_a`/\sqrt{44};\; `r mu` + `r z_a`/\sqrt{44}] = [`r round(mu-z_a/sqrt(44),4)`;\;`r round(mu+z_a/sqrt(44),4)`] $$ and  $$ \text{CI}(\bar{x},90\%) = [`r mu` - `r t_a`\;`r sig`/\sqrt{44};\; `r mu` + `r t_a`\;`r sig` /\sqrt{44}] = [`r round(mu-t_a*sig/sqrt(44),4)`;\;`r round(mu+t_a*sig/sqrt(44),4)`] $$   -->
+2. We have $\bar{x} = `r (mu <- round(mean(hospital$Days),4))`$ and the quantile $z_{0.975} = `r (z_a <- round(qnorm(.975),4))`$. The 95\% confidence interval is therefore $$ \text{CI}(\bar{x},95\%) = [`r mu` - `r z_a`/\sqrt{44};\; `r mu` + `r z_a`/\sqrt{44}] = [`r round(mu-z_a/sqrt(44),4)`;\;`r round(mu+z_a/sqrt(44),4)`] $$
+3. The standard deviation is estimated at $\hat{\sigma}\approx `r (sig <- round(sd(hospital$Days),4))`$ and the quantile $t_{43;\;0.975} = `r (t_a <- round(qt(.975,df=43),4))`$. The 95\% confidence interval is therefore $$ \text{CI}(\bar{x},95\%) = [`r mu` - `r t_a`\;`r sig`/\sqrt{44};\; `r mu` + `r t_a`\;`r sig` /\sqrt{44}] = [`r round(mu-t_a*sig/sqrt(44),4)`;\;`r round(mu+t_a*sig/sqrt(44),4)`] $$
+4. Clearly if the confidence level decreases, there is a lower probability that the confidence interval will contain the true value, it translates into a shorter interval. The quantiles are modifies as follows $z_{0.95} = `r (z_a <- round(qnorm(.95),4))`$ and $t_{43;\;0.95} = `r (t_a <- round(qt(.95,df=43),4))`$. The new confidence intervals are $$ \text{CI}(\bar{x},90\%) = [`r mu` - `r z_a`/\sqrt{44};\; `r mu` + `r z_a`/\sqrt{44}] = [`r round(mu-z_a/sqrt(44),4)`;\;`r round(mu+z_a/sqrt(44),4)`] $$ and  $$ \text{CI}(\bar{x},90\%) = [`r mu` - `r t_a`\;`r sig`/\sqrt{44};\; `r mu` + `r t_a`\;`r sig` /\sqrt{44}] = [`r round(mu-t_a*sig/sqrt(44),4)`;\;`r round(mu+t_a*sig/sqrt(44),4)`] $$
 
 </div>
 
 <div id="ex4">
-**Exercise 4:** Will be revealed soon.
-```{r,cache=TRUE,eval=TRUE,echo=FALSE,message=FALSE,warnings=FALSE,results='hide',fig.align='center',fig.height=4,fig.width=6,fig.show='hide'}
+**Exercise 4:**
+```{r,cache=TRUE,eval=TRUE,echo=T,message=FALSE,warnings=FALSE,fig.align='center',fig.height=4,fig.width=6}
 # 1.
 # set the workind directoy (for me)
 setwd("~/Documents/Teaching/RM/")
@@ -164,15 +164,15 @@ t.test(Time ~ When, mu = 0, alternative = "less", data = wt)
 wilcox.test(Time ~ When, mu = 0, alternative = "less", data = wt)
 ```
 
-<!-- 2. It is not clear from the description that we have the exact same clients before/after the change of process. Somehow, it would make more sense to have different clients. Additionnaly,from the descriptive analysis, we can see that the number of clients is inequal. A $t$-test for two different means seems more adequate. Since we are expecting a decrease in waiting time after the change, we should orientate the alternative hypothesis. We make the following hypothesis: $$ H_0:\mu_{\text{Before}} = \mu_{\text{After}} $$ agains $$ H_1: \mu_{\text{Before}} > \mu_{\text{After}} $$ Since there are no indications, we take a default significance level of $\alpha=5\%$.    -->
-<!-- 3. Based on the sample and a level of $\alpha=5\%$, we reject $H_0$. We conclude the waiting time decreased significantly after the change of process.     -->
-<!-- 4. As already mentionned, the number of unit is different between after/before, so a paired $t$-test is not possible.     -->
-<!-- 5. On the boxplot we can see two potential outliers that may influence the mean of the groupe before. This influence may bias the $p$-value towards rejecting the null. The $t$-test and Wilcoxon test do not contradict each, both reject $H_0$ at level of significance of 5\%.  -->
+2. It is not clear from the description that we have the exact same clients before/after the change of process. Somehow, it would make more sense to have different clients. Additionnaly,from the descriptive analysis, we can see that the number of clients is inequal. A $t$-test for two different means seems more adequate. Since we are expecting a decrease in waiting time after the change, we should orientate the alternative hypothesis. We make the following hypothesis: $$ H_0:\mu_{\text{Before}} = \mu_{\text{After}} $$ agains $$ H_1: \mu_{\text{Before}} > \mu_{\text{After}} $$ Since there are no indications, we take a default significance level of $\alpha=5\%$.
+3. Based on the sample and a level of $\alpha=5\%$, we reject $H_0$. We conclude the waiting time decreased significantly after the change of process.
+4. As already mentionned, the number of unit is different between after/before, so a paired $t$-test is not possible.
+5. On the boxplot we can see two potential outliers that may influence the mean of the groupe before. This influence may bias the $p$-value towards rejecting the null. The $t$-test and Wilcoxon test do not contradict each, both reject $H_0$ at level of significance of 5\%.
 </div>
 
 <div id="ex5">
-**Exercise 5:** Will be revealed soon.
-```{r,cache=TRUE,eval=TRUE,echo=FALSE,message=FALSE,warnings=FALSE,results='hide',fig.align='center',fig.height=4,fig.width=6,fig.show='hide'}
+**Exercise 5:**
+```{r,cache=TRUE,eval=TRUE,echo=T,message=FALSE,warnings=FALSE,fig.align='center',fig.height=4,fig.width=6}
 # 1.
 # set the workind directoy (for me)
 setwd("~/Documents/Teaching/RM/")
@@ -212,24 +212,24 @@ pairwise.wilcox.test(media$Impact, media$Media, alternative = "greater", p.adjus
 ```
 
 
-<!-- 2. There is a clear distinction between `Media` on `Impact`, we have the following order: `Website` > `Television` > `Radio` > `Newspaper`. The distinction between the two last is less evident as `Radio` is more disperse. This order will be uses for pairwise comparisons to answer the question of research. There are no reasons to believe outliers are present in this dataset.    -->
-<!-- 3. We have $H_0 :$ all averages are equals agains $H_1:$ at least one difference. We work with a level of significance of $\alpha=0.05$. First we compute the total sum of squares. Then, the treatment sum of squares, from which we can deduce the residual some of squares. Here we can do it by hand, since the dataset is of reasonable size, or by using `R` (see the code). We obtain -->
+2. There is a clear distinction between `Media` on `Impact`, we have the following order: `Website` > `Television` > `Radio` > `Newspaper`. The distinction between the two last is less evident as `Radio` is more disperse. This order will be uses for pairwise comparisons to answer the question of research. There are no reasons to believe outliers are present in this dataset.
+3. We have $H_0 :$ all averages are equals agains $H_1:$ at least one difference. We work with a level of significance of $\alpha=0.05$. First we compute the total sum of squares. Then, the treatment sum of squares, from which we can deduce the residual some of squares. Here we can do it by hand, since the dataset is of reasonable size, or by using `R` (see the code). We obtain
 
-<!-- Quantity                       | Value -->
-<!-- ------------------------------ | -------------- -->
-<!-- $\text{df}_1$                  | $3$   -->
-<!-- $\text{df}_2$                  | $36$   -->
-<!-- $\text{SS}_{\text{Treatment}}$ | `r ss_treat`     -->
-<!-- $\text{SS}_{\text{Residuals}}$ | `r ss_res`   -->
-<!-- $\text{MS}_{\text{Treatment}}$ | `r (ms_treat <- round(ss_treat/3,4))` -->
-<!-- $\text{MS}_{\text{Residuals}}$ | `r (ms_res <- round(ss_res/36,4))` -->
-<!-- $t_{\text{obs}}$               | `r (tobs <- round(ms_treat / ms_res,4))`  -->
-<!-- $p$-value                      | `r round(1 - pf(tobs,df1=3,df2=36),4)` -->
+Quantity                       | Value
+------------------------------ | --------------
+$\text{df}_1$                  | $3$
+$\text{df}_2$                  | $36$
+$\text{SS}_{\text{Treatment}}$ | `r ss_treat`
+$\text{SS}_{\text{Residuals}}$ | `r ss_res`
+$\text{MS}_{\text{Treatment}}$ | `r (ms_treat <- round(ss_treat/3,4))`
+$\text{MS}_{\text{Residuals}}$ | `r (ms_res <- round(ss_res/36,4))`
+$t_{\text{obs}}$               | `r (tobs <- round(ms_treat / ms_res,4))`
+$p$-value                      | `r round(1 - pf(tobs,df1=3,df2=36),4)`
 
-<!-- We can clearly reject $H_0$ based on this sample and a level of significance of $\alpha=5\%$.     -->
-<!-- 4. Same results up to rounding errors.    -->
-<!-- 5. The Dunn-Sidak correction is obtained by $$ \alpha_I = 1 - 0.95^{1/6} \approx `r round(1 - 0.95^(1/6),4)`  $$ since there are six different pairs. We cannot conclude on the difference between `Radio` and `Newspaper`, and `Radio` and `Television`, all the other differences are significant with the Dunn-Sidak correction based on this sample. In particular, we can conclude that the `Website` is has the best Impact.   -->
-<!-- 6. Since there is no reason to fear influenced from outliers, it seems unnecessary to perform Kruskal-Wallis Wilcoxon tests. Anyway, we perform these tests and found no contradictions. -->
+We can clearly reject $H_0$ based on this sample and a level of significance of $\alpha=5\%$.
+4. Same results up to rounding errors.
+5. The Dunn-Sidak correction is obtained by $$ \alpha_I = 1 - 0.95^{1/6} \approx `r round(1 - 0.95^(1/6),4)`  $$ since there are six different pairs. We cannot conclude on the difference between `Radio` and `Newspaper`, and `Radio` and `Television`, all the other differences are significant with the Dunn-Sidak correction based on this sample. In particular, we can conclude that the `Website` is has the best Impact.
+6. Since there is no reason to fear influenced from outliers, it seems unnecessary to perform Kruskal-Wallis Wilcoxon tests. Anyway, we perform these tests and found no contradictions.
 </div>
 
 # Multivariate Regression model
