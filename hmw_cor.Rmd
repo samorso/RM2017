@@ -233,7 +233,4 @@ We can clearly reject $H_0$ based on this sample and a level of significance of 
 </div>
 
 # Multivariate Regression model
-(coming soon)  
-
-# Prediction
 (coming soon)

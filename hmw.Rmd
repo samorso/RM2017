@@ -56,6 +56,8 @@ You will find the correction [here](https://samorso.github.io/RM2017/hmw_cor.htm
 
 <div id="ex4">
 **Exercise 4:** Repeat (if possible) the in-class Exercise 7 with the `waiting_time.csv` dataset (available on  [cyberlearn](https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591)) by starting with a descriptive analysis. Here is the story. In a fast food, you rearrange the manufacturing process of several products and services. On paper, your reorganization is effective and reduces the waiting time. To check if this is true in practice, you compare the waiting time of customers (in seconds) between the start of the command and the final operation. There are two samples, one measured before the change, the other after. The changes will be maintained only if there is clear evidence of their effectiveness.
+
+You will find the correction [here](https://samorso.github.io/RM2017/hmw_cor.html#ex4)
 </div>
 
 <div id="ex5">
@@ -65,11 +67,18 @@ You will find the correction [here](https://samorso.github.io/RM2017/hmw_cor.htm
 3. Perform a one-way ANOVA test by constructing the table. Give the working hypothesis. Inspire yourself from the in-class examples and conclude the test.       
 4. Check your result by running the `R` command `aov(.)` (see the course for details).   
 5. Run pairwise comparisons in `R` by applying the Dunn-Sidak correction, give full details.   
-6. Do 4 and 5 using Kruskal-Wallis and Wilcoxon tests. Are there any contradictions?    
+6. Do 4 and 5 using Kruskal-Wallis and Wilcoxon tests. Are there any contradictions? 
+
+You will find the correction [here](https://samorso.github.io/RM2017/hmw_cor.html#ex5)
 </div>
 
 # Multivariate Regression model
-(coming soon)  
+<div id="ex6">
+**Exercise 6:** Based on In-class Exercises 9 to 17, train yourself on the `Prestige` dataset from the `R` package `car` (first you need to install this package). Using all the material seen in class, you should be able to answer the following questions:  
 
-# Prediction
-(coming soon)
+* Is my regression a good fit?   
+* Does all my assumptions hold?   
+* Is there a problem of multicollinearity? Heteroscedasticity? Outliers? Non-linearity? Autocorrelation?  
+* Should I include/exclude predictors?   
+* ...
+</div>

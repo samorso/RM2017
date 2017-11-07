@@ -12,12 +12,50 @@
 
 <meta name="author" content="Samuel Orso" />
 
-<meta name="date" content="2017-09-18" />
+<meta name="date" content="2017-11-07" />
 
 <title>Multivariate statistics</title>
 
 
 
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+</style>
 
 
 
@@ -35,7 +73,7 @@
 <h1 class="title toc-ignore">Multivariate statistics</h1>
 <h2 class="subtitle">In-class exercises</h2>
 <h3 class="author">Samuel Orso</h3>
-<h3 class="date">2017-09-18</h3>
+<h3 class="date">2017-11-07</h3>
 </div>
 </header>
 
@@ -47,7 +85,6 @@
 <li><a href="#descriptive-analysis">Descriptive analysis</a></li>
 <li><a href="#inference">Inference</a></li>
 <li><a href="#multivariate-regression-model">Multivariate Regression model</a></li>
-<li><a href="#prediction">Prediction</a></li>
 </ul>
 </div>
 
@@ -66,64 +103,235 @@
 <p><strong>Exercice 2:</strong> Reproduce the same lines of code as <strong>Example 1</strong> on your laptop.</p>
 </div>
 <div id="ex3">
-<p><strong>Exercice 3:</strong> By helping yourself with the previous examples, explaine the <em>Price</em> (variable of interest) by the <em>Mileage</em> (predictor):<br />
-1. Write the regression equation.<br />
-2. Fit the regression using the <code>lm(.)</code> function.<br />
-3. Using the <code>summary(.)</code> function, write the estimated regression equation.<br />
-4. You observe a new car with mileage equals to 32500. Predict the price value.</p>
+<p><strong>Exercice 3:</strong> By helping yourself with the previous examples, explaine the <em>Price</em> (variable of interest) by the <em>Mileage</em> (predictor):</p>
+<ol style="list-style-type: decimal">
+<li>Write the regression equation.<br />
+</li>
+<li>Fit the regression using the <code>lm(.)</code> function.<br />
+</li>
+<li>Using the <code>summary(.)</code> function, write the estimated regression equation.<br />
+</li>
+<li>You observe a new car with mileage equals to 32500. Predict the price value.<br />
+</li>
+</ol>
 </div>
 </div>
 <div id="descriptive-analysis" class="section level1">
 <h1>Descriptive analysis</h1>
 <div id="ex4">
-<p><strong>Exercise 4:</strong> The dataset <code>marathon.csv</code> (on <a href="https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591">cyberlearn</a>) contains a sample of time (minutes) at marathon of Boston [Keller].<br />
-1. Load the dataset in <code>R</code>. First set the working directory (where you want to work with <code>R</code> in your computer) by using the <code>setwd(&quot;my directory&quot;)</code> commands. Then load the dataset using the command <code>marathon &lt;- read.csv(file=&quot;marathon.csv&quot;, header=TRUE, sep=&quot;;&quot;)</code>.<br />
-2. Compute the average, the standard deviation and the 5-number-summary.<br />
-3. Make the boxplot of the data. What are the outliers?<br />
-4. Build the histogram of the data. Describe the shape of the distribution? Determine approximately the mode of the distribution.</p>
+<p><strong>Exercise 4:</strong> The dataset <code>marathon.csv</code> (on <a href="https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591">cyberlearn</a>) contains a sample of time (minutes) at marathon of Boston [Keller].</p>
+<ol style="list-style-type: decimal">
+<li>Load the dataset in <code>R</code>. First set the working directory (where you want to work with <code>R</code> in your computer) by using the <code>setwd(&quot;my directory&quot;)</code> commands. Then load the dataset using the command <code>marathon &lt;- read.csv(file=&quot;marathon.csv&quot;, header=TRUE, sep=&quot;;&quot;)</code>.<br />
+</li>
+<li>Compute the average, the standard deviation and the 5-number-summary.<br />
+</li>
+<li>Make the boxplot of the data. What are the outliers?<br />
+</li>
+<li>Build the histogram of the data. Describe the shape of the distribution? Determine approximately the mode of the distribution.<br />
+</li>
+</ol>
 </div>
 <div id="ex5">
-<p><strong>Exercise 5:</strong> The dataset <code>fastfood.csv</code> (on <a href="https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591">cyberlearn</a>) contains measures of times in second of services at several drives.<br />
-1. Load the dataset in <code>R</code>. First set the working directory (where you want to work with <code>R</code> in your computer) by using the <code>setwd(&quot;my directory&quot;)</code> commands. Then load the dataset using the command <code>fastfood &lt;- read.csv(file=&quot;fastfood.csv&quot;, header=TRUE, sep=&quot;;&quot;)</code>.<br />
-2. Produce a barplot illustrating the number of measures per drives.<br />
-3. Produce a boxplot per drive.<br />
-4. Produce a scatterplot between drives.<br />
-5. Compute the linear and Spearman’s correlations between the drives, use the function <code>cor(.)</code> and <code>cor( . , method = &quot;spearman&quot;)</code>.</p>
+<p><strong>Exercise 5:</strong> The dataset <code>fastfood.csv</code> (on <a href="https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591">cyberlearn</a>) contains measures of times in second of services at several drives.</p>
+<ol style="list-style-type: decimal">
+<li>Load the dataset in <code>R</code>. First set the working directory (where you want to work with <code>R</code> in your computer) by using the <code>setwd(&quot;my directory&quot;)</code> commands. Then load the dataset using the command <code>fastfood &lt;- read.csv(file=&quot;fastfood.csv&quot;, header=TRUE, sep=&quot;;&quot;)</code>.<br />
+</li>
+<li>Produce a barplot illustrating the number of measures per drives.<br />
+</li>
+<li>Produce a boxplot per drive.<br />
+</li>
+<li>Produce a scatterplot between drives.<br />
+</li>
+<li>Compute the linear and Spearman’s correlations between the drives, use the function <code>cor(.)</code> and <code>cor( . , method = &quot;spearman&quot;)</code>.<br />
+</li>
+</ol>
 </div>
 </div>
 <div id="inference" class="section level1">
 <h1>Inference</h1>
 <div id="ex6">
-<p><strong>Exercise 6:</strong> Reperform <strong>Example 1</strong>, but with the <strong>CS</strong> dataset when explaining the <em>Price</em> with the <em>Mileage</em> and a level of significance <span class="math inline">\(\alpha=8\%\)</span>.<br />
-1. You need to specify the testing hypothesis, compute <span class="math inline">\(t_{\text{obs}}\)</span>, the <span class="math inline">\(p\)</span>-value, <span class="math inline">\(T(8\%)\)</span> and the rejection region.<br />
-2. Try to make a graph of the rejection region. You need to change <code>dnorm</code> to <code>dt</code> and use another argument: <code>args = list(df = ?)</code>, where <code>?</code> is the number of degrees of freedom.<br />
-3. Conclude the test based on the rejection region.</p>
+<p><strong>Exercise 6:</strong> Reperform <strong>Example 1</strong>, but with the <strong>CS</strong> dataset when explaining the <em>Price</em> with the <em>Mileage</em> and a level of significance <span class="math inline">\(\alpha=8\%\)</span>.</p>
+<ol style="list-style-type: decimal">
+<li>You need to specify the testing hypothesis, compute <span class="math inline">\(t_{\text{obs}}\)</span>, the <span class="math inline">\(p\)</span>-value, <span class="math inline">\(T(8\%)\)</span> and the rejection region.<br />
+</li>
+<li>Try to make a graph of the rejection region. You need to change <code>dnorm</code> to <code>dt</code> and use another argument: <code>args = list(df = ?)</code>, where <code>?</code> is the number of degrees of freedom.<br />
+</li>
+<li>Conclude the test based on the rejection region.<br />
+</li>
+</ol>
 </div>
 <div id="ex7">
-<p><strong>Exercise 7:</strong> In a chain of supermarkets, you want to know if a product is enhanced when installed in front or in the middle. The data set of product sales (a soda) is in <code>sales.csv</code>. We consider that being in front is a privilege, which is applied to a product if there is clear evidence that this position improves sales.<br />
-1. Load the dataset in <code>R</code>. First set the working directory (where you want to work with <code>R</code> in your computer) by using the <code>setwd(&quot;my directory&quot;)</code> commands. Then load the dataset using the command <code>sales &lt;- read.csv(file=&quot;sales.csv&quot;, header=TRUE, sep=&quot;;&quot;)</code>.<br />
-2. Which test should you pick? What are the null and alternative hypothesis?<br />
-3. Make a test for two populations. Use directly the <code>R</code> function <code>t.test(.)</code> and inspire yourself from the course. What is your conclusion?<br />
-4. Same as 3 but with a paired <span class="math inline">\(t\)</span>-test. What am I assuming when making this test?<br />
-5. Repeat 3 and 4 with the Wilcoxon’s signed-rank test. Is the conclusion different? How can you check if there are outliers? Have you found any?</p>
+<p><strong>Exercise 7:</strong> In a chain of supermarkets, you want to know if a product is enhanced when installed in front or in the middle. The data set of product sales (a soda) is in <code>sales.csv</code>. We consider that being in front is a privilege, which is applied to a product if there is clear evidence that this position improves sales.</p>
+<ol style="list-style-type: decimal">
+<li>Load the dataset in <code>R</code>. First set the working directory (where you want to work with <code>R</code> in your computer) by using the <code>setwd(&quot;my directory&quot;)</code> commands. Then load the dataset using the command <code>sales &lt;- read.csv(file=&quot;sales.csv&quot;, header=TRUE, sep=&quot;;&quot;)</code>.<br />
+</li>
+<li>Which test should you pick? What are the null and alternative hypothesis?<br />
+</li>
+<li>Make a test for two populations. Use directly the <code>R</code> function <code>t.test(.)</code> and inspire yourself from the course. What is your conclusion?<br />
+</li>
+<li>Same as 3 but with a paired <span class="math inline">\(t\)</span>-test. What am I assuming when making this test?<br />
+</li>
+<li>Repeat 3 and 4 with the Wilcoxon’s signed-rank test. Is the conclusion different? How can you check if there are outliers? Have you found any?<br />
+</li>
+</ol>
 </div>
 <div id="ex8">
-<p><strong>Exercise 8:</strong> We are interested in the difference of delays of airplaines at NYC in 2013.<br />
-1. Load the data from the package <code>nycflights13</code>. Install and call the package.<br />
-2. The data you are interested is called <code>flights</code>, run the command <code>flights</code> and <code>?flights</code> to understand the data.<br />
-3. Construct a boxplot of <code>arr_delay</code> agains <code>carrier</code>. You can find to which company the <code>carrier</code> refers to in <code>airlines</code> data (just enter <code>airlines</code> in <code>R</code>).<br />
-4. Perform an one-way ANOVA test of <code>arr_delay</code> per <code>carrier</code>. What are the hypothesis? What is your conclusion?<br />
-5. Perform multiple comparisons. What is the Dunn-Sidak correction? How many pairs? For which pair can you conclude the test?<br />
-6. Restart 4 and 5 with Kruskal-Wallis and Wilcoxon tests? Are there contradictions? If yes, why?</p>
+<p><strong>Exercise 8:</strong> We are interested in the difference of delays of airplaines at NYC in 2013.</p>
+<ol style="list-style-type: decimal">
+<li>Load the data from the package <code>nycflights13</code>. Install and call the package.<br />
+</li>
+<li>The data you are interested is called <code>flights</code>, run the command <code>flights</code> and <code>?flights</code> to understand the data.<br />
+</li>
+<li>Construct a boxplot of <code>arr_delay</code> against <code>carrier</code>. You can find to which company the <code>carrier</code> refers to in <code>airlines</code> data (just enter <code>airlines</code> in <code>R</code>).<br />
+</li>
+<li>Perform an one-way ANOVA test of <code>arr_delay</code> per <code>carrier</code>. What are the hypothesis? What is your conclusion?<br />
+</li>
+<li>Perform multiple comparisons. What is the Dunn-Sidak correction? How many pairs? For which pair can you conclude the test?<br />
+</li>
+<li>Restart 4 and 5 with Kruskal-Wallis and Wilcoxon tests? Are there contradictions? If yes, why?<br />
+</li>
+</ol>
 </div>
 </div>
 <div id="multivariate-regression-model" class="section level1">
 <h1>Multivariate Regression model</h1>
-<p>(coming soon)</p>
+<div id="ex9">
+<p><strong>Exercice 9:</strong> Model the linear regression to explain the <em>Price</em> from <strong>CS</strong> with the predictors <em>Mileage</em>, <em>Make</em> and <em>Doors</em>.</p>
+<ol style="list-style-type: decimal">
+<li>What is the nature of each predictor?<br />
+</li>
+<li>Write down the regression equation by taking into account the factors in the design matrix.<br />
+</li>
+<li>Fit the regression model with <code>R</code> by, if necessary, modifying the reference factor.<br />
+</li>
+<li>Write down the estimated equation.<br />
+</li>
+<li>What is the prediction for the price of a new Cadillac car with 4 doors, and a mileage of 30’000.<br />
+</li>
+</ol>
 </div>
-<div id="prediction" class="section level1">
-<h1>Prediction</h1>
-<p>(coming soon)</p>
+<div id="ex10">
+<p><strong>Exercice 10:</strong> Take your fitted model on <strong>Exercise 9</strong>.</p>
+<ol style="list-style-type: decimal">
+<li>Make a QQ-plot. How do you interpret the result?<br />
+</li>
+<li>Make a robust linear regression and compare the coefficients obtained. Do you observe any differences? What can you say about it?<br />
+</li>
+</ol>
+</div>
+<div id="ex11">
+<p><strong>Exercice 11:</strong> Model the linear regression to explain the <em>Price</em> from <strong>CS</strong> with the predictors <em>Mileage</em>, <em>Make</em>, <em>Doors</em>, <em>Liter</em>, <em>Cruise</em>, <em>Cylinder</em>.</p>
+<ol style="list-style-type: decimal">
+<li>Fit the linear model and plot the residuals against the fitted values. Do you think the assumption of homoscedasticity holds?<br />
+</li>
+<li>Log-transform the <em>Price</em> and answer point 1). Do you see any difference?<br />
+</li>
+</ol>
+</div>
+<div id="ex12">
+<p><strong>Exercice 12:</strong> Use your responses of <strong>Exercise 11</strong> and answer the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>Plot the residuals against <em>Mileage</em>. Do you see any particular pattern? Do you believe any polynomials should be included in the regression model?<br />
+</li>
+<li>Add <em>Mileage</em> up to the order 4 in the regression model using the <code>poly()</code> function and answer question 1) again.<br />
+</li>
+</ol>
+</div>
+<div id="ex13">
+<p><strong>Exercice 13:</strong> Use your responses of <strong>Exercise 11</strong> and answer the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>Explore the linear relationship between the predictors using the correlation and the scatterplots. Is there any reason to believe some predictors are multicollinear?<br />
+</li>
+<li>If yes, try to fit the model with and without the multicollinear predictors. What difference do you observe?<br />
+</li>
+</ol>
+</div>
+<div id="ex14">
+<p><strong>Exercice 14:</strong> Using your regression model in <strong>Exercise 13</strong> answer the following questions:</p>
+<ol style="list-style-type: decimal">
+<li>Make an autocorrelation plot of your response variable. How do you interpret the plot? What do you think would be the appropriate action to take here, if any?<br />
+</li>
+<li>Same as point 1) but on the residuals of the fitted model.<br />
+</li>
+<li>What do you believe will happen if we randomly reorganize the rows of the dataset? Is there argument preventing us of doing so?</li>
+</ol>
+</div>
+<div id="ex15">
+<p><strong>Exercice 15:</strong> Using the same model as in <strong>Exercise 14</strong>, fit a robust linear regression and compare the coefficients. Do you believe there is a problem of outliers?</p>
+</div>
+<div id="ex16">
+<p><strong>Exercice 16:</strong> Using the <strong>CS</strong> dataset:</p>
+<ol style="list-style-type: decimal">
+<li>Fit the linear regression model with all predictors. What is the AIC criterion? (Use the function <code>extractAIC()</code>)</li>
+<li>Fit another model with less predictors and compare the AIC criterion. Which one of the two would you choose?<br />
+</li>
+<li>Select the best model according to the AIC criterion by using the function <code>stepAIC()</code>.<br />
+</li>
+<li>Which predictors are present in the ‘best’ model? Write down the regression model.<br />
+</li>
+</ol>
+</div>
+<div id="ex17">
+<p><strong>Exercice 17:</strong> Suppose you observe the following new values for the predictors in <strong>CS</strong>:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">new_x &lt;-<span class="st"> </span><span class="kw">data.frame</span>(
+  <span class="dt">Mileage =</span> <span class="dv">49081</span>,
+  <span class="dt">Make =</span> <span class="st">&quot;Saturn&quot;</span>,
+  <span class="dt">Model =</span> <span class="st">&quot;Ion&quot;</span>,
+  <span class="dt">Trim =</span> <span class="st">&quot;Quad Coupe 2D&quot;</span>,
+  <span class="dt">Type =</span> <span class="st">&quot;Coupe&quot;</span>,
+  <span class="dt">Cylinder =</span> <span class="st">&quot;6&quot;</span>,
+  <span class="dt">Liter =</span> <span class="st">&quot;2.2&quot;</span>,
+  <span class="dt">Doors =</span> <span class="st">&quot;2&quot;</span>,
+  <span class="dt">Cruise =</span> <span class="st">&quot;0&quot;</span>,
+  <span class="dt">Sound =</span> <span class="st">&quot;1&quot;</span>,
+  <span class="dt">Leather =</span> <span class="st">&quot;1&quot;</span>
+)
+new_x</code></pre></div>
+<div class="kable-table">
+<table>
+<thead>
+<tr class="header">
+<th align="right">Mileage</th>
+<th align="left">Make</th>
+<th align="left">Model</th>
+<th align="left">Trim</th>
+<th align="left">Type</th>
+<th align="left">Cylinder</th>
+<th align="left">Liter</th>
+<th align="left">Doors</th>
+<th align="left">Cruise</th>
+<th align="left">Sound</th>
+<th align="left">Leather</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="right">49081</td>
+<td align="left">Saturn</td>
+<td align="left">Ion</td>
+<td align="left">Quad Coupe 2D</td>
+<td align="left">Coupe</td>
+<td align="left">6</td>
+<td align="left">2.2</td>
+<td align="left">2</td>
+<td align="left">0</td>
+<td align="left">1</td>
+<td align="left">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ol style="list-style-type: decimal">
+<li>What is the prediction of the <em>Price</em> based on your ‘best’ model of <strong>Exercise 16</strong>?<br />
+</li>
+<li>Give the confidence interval at a level of 90% and 95%.<br />
+</li>
+<li>Give the prediction interval at a level of 90% and 95%.<br />
+</li>
+<li>In which of the category do you think this car belongs? Category 1: “Cheap” (below 25 quantile), Category 2: “Low Average” (between 25 quantile and median), Category 3: “Upper Average” (median - 75-quantile), Category 4: “Expensive” (above 75-quantile).<br />
+</li>
+</ol>
+</div>
 </div>
     </section>
   </div>

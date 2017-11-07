@@ -26,6 +26,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <div id="ex3">
 **Exercice 3:** By helping yourself with the previous examples, explaine the *Price* (variable of interest) by the *Mileage* (predictor):   
+
 1. Write the regression equation.   
 2. Fit the regression using the `lm(.)` function.   
 3. Using the `summary(.)` function, write the estimated regression equation.   
@@ -35,6 +36,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Descriptive analysis
 <div id="ex4">
 **Exercise 4:** The dataset `marathon.csv` (on [cyberlearn](https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591)) contains a sample of time (minutes) at marathon of Boston [Keller].   
+
 1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `marathon <- read.csv(file="marathon.csv", header=TRUE, sep=";")`.   
 2. Compute the average, the standard deviation and the 5-number-summary.  
 3. Make the boxplot of the data. What are the outliers?   
@@ -43,6 +45,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <div id="ex5">
 **Exercise 5:** The dataset `fastfood.csv` (on [cyberlearn](https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591)) contains measures of times in second of services at several drives.   
+
 1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `fastfood <- read.csv(file="fastfood.csv", header=TRUE, sep=";")`.  
 2. Produce a barplot illustrating the number of measures per drives.   
 3. Produce a boxplot per drive.   
@@ -53,6 +56,7 @@ knitr::opts_chunk$set(echo = TRUE)
 # Inference
 <div id="ex6">
 **Exercise 6:** Reperform **Example 1**, but with the **CS** dataset when explaining the *Price* with the *Mileage* and a level of significance $\alpha=8\%$.   
+
 1. You need to specify the testing hypothesis, compute $t_{\text{obs}}$, the $p$-value, $T(8\%)$ and the rejection region.  
 2. Try to make a graph of the rejection region. You need to change `dnorm` to `dt` and use another argument: `args = list(df = ?)`, where `?` is the number of degrees of freedom.   
 3. Conclude the test based on the rejection region.  
@@ -60,6 +64,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <div id="ex7">
 **Exercise 7:** In a chain of supermarkets, you want to know if a product is enhanced when installed in front or in the middle. The data set of product sales (a soda) is in `sales.csv`. We consider that being in front is a privilege, which is applied to a product if there is clear evidence that this position improves sales.  
+
 1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `sales <- read.csv(file="sales.csv", header=TRUE, sep=";")`.  
 2. Which test should you pick? What are the null and alternative hypothesis?  
 3. Make a test for two populations. Use directly the `R` function `t.test(.)` and inspire yourself from the course. What is your conclusion?   
@@ -70,16 +75,126 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <div id="ex8">  
 **Exercise 8:** We are interested in the difference of delays of airplaines at NYC in 2013.   
+
 1. Load the data from the package `nycflights13`. Install and call the package.    
 2. The data you are interested is called `flights`, run the command `flights` and `?flights` to understand the data.    
-3. Construct a boxplot of `arr_delay` agains `carrier`. You can find to which company the `carrier` refers to in `airlines` data (just enter `airlines` in `R`).    
+3. Construct a boxplot of `arr_delay` against `carrier`. You can find to which company the `carrier` refers to in `airlines` data (just enter `airlines` in `R`).    
 4. Perform an one-way ANOVA test of `arr_delay` per `carrier`. What are the hypothesis? What is your conclusion?    
 5. Perform multiple comparisons. What is the Dunn-Sidak correction? How many pairs? For which pair can you conclude the test?   
 6. Restart 4 and 5 with Kruskal-Wallis and Wilcoxon tests? Are there contradictions? If yes, why?  
 </div>
 
 # Multivariate Regression model
-(coming soon)  
+<div id="ex9">
+**Exercice 9:** Model the linear regression to explain the _Price_ from **CS** with the predictors _Mileage_, _Make_ and _Doors_.   
 
-# Prediction
-(coming soon)
+1. What is the nature of each predictor?   
+2. Write down the regression equation by taking into account the factors in the design matrix.   
+3. Fit the regression model with `R` by, if necessary, modifying the reference factor.   
+4. Write down the estimated equation.   
+5. What is the prediction for the price of a new Cadillac car with 4 doors, and a mileage of 30'000.  
+</div>
+
+<div id="ex10">
+**Exercice 10:** Take your fitted model on **Exercise 9**.
+
+1. Make a QQ-plot. How do you interpret the result?   
+2. Make a robust linear regression and compare the coefficients obtained. Do you observe any differences? What can you say about it?  
+</div>
+
+<div id="ex11">
+**Exercice 11:** Model the linear regression to explain the _Price_ from **CS** with the predictors _Mileage_, _Make_, _Doors_, _Liter_, _Cruise_, _Cylinder_.
+
+1. Fit the linear model and plot the residuals against the fitted values. Do you think the assumption of homoscedasticity holds?   
+2. Log-transform the _Price_ and answer point 1). Do you see any difference?    
+</div>
+
+<div id="ex12">
+**Exercice 12:** Use your responses of **Exercise 11** and answer the following questions:
+
+1. Plot the residuals against _Mileage_. Do you see any particular pattern? Do you believe any polynomials should be included in the regression model?   
+2. Add _Mileage_ up to the order 4 in the regression model using the `poly()` function and answer question 1) again.   
+</div>
+
+
+<div id="ex13">
+**Exercice 13:** Use your responses of **Exercise 11** and answer the following questions:
+
+1. Explore the linear relationship between the predictors using the correlation and the scatterplots. Is there any reason to believe some predictors are multicollinear?  
+2. If yes, try to fit the model with and without the multicollinear predictors. What difference do you observe?   
+</div>
+
+
+<div id="ex14">
+**Exercice 14:** Using your regression model in **Exercise 13** answer the following questions:
+
+1. Make an autocorrelation plot of your response variable. How do you interpret the plot? What do you think would be the appropriate action to take here, if any?   
+2. Same as point 1) but on the residuals of the fitted model.   
+3. What do you believe will happen if we randomly reorganize the rows of the dataset? Is there argument preventing us of doing so?       
+
+```{r,eval=F,echo=F}
+kars3 <- kars2[sample.int(nrow(kars2),nrow(kars2)),]
+fit_lm <- lm(Price ~ Mileage + Make + Cylinder + Doors + Cruise, data = kars3)
+d_f <- data.frame(
+  fitted <- fitted(fit_lm),
+  index <- seq_len(nrow(kars2)),
+  group <- kars2$Model
+)
+qplot(d_f$index, d_f$fitted)
+ggplot(d_f, aes(x=index, y=fitted, color=group)) + geom_point()
+d_f <- data.frame(
+  fitted <- fitted(fit_lm),
+  index <- seq_len(nrow(kars2)),
+  group <- kars2$Trim
+)
+ggplot(d_f, aes(x=index, y=fitted, color=group)) + geom_point()
+
+fit_lm2 <- lm(Price ~ Mileage + Make + Model + Cylinder + Doors + Cruise, data = kars2)
+summary(fit_lm2)
+d_f <- data.frame(
+  fitted <- residuals(fit_lm2),
+  index <- seq_len(nrow(kars2)),
+  group <- kars2$Model
+)
+qplot(d_f$index, d_f$fitted)
+ggplot(d_f, aes(x=index, y=fitted, color=group)) + geom_point()
+```
+</div>
+
+<div id="ex15">
+**Exercice 15:** Using the same model as in **Exercise 14**, fit a robust linear regression and compare the coefficients. Do you believe there is a problem of outliers?   
+</div>
+
+<div id="ex16">
+**Exercice 16:** Using the **CS** dataset:    
+
+1. Fit the linear regression model with all predictors. What is the AIC criterion? (Use the function `extractAIC()`)
+2. Fit another model with less predictors and compare the AIC criterion. Which one of the two would you choose?   
+3. Select the best model according to the AIC criterion by using the function `stepAIC()`.   
+4. Which predictors are present in the 'best' model? Write down the regression model.   
+</div>
+
+<div id="ex17">
+**Exercice 17:** Suppose you observe the following new values for the predictors in **CS**:
+```{r}
+new_x <- data.frame(
+  Mileage = 49081,
+  Make = "Saturn",
+  Model = "Ion",
+  Trim = "Quad Coupe 2D",
+  Type = "Coupe",
+  Cylinder = "6",
+  Liter = "2.2",
+  Doors = "2",
+  Cruise = "0",
+  Sound = "1",
+  Leather = "1"
+)
+new_x
+```
+
+1. What is the prediction of the _Price_ based on your 'best' model of **Exercise 16**?   
+2. Give the confidence interval at a level of 90% and 95%.   
+3. Give the prediction interval at a level of 90% and 95%.   
+4. In which of the category do you think this car belongs? Category 1: "Cheap" (below 25 quantile), Category 2: "Low Average" (between 25 quantile and median), Category 3: "Upper Average" (median - 75-quantile), Category 4: "Expensive" (above 75-quantile).    
+</div>

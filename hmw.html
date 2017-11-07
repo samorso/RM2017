@@ -12,7 +12,7 @@
 
 <meta name="author" content="Samuel Orso" />
 
-<meta name="date" content="2017-09-18" />
+<meta name="date" content="2017-11-07" />
 
 <title>Multivariate statistics</title>
 
@@ -35,7 +35,7 @@
 <h1 class="title toc-ignore">Multivariate statistics</h1>
 <h2 class="subtitle">Homeworks</h2>
 <h3 class="author">Samuel Orso</h3>
-<h3 class="date">2017-09-18</h3>
+<h3 class="date">2017-11-07</h3>
 </div>
 </header>
 
@@ -46,7 +46,6 @@
 <li><a href="#descriptive-analysis">Descriptive analysis</a></li>
 <li><a href="#inference">Inference</a></li>
 <li><a href="#multivariate-regression-model">Multivariate Regression model</a></li>
-<li><a href="#prediction">Prediction</a></li>
 </ul>
 </div>
 
@@ -93,6 +92,7 @@
 </div>
 <div id="ex4">
 <p><strong>Exercise 4:</strong> Repeat (if possible) the in-class Exercise 7 with the <code>waiting_time.csv</code> dataset (available on <a href="https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591">cyberlearn</a>) by starting with a descriptive analysis. Here is the story. In a fast food, you rearrange the manufacturing process of several products and services. On paper, your reorganization is effective and reduces the waiting time. To check if this is true in practice, you compare the waiting time of customers (in seconds) between the start of the command and the final operation. There are two samples, one measured before the change, the other after. The changes will be maintained only if there is clear evidence of their effectiveness.</p>
+<p>You will find the correction <a href="https://samorso.github.io/RM2017/hmw_cor.html#ex4">here</a></p>
 </div>
 <div id="ex5">
 <p><strong>Exercise 5:</strong> For a promotional campaign, a local airline company measures the impact on the increased ticket sales per dollar spent on four medias. The comapny wants to know whether there are differences between medias, and in particular which media has the best increase. To perform the analysis, use the <code>medias.csv</code> dataset available on <a href="https://cyberlearn.hes-so.ch/mod/folder/view.php?id=721591">cyberlearn</a>.<br />
@@ -102,15 +102,25 @@
 4. Check your result by running the <code>R</code> command <code>aov(.)</code> (see the course for details).<br />
 5. Run pairwise comparisons in <code>R</code> by applying the Dunn-Sidak correction, give full details.<br />
 6. Do 4 and 5 using Kruskal-Wallis and Wilcoxon tests. Are there any contradictions?</p>
+<p>You will find the correction <a href="https://samorso.github.io/RM2017/hmw_cor.html#ex5">here</a></p>
 </div>
 </div>
 <div id="multivariate-regression-model" class="section level1">
 <h1>Multivariate Regression model</h1>
-<p>(coming soon)</p>
+<div id="ex6">
+<p><strong>Exercise 6:</strong> Based on In-class Exercises 9 to 17, train yourself on the <code>Prestige</code> dataset from the <code>R</code> package <code>car</code> (first you need to install this package). Using all the material seen in class, you should be able to answer the following questions:</p>
+<ul>
+<li>Is my regression a good fit?<br />
+</li>
+<li>Does all my assumptions hold?<br />
+</li>
+<li>Is there a problem of multicollinearity? Heteroscedasticity? Outliers? Non-linearity? Autocorrelation?<br />
+</li>
+<li>Should I include/exclude predictors?<br />
+</li>
+<li>…</li>
+</ul>
 </div>
-<div id="prediction" class="section level1">
-<h1>Prediction</h1>
-<p>(coming soon)</p>
 </div>
     </section>
   </div>

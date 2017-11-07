@@ -9,15 +9,18 @@ output:
   highlight: github
   toc: true
   df_print: kable
+  fig_height: 4
+  fig_width: 6
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warinings = FALSE, message = FALSE)
 ```
 
 # Before we get started
 ### Formalities
 Formal information:  
+
 * Lecturer: Samuel Orso (Samuel.Orso@unige.ch)  
 * In-class: 20 hours over 5 sessions  
 * Evaluation: two group projects (~2+2 students) (25%) and a final exam (75%)  
@@ -25,12 +28,14 @@ Formal information:
 * The most current version of the course is available on https://samorso.github.io/RM2017/RM.html (if you encounter any bug, you can report it [here](https://github.com/samorso/RM2017/issues)).   
 
 This course serves as an introduction to multivariate statistics with an emphasis on the multivariate regression and its applications. In class, we cover the theory and part of the exercises. The course is self-contained. There exists a large choice of textbooks for self-studying. Here are some options:  
+
 * *Managerial statistics* (2002). S.C. Albright, W.L. Winston, C.J. Zappe.  
 * *Managerial statistics* (2012). G. Keller.  
 * *Statistics for Business and Economics* (2011). D.R. Anderson, D.J. Sweeney, T.A. Williams.  
 
 ### How do we work?
 I split the exercises into two categories:  
+
 1. In-class exercises: you will have time during the class to solve these exercises, then I correct it with you. You can find them [here](https://samorso.github.io/RM2017/Inclass.html)  
 2. Homework: you have to solve these exercises by your own at home. You receive a detailed solution. In principle I will not give further correction. You can find the exercises [here](https://samorso.github.io/RM2017/hmw.html) and their correction [here](https://samorso.github.io/RM2017/hmw_cor.html)
 
@@ -38,6 +43,7 @@ At the end of each Chapter, I will submit you a quiz. The quiz does not count fo
 
 ### Few more wo`R`ds
 This class has been entirely written using `R/RStudio` open source statistical software. The students are strongly encouraged to learn how to use these software by themselves as it will ease their learning process. Also we believe it will be an asset on your CV and for the rest of your careers. Many web sources exist for learning `R`:  
+
 * https://www.rstudio.com/  
 * https://www.coursera.org/learn/r-programming/  
 * https://www.datacamp.com/  
@@ -72,6 +78,7 @@ require(ggplot2)
 # Introduction: Multivariate regression
 ### Preamble
 Multivariate regression aims at modelling the relationship between one **variable of interest** and many (i.e. multivariate) potential **explanatory variables** (or **predictors**). We will use the multivariate regression for two purposes:    
+
 1. Verifying a theory   
 2. Predicting  
 
@@ -91,7 +98,8 @@ ggplot(cars, aes(x = speed, y = dist)) +
   geom_point() +
   stat_smooth(method = "lm", col = "red")
 ```
-The main line is the **regression line**. The gray area around the regression line is the confidence interval (more on that later). The points are the observations. ''Of course'' the points are not on the line. Two reasons for that might be:
+The main line is the **regression line**. The gray area around the regression line is the confidence interval (more on that later). The points are the observations. ''Of course'' the points are not on the line. Two reasons for that might be:    
+
 1. Both the stopping distance and the speed are random variables;  
 2. The relation between the variable of interest and the explanatory variable is not **linear**.  
 The regression line is interpreted as follows: the faster the car drives, the more distance the car needs to stop, which seems to make sense. What else could we consider to explain the stopping distance?
@@ -134,12 +142,14 @@ ggplot(cars, aes(x = speed, y = dist)) +
 ```
 
 The general idea of regression is to find back the line equation from the observations. Two reasons for that:   
+
 1. Check whether $x$ has a linear impact on $y$;     
 2. Predict future values for $y$.   
 
 ### Formalization
 The multivariate regression can be formalized as follows. Suppose that you are interested in the variable $y$ and have $p$ potential predictors $x$. You have obtained a sample of size $n$. The **regression equation** is given by $$ y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \dots + \beta_p x_{pi} + \varepsilon_i,\quad i = 1,\dots,n, $$ or more compactly, $$ y_i = \beta_0 + \sum_{j=1}^px_{ij}\beta_j + \varepsilon_i,\quad i = 1,\dots,n. $$
 There are two unknown quantities:  
+
 1. the $\beta$'s are the **regression parameters**. Note that $\beta_0$ has a specific name: the *intercept*.  
 2. $\varepsilon$ represent the random errors of the regression line. **They are not observable**. However, it is assumed to follows independently and identically a normal distribution centered on 0 and of variance $\sigma^2_\varepsilon$, $\varepsilon_i\sim\mathcal{N}(0,\sigma^2_\varepsilon)$.
 
@@ -157,6 +167,7 @@ estim_lm <- lm(dist ~ speed, data=cars)
 summary(estim_lm)
 ```
 The summary has a lot of useful information. For the moment we are only interested in the estimators. We have:  
+
 * The intercept: $\hat{\beta}_0 =$ `r round(estim_lm$coefficients[1],4)`;  
 * The coefficient of the variable speed: $\hat{\beta}_1$ = `r round(estim_lm$coefficients[2],4)`;  
 * The square root of the estimator of the variance: $\sqrt{\hat{\sigma}^2_\varepsilon} =$ `r round(sqrt(sum((estim_lm$residuals - mean(estim_lm$residuals))^2)/estim_lm$df.residual),2)`.  
@@ -226,12 +237,14 @@ head(data)
 
 # Descriptive analysis
 The aims of descriptive statistics are:  
+
 * To focus on some characteristics of the sample  
 * To represent the data in a readable way  
 * To summarize the sample information  
 
 These summaries can be numerical or graphical, univariate or multivariate.
 For example the *5-number-summary* provides numerical summary of an univariate variable:   
+
 * Minimum or quantile at 0%: the smallest data, 0% of the data are
 smaller  
 * 1st quartile or quantile at 25%: a quarter of the data (25%) are
@@ -286,6 +299,7 @@ grid.arrange(plot1, plot2, ncol=1)
 
 ### Application to regression: continuous predictors
 Many assumptions on the predictors can be intuitively check via a bivariate graph, the **scatterplot**:   
+
 * Are the predictors (more or less) independent between them? We should observe a *widespread cloud* on a scatterplot.   
 * Are the predictors **linearly dependent** with the variable of interest? On a scatterplot, we should be able to imagine a line going through the points.   
 * The distance between the points and this imaginary line should be more or less constant, or saying it differently error should be **homoscedastic** (meaing *same variability*), otherwise we might have a problem of **heteroskedasticity**. In which case it might be a good option to make a transformation.   
@@ -367,10 +381,10 @@ The goal of **confidence intervals** is to quantify the uncertainty around the *
 
 In Example 2, we say that there is 95% probability that this interval contains the population mean (and not the converse). It is important to note that there is still 5% chance that this interval does not contain the population mean.
 
-More generally, a 1-$\alpha$% confidence interval for a sample mean is given by the general formula $$ \Big[\bar{x} - z_{1-\alpha/2}\sqrt{\frac{\sigma^2}{n}};\;\bar{x} + z_{1-\alpha/2}\sqrt{\frac{\sigma^2}{n}}\Big], $$ where $z_\alpha$ is the $\alpha$-quantile of a standard Normal distribution (recall your probability classes). The user chooses the level $\alpha$. Generally the default value is $\alpha=0.05$, but it may vary depending the context. This formula assumes that the variance $\sigma^2$ is a known value. In most cases the **variance is unknown** and is estimated, which leads to the following modification $$ \Big[\bar{x} - t_{n-1;\;1-\alpha/2}\sqrt{\frac{\hat{\sigma}^2}{n}};\;\bar{x} + z_{n-1;\;1-\alpha/2}\sqrt{\frac{\hat{\sigma}^2}{n}}\Big], $$ where $t_{\text{df};\;\alpha}$ is the $\alpha$-quantile of the student distribution with $\text{df}$ degrees of freedom ($n$ is the sample size).
+More generally, a 1-$\alpha$% confidence interval for a sample mean is given by the general formula $$ \Big[\bar{x} - z_{1-\alpha/2}\sqrt{\frac{\sigma^2}{n}};\;\bar{x} + z_{1-\alpha/2}\sqrt{\frac{\sigma^2}{n}}\Big], $$ where $z_\alpha$ is the $\alpha$-quantile of a standard Normal distribution (recall your probability classes). The user chooses the level $\alpha$. Generally the default value is $\alpha=0.05$, but it may vary depending the context. This formula assumes that the variance $\sigma^2$ is a known value. In most cases the **variance is unknown** and is estimated, which leads to the following modification $$ \Big[\bar{x} - t_{n-1;\;1-\alpha/2}\sqrt{\frac{\hat{\sigma}^2}{n}};\;\bar{x} + t_{n-1;\;1-\alpha/2}\sqrt{\frac{\hat{\sigma}^2}{n}}\Big], $$ where $t_{\text{df};\;\alpha}$ is the $\alpha$-quantile of the student distribution with $\text{df}$ degrees of freedom ($n$ is the sample size).
 
 #### Application to regression: confidence interval on a coefficient
-Regression coefficients can be treated as average, we can use the same formulas. The only difference is that the degrees of freedom is not $n-1$, but $n-p$ where $p$ is the number of regressors.
+Regression coefficients can be treated as average, we can use the same formulas. The only difference is that the degrees of freedom is not $n-1$, but $n-p-1$ where $p$ is the number of regressors.
 
 **Example 1:** Recall that we try to explain the distance a car takes to stop with the speed of the car. The fitted linear regression is given by
 ```{r}
@@ -382,9 +396,11 @@ The column `Estimate` gives the point estimates: $\hat{\beta}_0,\hat{\beta}_1$. 
 
 ## Hypothesis testing
 The objective of hypothesis testing is to answer a question about the population under study. It is a major element of statistical inference. Hypothesis testing is constructed in three parts:   
+
 1. What hypothesis am I testing?    
 2. What is my decision rule?   
 3. Based on the sample, what is my decision?   
+
 It is important to note that the two first parts are chosen first and independently of the sample (i.e. before looking at the data). The three parts are standard for every test.
 
 ### Hypothesis
@@ -410,18 +426,21 @@ Guilty             | Serious mistake | Correct
 Innocent           | Correct         | Mistake
 
 We cannot eliminate these sources of error completely at the same time:   
+
 * A rule completely eliminating type I error would always conclude in favor of $H_0$ even when it is wrong ("every defendant is innocent")     
 * A rule completely eliminating type II error would always conclude in favor of $H_1$ even when it is wrong ("every defendant is guilty")    
 
 Consequently one has to choose the risk he/she is ready to take by choosing a **significant level**, denoted $\alpha$. The significance level $\alpha$ control the error of type I (the most serious one). It is common to choose $\alpha=5\%$. It means ''I am ready to be wrong 5\% of the time when rejecting $H_0$''.
 
 The $p$-value is a number obtained on the data. It determines the decision. The **decision rule** is the following:     
+
 * If the $p$-value is smaller than the significance level $\alpha$, we reject $H_0$. It means that we gathered enough evidence against $H_0$ and accept $H_1$. We call the test **significant**.   
 * If the $p$-value is greater than $\alpha$, the test is **unsignificant**, no conclusion can be reached based on the sample at hand.   
 
 More specifically, the $p$-value is the probability under $H_0$ of observing a **test statistic** more in favor of $H_1$ than the test statistic indeed observed. Generally $T$ denotes the test statistic (a random variable), and $t_\text{obs}$ the observed statistic on the sample. 
 
 Instead of comparing the $p$-value with the significance level, it is equivalent to compare $t_{\text{obs}}$ with a quantile of the distribution of $T$ depending on $\alpha$, denoted $T(\alpha)$. This quantile $T(\alpha)$ determines a **rejecting region**, which leads to the following **decision rule** (totally equivalent to the previous one):   
+
 * If $t_{\text{obs}}$ is included in the rejecting region, we reject $H_0$. It means that we gathered enough evidence against $H_0$ and accept $H_1$. We call the test **significant**.   
 * If $t_{\text{obs}}$ is not included in the rejection region, the test is **unsignificant**, no conclusion can be reached based on the sample at hand. 
 
@@ -549,7 +568,7 @@ plot2 <- ggplot(data.frame(x = c(-3.5,3.5)), aes(x)) +
 # Both graphs
 grid.arrange(plot1, plot2)
 ```
-With this alternative, we could not reject $H_0$. Note that this $p$-value is obtained by taking 1 minus the $p$-value of the other oriented test. Of course, it is important that the alternative is carefully chosen before looking at the result. First, you choose the decision rule (hypthesis and $\alpha$) and only then compute the $p$-value or the rejection region.  
+With this alternative, we could not reject $H_0$. Note that this $p$-value is obtained by taking 1 minus the $p$-value of the other oriented test. Of course, it is important that the alternative is carefully chosen before looking at the result. First, you choose the decision rule (hypothesis and $\alpha$) and only then compute the $p$-value or the rejection region.  
 
 
 **CS:** We read that a used car should cost 18'000\$. We want to test this assertion with case study data. We are willing to take 5% chance to be wrong when rejecting this hypothesis. The variance is assumed to be $\sigma^2=5\times 10^5$.
@@ -610,7 +629,7 @@ wilcox.test(x = data$Price, mu = 18000, alternative = "two.sided")
 ```
 
 #### Application to regression: test on a single coefficient
-Testing for a single regression coefficient uses the same framework as testing a single mean. The difference is in the degrees of freedom, previously we had $\text{df}=n-1$, now in regression we have $\text{df}=n-p$ where $p$ is the total number of regressors.
+Testing for a single regression coefficient uses the same framework as testing a single mean. The difference is in the degrees of freedom, previously we had $\text{df}=n-1$, now in regression we have $\text{df}=n-p-1$ where $p$ is the total number of regressors.
 
 **Example 1:** We want to test whether the predictor *Speed* has a null coefficient at a level of $\alpha=5\%$. (What are the hypothesis?)
 
@@ -808,7 +827,7 @@ If instead of a one-way ANOVA test you used the robust alternative, the Kruskal-
 ```{r}
 pairwise.wilcox.test(x = data$Price, g = data$Type, p.adjust.method = "none")
 ```
-With theses tests, we reject $H_0$ for every pairs at level of significance of $\alpha_I = `r round(100 * (1 - .95^.1),2)`\%$. Looking more closely to the boxplots, we see that few outliers appears for the _Sedan_ of cars. If we look at the five-numbers-summary
+With these tests, we reject $H_0$ for every pairs at level of significance of $\alpha_I = `r round(100 * (1 - .95^.1),2)`\%$. Looking more closely to the boxplots, we see that few outliers appears for the _Sedan_ of cars. If we look at the five-numbers-summary
 ```{r}
 summary(data$Price[data$Type=="Sedan"])
 ```
@@ -817,19 +836,425 @@ we see that outliers have an influence on the average (`mean` $\gg$ `median`) ma
 [In-class: exercise 8](https://samorso.github.io/RM2017/Inclass.html#ex8)   
 [Homework: exercise 5](https://samorso.github.io/RM2017/hmw.html#ex5)  
 
-### Some practical recommendations
+### Some practical recommendations    
+
 * **How should I orientate the test?** Orienting a test gives you a more precise answer but it should be decided before looking at the data.  
 * **What should be my significance level $\alpha$?** If no precision is given, a default value for this class is $5\%$. Never change $\alpha$ after performing a test (although tempting).   
 * **Robust or not robust?** First, always check the data with descriptive techniques such as graph to have an intuition. If it is evident there are outliers, perform a robust test (or the converse). If it is not clear, run both robust and non-robust test. The non-robust test is generally more powerful but at the price of being more sensitive.  
 * **Can I trust the results?** Statistical test is a useful tool, but it should be used with caution. They are based on assumptions (we discussed some) that are not always met. A descriptive analysis should help you appreciate these assumptions, and therefore the validity of the test.  
 
 # Multivariate Regression model
-(coming soon)  
+## Model construction
+In the Introduction we formalized the regression equation: $$ y_i = \beta_0 + \sum_{j=1}^px_{ij}\beta_j + \varepsilon_i,\quad i = 1,\dots,n. $$ It is not unusual to write it even more compactly in matrix form: $$ \mathbf{y} = \mathbf{X}\boldsymbol\beta  + \boldsymbol\varepsilon $$ We have $\mathbf{y}$ is a vector of size $n\times 1$, $\mathbf{X}$ is a matrix of dimensions $n\times(p+1)$, $\boldsymbol\beta$ is a vector of size $(p+1)\times 1$ and $\boldsymbol\varepsilon$ is a vector $n\times 1$. The matrix of **predictors** $\mathbf{X}$ is called the **design matrix**. Predictors can be split into two categories:    
 
-# Prediction
-(coming soon)
+1. **Covariates**: they are numerical quantities (for example _Mileage_ in the **CS**);   
+2. **Factors**: they take only few values, called _levels_ (for example _Cylinder_ in the **CS**). Factors can quantitative or qualitative, ordinal or not.      
 
-# References
+When you have factors in the model, they are re coded into specific numerical values, the **contrast**. The contrast allows comparison between the different levels of a factor.
+
+**CS:** For example you want to regress the _Price_ of a car with the ordinal factor _Cylinder_. In `R` you can fit the regression model easily. First you need to make sure `R` knows that _Cylinder_ is a factor.
+```{r}
+# Check the structure of the data
+str(data)
+
+# Tell R that Cylinder is a factor (it modifies the data)
+data$Cylinder <- as.factor(data$Cylinder)
+
+# Fit linear regression
+fit_lm <- lm(Price ~ Cylinder, data)
+summary(fit_lm)
+```
+You can see that there are two coefficients. Why not three? There are three levels for _Cylinder_. In fact the level _Cylinder4_ is included in the intercept by default, we say that _Cylinder4_ is the reference. The regression coefficients represent the average difference between _Cylinder6_ (or _Cylinder8_) and _Cylinder4_. The design matrix is of dimension $804\times 3$. If I take one row of the design matrix $\mathbf{X}$, the first column is 1 for the intercept and _Cylinder4_, the second column takes dummy values 1 if the car has _Cylinder6_ or 0 elsewhere, same for third column with _Cylinder8_. The regression line is $$ y_i = \beta_0 + \beta_1\text{Cylinder}_6 + \beta_2\text{Cylinder}_8 + \varepsilon_i,\quad i=1,\dots,n.  $$ The variables $\text{Cylinder}_6$ and $\text{Cylinder}_8$ takes dummy values 0 or 1. The estimated regression line is $$ \hat{y}_i = `r round(coef(fit_lm)[1],2)` + `r round(coef(fit_lm)[2],2)`\text{Cylinder}_6 + `r round(coef(fit_lm)[3],2)`\text{Cylinder}_8, \quad i=1,\dots,804.$$
+
+So if I have a new car with four cylinder, the predicted price is $$\hat{y}^{\text{new}} = `r round(coef(fit_lm)[1],1)`$$ With six cylinders it is $$\hat{y}^{\text{new}} = `r round(coef(fit_lm)[1],1)` + `r round(coef(fit_lm)[2],1)` \approx `r round(coef(fit_lm)[1]+coef(fit_lm)[2],1)`$$ And with eight $$\hat{y}^{\text{new}} = `r round(coef(fit_lm)[1],1)` + `r round(coef(fit_lm)[3],1)` \approx `r round(coef(fit_lm)[1]+coef(fit_lm)[3],1)`$$ Note that the contrast I presented is called _treatment_ (by default in `R`) and that other exist.
+
+If you want to see the details of the design matrix, you can run the commands:
+```{r}
+# Extract the design matrix
+X <- model.matrix(fit_lm)
+head(as.data.frame(X))
+
+# Compare with the data
+head(data[,c(1,7)])
+```
+
+Note that if you prefer to have another level of cylinder as reference you can follow the code:
+```{r}
+# The levels of Cylinder
+levels(data$Cylinder)
+
+# Modify the reference level for Cylinder
+data <- within(data, Cylinder <- relevel(Cylinder, ref = 2))
+
+# Check the difference
+levels(data$Cylinder)
+
+# Fit the new regression with Cylinder6 in the intercept
+fit_lm <- lm(Price ~ Cylinder, data)
+summary(fit_lm)
+```
+
+[In-class: exercise 9](https://samorso.github.io/RM2017/Inclass.html#ex9)   
+
+## Model checking
+Once the model is fitted, it is necessary to check the validity of the fit. Model checking is perform on the residuals, i.e. the difference between the response and the fitted values $\hat{\varepsilon}_i = y_i - \hat{y}_i$. It is common to do the checking on the standard residuals, $r_i = \hat{\varepsilon}_i/\hat{\sigma}_{\varepsilon}$. There are many sources of difference between the data and the assumed regression model. The difference can be specific or systematic. If specific, it means that very few data points behaves differently from the major part, we talk about _outliers_ in this case. Exploratory analysis usually helps to identify such data points. A robust linear model may help to decrease the influence of outliers. The handling of systematic difference will depend on the underlying assumption affected:   
+
+* _normality_ : residuals should behave approximately as normally distributed. Non-normality may be more often a consequence of other problems in the model. It is used to assess the general good fit of the model.    
+* _constant variance_ or _homoscedasticity_ : the variance is the same across the response variable, it does not increase or decrease with the level of the response. If this problem appears, sometimes a data-transformation can solve this problem.     
+* _linearity_ : the response depends linearly on each covariates.    
+* _independence of predictors_ : predictors are supposed to be not too strongly linearly dependent. If they are too strongly correlated, there is a problem of multicollinearity.   
+* _independence of the response_ : there should be no serial correlation on the residuals.   
+
+I discuss each problem separately, but keep in mind that in practice they may occur jointly.
+
+### Normality
+Normality is checked with a _quantile-quantile plot_ or _QQplot_. The observed quantiles on the data are plotted against the theoretical quantiles of a normal random variable. If normality is doubtful, it is a alarm telling you that there might be a problem with the other assumptions mentioned.
+
+**Example 1:** Let see the qqplot of the regression of the distance explained by the speed of the cars.
+```{r,fig.align='center',cache=TRUE,message=FALSE}
+# the regression
+fit_lm <- lm(dist ~ speed, data = cars)
+
+# qq-plot
+require(ggfortify)
+autoplot(fit_lm, which = 2, label.size=3)
+```
+
+Theoretically (or if sample size is very large), the observed quantiles should match the theoretical one and appear on the line. Here, since the sample size is small, it is not unusual to have this pattern and it is hard to tell there is a problem of normality. Other check might be helpful.
+
+[In-class: exercise 10](https://samorso.github.io/RM2017/Inclass.html#ex10)   
+
+### Homoscedasticity
+The problem of non-constant variability is checked by ordering the standard residuals with respect to the fitted value, $\hat{y}_i$. Roughly speaking, the points should appear randomly distributed around the center and no specific pattern should appear on scatterplot.
+
+**Example 1:** Back to this example.
+```{r,fig.align='center',cache=TRUE,message=FALSE}
+autoplot(fit_lm, which = 1, label.size = 3)
+```
+
+Here it is hard to argue that there is a specific pattern and the graph seems ok. If there is a problem, it is often linked with a problem of non-linearity (see next subsection).
+
+**Example 1:** Now I modify the dataset to illustrate a problem of homoscedasticity.
+```{r,message=F,warning=F,fig.align='center',cache=T}
+# copy cars dataset
+cars2 <- cars
+
+# extract coefficients from the regression
+beta <- coef(fit_lm)
+
+# define new variance and errors
+sigma2 <- cars2$speed^3
+set.seed(4322)
+eps <- rnorm(nrow(cars2), sd=sqrt(sigma2))
+
+# simulate new dist variable
+cars2$dist <- beta[1] + beta[2] * cars$speed + abs(eps) 
+# Note that I use the absolute value of the error to avoid negative distance
+
+# fit the regression
+fit_lm2 <- lm(dist ~ speed, data = cars2)
+
+# plot
+require(ggfortify)
+autoplot(fit_lm2, which = 1, label.size = 3)
+```
+Now it is more obvious that the variance is non-constant, it increases with the value of speed. To fix this problem, a possibility is to transform the data with a logarithm. In this example, I transform the response variable with a logarithm (see the code below), but sometimes the predictor can be transformed or both.
+
+```{r,fig.align='center',cache=T,message=F,warning=F}
+# log-transform the dist variable and create a new dataset
+cars3 <- within(cars2, dist <- log(dist))
+
+# fit the new regression
+fit_lm3 <- lm(dist ~ speed, data = cars3)
+
+# plot the new fit
+autoplot(fit_lm3, which = 1, label.size = 3)
+```
+
+[In-class: exercise 11](https://samorso.github.io/RM2017/Inclass.html#ex11)  
+
+### Linearity
+Linearity between the response variable and predictors is checked on the explanatory analysis, but it can also be checked by plotting the residuals against each predictor, in which case no specific pattern should appear, the residuals and predictor should ''look independent''.
+
+If I simulate two independent random variables (approximately the kind of shape you should observe), I should observe a 'cloud of dots'.
+```{r,fig.align='center',cache=T}
+set.seed(321)
+d_f <- data.frame(
+  x1 = rnorm(1000),
+  x2 = rnorm(1000)
+)
+ggplot(d_f, aes(x=x1,y=x2)) + geom_point()
+```
+
+**Example 1:** With few data points, it is hard to tell whether there is a pattern or not. Here the linearity assumption seems to hold.
+```{r,fig.align='center',cache=T}
+d_f <- data.frame(
+  residual = residuals(fit_lm),
+  speed = cars$speed
+)
+ggplot(d_f, aes(x=speed,y=residual)) + geom_point()
+```
+
+**Example 4:** Let see what happens when the relationship between the response and the predictor is curvilinear.
+```{r,fig.align='center',cache=T}
+# Generate random values
+set.seed(1234)
+x <- rnorm(1000)
+y <- x * x + rnorm(1000)
+
+# fit a regression model
+fit_lm <- lm(y ~ x)
+
+# plot residuals agains the covariate x
+d_f <- data.frame(
+  residual = residuals(fit_lm),
+  x = x
+)
+ggplot(d_f, aes(x=x,y=residual)) + geom_point()
+```
+
+Clearly a pattern appears (remember the plot in the Exploratory Analysis chapter?). In order to take this relationship into account in the regression model, we can add a 'new' variable, the square term (using the `I(.)` function in `R`).
+
+```{r,fig.align='center',cache=T}
+# fit a regression model
+fit_lm2 <- lm(y ~ x + I(x^2))
+
+# plot residuals agains the covariate x
+d_f <- data.frame(
+  residual = residuals(fit_lm2),
+  x = x
+)
+ggplot(d_f, aes(x=x,y=residual)) + geom_point()
+```
+
+The difference is striking. If we look at the `summary`, we can see that the square term is clearly significant.
+```{r}
+summary(fit_lm2)
+```
+
+More generally, we can add to the regression model any polynomial, and the task is easy with `R` as you can simply use the function `poly(x,p)` where `x` is the variable and `p` is the degrees of the polynomial. To fix ideas, let revisit the previous example, modeling this time a polynomial of degree three. 
+
+```{r,fig.align='center',cache=T}
+# fit a regression model
+fit_lm3 <- lm(y ~ poly(x,3))
+
+# plot residuals agains the covariate x
+d_f <- data.frame(
+  residual = residuals(fit_lm3),
+  x = x
+)
+ggplot(d_f, aes(x=x,y=residual)) + geom_point()
+```
+
+Note that using `poly(x,3)` is equivalent as writting `x + I(x^2) + I(x^3)`. The regression model is the following: $$ y_i = \beta_0 + \beta_1\;x_i + \beta_2\;x_i^2 + \beta_3\;x_i^3 + \varepsilon_i, \quad i=1,\dots,n. $$
+
+Let's have a look at the summary.
+```{r}
+summary(fit_lm3)
+```
+
+Not surprisingly, the third term of the polynomial is not significant (remember we use only the second term when simulating the data). How would you write the estimated regression?
+
+[In-class: exercise 12](https://samorso.github.io/RM2017/Inclass.html#ex12)  
+
+### Independence of predictors
+The predictors should be not too strongly linearly correlated. The intuition is that if two predictors have a strong linear relationship, they carry the same amount of information for the regression model, and thus only one of them is necessary. The presence of correlated predictors in the model have a undesirable effects: the estimators are numerically unstable, you cannot rely on the numerical value obtained.  
+
+This problem is refered as the mulitcollinearity problem. One possibility to spot a problem of multicollinearity is with a scatterplot between predictors, so with the exploratory analysis tools. This problem can be considered as minor because nowadays statistical software deal quite well with these numerical issues, and if a model selection is performed (next section), the extra predictors will, in general, not be selected
+
+We now illustrate a problem of multicollinearity by using the same simulation as in **Example 4** :
+```{r,fig.align='center',cache=T}
+# Generate random values
+set.seed(1234)
+x <- rnorm(1000)
+y <- x + rnorm(1000)
+
+# Create a new variable very similar to "x"
+x2 <- x + rnorm(1000,sd=.1)
+
+# Scatterplot of x and x2
+require(ggplot2)
+qplot(x,x2)
+
+```
+(Here the linear correlation is `r cor(x,x2)`).
+
+```{r}
+# fit a regression model
+fit_lm <- lm(y ~ x)
+fit_lm1 <- lm(y ~ x2)
+fit_lm2 <- lm(y ~ x + x2)
+```
+
+See the effect of multicollinearity on the regression coefficients
+```{r,echo=F}
+d_f <- data.frame(
+  model = c("fit_lm", "fit_lm1", "fit_lm2"),
+  intercept = c(coef(fit_lm)[1], coef(fit_lm1)[1], coef(fit_lm2)[1]),
+  beta_1 = c(coef(fit_lm)[2], NA, coef(fit_lm2)[2]),
+  beta_2 = c(NA, coef(fit_lm1)[2], coef(fit_lm2)[3])
+)
+d_f
+```
+
+But nothing particular appears on the residuals vs predictors plots, they seem to be independent, an indicator for a good fit. The descriptive analysis is thus essential here to early detect a problem of multicollinearity, but as said previously, performing  model selection will generaly help to eliminate such situation.
+```{r,fig.align="center",cache=T} 
+# plot residuals agains the covariates x and x2
+d_f <- data.frame(
+  residual = residuals(fit_lm2),
+  x = x,
+  x2 = x2
+)
+require(ggplot2)
+require(gridExtra)
+p1 <- ggplot(d_f, aes(x=x,y=residual)) + geom_point()
+p2 <- ggplot(d_f, aes(x=x2,y=residual)) + geom_point()
+grid.arrange(p1,p2,nrow=1)
+```
+
+[In-class: exercise 13](https://samorso.github.io/RM2017/Inclass.html#ex13)  
+
+### Independence of the response
+Each realizations of the response variable given the predictors are assumed to be independent from each other by the model. Saying it with other words, the response variable is assumed to be identically and independently distributed (according to which probabilistic distribution?). It means for example that $y$ is not supposed to explain itself, situation that could appear for example in the context of time series, otherwise it should be taken into account in the regression model. First, we will use one specific tool to spot such situation: the autocorrelation plot. This plot visually shows the correlation between the same variable but at some increasing lag distance (**autocorrelation**).
+
+**Example 6:** Suppose we receive some observations from the following assumed model: $$y_i = \beta_0 + \beta_1\;x_i + \alpha\;y_{i-1} + \varepsilon_i,\quad i = 1,\dots,n.$$. 
+```{r}
+# sample size
+n <- 100
+
+# coefficients
+beta0 <- 1
+beta1 <- 2
+alpha <- 0.5
+
+# Generate observations
+y <- numeric(n)
+set.seed(43)
+eps <- rnorm(n)
+x <- rnorm(n)
+y[1] <- beta0 + beta1 * x[1] + eps[1]
+for(i in 2:n){
+  y[i] <- beta0 + beta1 * x[i] + alpha * y[i-1] + eps[i]
+}
+```
+
+To plot the autocorrelation we use the `forecast` package.
+```{r,eval=F}
+install.packages("forecast")
+require(forecast)
+```
+
+```{r,echo=F,warning=F,message=F}
+require(forecast)
+```
+
+```{r,cache=T,fig.align='center'}
+ggAcf(y)
+```
+
+Each *bar* represents the correlation between $y_i$ and $y_{i+l}$ where $l$ is the lag. We can clearly identify that the first lag ($l=1$), the autocorrelation is about $0.5$ as construncted with this model. For the scope of this course, we do not cover the modelisation of lagged variable but you should be aware of this phenomena.   
+
+[In-class: exercise 14](https://samorso.github.io/RM2017/Inclass.html#ex14)  
+
+### Robust regression
+The problem of outlier is specific: only few data points are concerned. To handle this problem, we can fit a robust regression. Let's illustrate with **Example 5**:
+
+Recall that we had the following in the explanatory analysis:
+```{r,fig.align='center',fig.height=4,fig.width=6,message=FALSE,cache=TRUE}
+# Generate random values
+set.seed(1234)
+x <- rnorm(1000)
+y <- x + rnorm(1000)
+
+# We add randomly some outliers
+y[sample(1000,10)] <- rnorm(10,mean=15)
+
+# Plot  
+qplot(x,y)
+```
+
+Now suppose you want to model the response $y$ with the covariate $x$ (intercept $\beta_0$ is 0 and coefficient $\beta_1$ is 1). 
+```{r,cache=T}
+# Linear model
+fit_lm <- lm(y ~ x)
+summary(fit_lm)
+
+# Robust linear model from MASS package
+require(MASS)
+fit_rlm <- rlm(y ~ x)
+summary(fit_rlm)
+```
+
+You can see that the intercept is affected (significantly different from 0 with the linear model).
+
+On a practical note, you can always try both robust and regular and see whether there are differences. If there are none, keep the regular, if there are, use your intuition from the explanatory variable to decide which approach is the best. 
+
+[In-class: exercise 15](https://samorso.github.io/RM2017/Inclass.html#ex15)  
+
+## Model selection
+The goal of model selection is to provide us with the model the generalize the most, in the sense that it explains well the population (and not only the sample). The goal is to choose the right combination of predictors as some might be irrelevant (remember for example the problems of multicollinearity and/or non-linearity). For this purpose, the AIC (*Akaike Information Criterion*) is a popular option: it gives a score to each possible models. You achieve model selection by taking the model that minimises the scores.
+
+**Example 7:** We use the `mtcars` dataset for which we want to explain the miles per gallon with respect to different predictors (10).
+```{r,cache=T}
+data(mtcars)
+head(mtcars)
+str(mtcars)
+
+# Modify into factors
+mtcars2 <- mtcars
+mtcars2$cyl <- as.factor(mtcars$cyl)
+mtcars2$vs <- as.factor(mtcars$vs)
+mtcars2$am <- as.factor(mtcars$am)
+mtcars2$gear <- as.factor(mtcars$gear)
+mtcars2$carb <- as.factor(mtcars$carb)
+str(mtcars2)
+```
+
+We created a copy of the dataset where we modify some predictor to be factors. For the sake of the exercise, we fit a regression model where for every continuous predictor we add the polynomial of order 3 ($p=?$). We now select the best model according to the AIC:
+```{r,cache=T}
+fit_lm <- lm(mpg ~ cyl + poly(disp,3) + poly(hp,3) + poly(drat,3) + poly(wt,3) + 
+               poly(qsec,3) + vs + am + gear + carb, data = mtcars2)
+require(MASS)
+stepAIC(fit_lm)
+```
+
+Here the function `stepAIC` consider `poly(predictor,3)` as 'one predictor' in the sense either all the three polynomes are included or all are excluded. To refine the result, we can do the following instead:
+
+```{r,cache=T}
+fit_lm2 <- lm(mpg ~ . + I(disp^2) + I(disp^3) + I(hp^2) + I(hp^3) + 
+                I(drat^2) + I(drat^3) + I(wt^2) + I(wt^3) + I(qsec^2) + I(qsec^3), data = mtcars2)
+fit_aic <- stepAIC(fit_lm2)
+```
+
+The initial model has a AIC score of `r extractAIC(fit_lm2)[2]`. The final (with minimum score found) model has an AIC score of 24.57. It is the following: $\begin{align*} \text{mpg} &= \beta_0 + \beta_1\;\text{cyl}_6 + \beta_2\;\text{cyl}_8 + \beta_3\;\text{disp} + \beta_4\;\text{drat} + \beta_5\;\text{wt} + \beta_6\;\text{qsec} + \beta_7\;\text{vs}_1 + \beta_8\;\text{gear}_4 + \beta_9\;\text{gear}_5 + \\ &\quad\beta_{10}\;\text{carb}_2 + \beta_{11}\;\text{carb}_3 + \beta_{12}\;\text{carb}_4 + \beta_{13}\;\text{carb}_6 + \beta_{14}\;\text{carb}_8 + \beta_{15}\;\text{disp}^2 + \beta_{16}\;\text{disp}^3 + \beta_{17}\;\text{hp}^3 \\ &\quad + \beta_{18}\;\text{drat}^2 + \beta_{19}\;\text{drat}^3 + \beta_{20}\;\text{qsec}^2 + \beta_{21}\;\text{qsec}^3 + \varepsilon \end{align*}$
+
+Can you write the fitted model?
+
+[In-class: exercise 16](https://samorso.github.io/RM2017/Inclass.html#ex16)  
+
+## Prediction
+Suppose we receive new data for the predictors (assumely for all of them), we want to be able to say something about the new response that we have not observed yet, we want to predict it. We have already seen how to predict a point. For the above example, suppose we observe a new value for every predictors $x^{\text{new}}$, we can predict the future value for the response $y^{\text{new}}$:
+
+```{r}
+x_new <- data.frame(cyl = '6', disp = 150, hp = 102, drat = 2.05, wt = 4.03, 
+                    qsec = 15.01, vs = '0', am = '1', gear = '3', carb = '2')
+predict(fit_aic, newdata = x_new)
+```
+Note how we input data for the factors. It is even possible to give this prediction within an interval: a **prediction interval**:
+```{r}
+predict(fit_aic, newdata = x_new, interval = "predict", level = 0.95)
+predict(fit_aic, newdata = x_new, interval = "confidence", level = 0.95)
+```
+
+The confidence interval at a $1-alpha$ level for a future observation is defined as $$ \hat{y}^{\text{new}} \mp t_{1-\alpha/2;\;n-p-1}\hat{\sigma}_y$$
+The prediction interval is similar, it is given by $$ \hat{y}^{\text{new}} \mp t_{1-\alpha/2;\;n-p-1}\tilde{\sigma}_y,$$ where $\tilde{\sigma}_y>\hat{\sigma}_y$. The intuition is that when we construct a prediction interval we take into account the uncertainty around our estimated coefficients ($\hat{\beta}$) and the gaussian noise ($\varepsilon$) as the assumed model is $y=X\beta+\varepsilon$. When constructing a confidence interval, the noise is not taken into account, only the uncertainty around the coefficients, thus we have necessarily $\tilde{\sigma}_y>\hat{\sigma}_y$, meaning the prediction interval will be always larger than confidence interval for the same level.
+
+[In-class: exercise 17](https://samorso.github.io/RM2017/Inclass.html#ex17)  
+[Homework: exercise 6](https://samorso.github.io/RM2017/hmw.html#ex6)
+
+# References   
+
 * Reboulleau, J. and Boldi, M.-O. (2016) ''Multivariate statistics''.
 * Kuiper, S. (2008) ''Introduction to Multiple Regression: How Much Is Your Car Worth?'' *Journal of Statistics Education* Volume 16, Number 3.   
+* Davison, A. (2003) ''Statistical Models''  
 * Kuffner, T. and Walker, S. (2017) ''Why are p-values controversial?'' *The American Statistician* (just-accepted) http://dx.doi.org/10.1080/00031305.2016.1277161   

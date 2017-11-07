@@ -3,3 +3,6 @@ ggplot2
 gridExtra
 dplyr
 bindrcpp
+ggfortify
+forecast
+MASS
