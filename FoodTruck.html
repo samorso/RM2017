@@ -12,7 +12,7 @@
 
 <meta name="author" content="Samuel Orso, Sacha Varone" />
 
-<meta name="date" content="2017-09-26" />
+<meta name="date" content="2017-11-08" />
 
 <title>HealthyFood</title>
 
@@ -35,7 +35,7 @@
 <h1 class="title toc-ignore">HealthyFood</h1>
 <h2 class="subtitle">a food truck problem</h2>
 <h3 class="author">Samuel Orso, Sacha Varone</h3>
-<h3 class="date">2017-09-26</h3>
+<h3 class="date">2017-11-08</h3>
 </div>
 </header>
 
@@ -43,8 +43,8 @@
 <div id="TOC" class="toc">
 <ul>
 <li><a href="#presentation">Presentation</a></li>
-<li><a href="#questions-for-multivariate-statistics-part">Questions for multivariate statistics part</a></li>
 <li><a href="#work-process">Work process</a></li>
+<li><a href="#questions-for-multivariate-statistics-part">Questions for multivariate statistics part</a></li>
 </ul>
 </div>
 
@@ -81,21 +81,6 @@
 <li><em>BlueLake</em>: The amount of <em>BlueLake</em> menu sold.</li>
 </ul>
 </div>
-<div id="questions-for-multivariate-statistics-part" class="section level2">
-<h2>Questions for multivariate statistics part</h2>
-<ol style="list-style-type: decimal">
-<li><p>Make an exploratory analysis of the dataset, in particular answer the questions:</p>
-<ul>
-<li>What are the predictors, what are the response variables? What is their nature (factors, numeric, ordinal, …)?<br />
-</li>
-<li>Do you think there are problems of outliers, multicollinearity, non-linearity?</li>
-</ul></li>
-<li><p>Perform a one-way ANOVA test of <code>BlueLake</code> per <code>week_day</code>. Give all the necessary details (testing hypothesis, conclusion). Perform a multiple pairwise comparison. Repeat for the two other menus.</p></li>
-<li><p>Based on previous points, what regression model would you like to fit to explain the quantities of menus sold? Would you transform variables? Make a robust regression? Other? Write down the regression models you intend to fit.</p></li>
-<li><p>Based on your answer at point 3, fit three regression models, one per menu. Write down the estimated regression equations.</p></li>
-<li><p>Analyse the residuals of your regressions. Are the assumptions met? Would make any modifications to the proposed model at point 3?</p></li>
-</ol>
-</div>
 <div id="work-process" class="section level2">
 <h2>Work process</h2>
 <p>Your project is spread into two parts:</p>
@@ -112,6 +97,44 @@
 </li>
 <li>Work: You receive a new set of data. These data are specific for your Group and differs from other Groups. With this new set of data you answer the questions written in the project presentation. You write a report of maximum 4 pages (meaning 2 sheets recto-verso) per course (statistics, management science). The deadline to submit your report is December 15th. In case of late submission, a penalty of -0.2/day will be automatically applied. If no report is submitted, the group will receive the grade 0.</li>
 </ul></li>
+</ol>
+</div>
+<div id="questions-for-multivariate-statistics-part" class="section level2">
+<h2>Questions for multivariate statistics part</h2>
+<p>Your goal is to build a multivariate regression model that leads to good prediction accuracy. Your report (max 4 pages) should be structured as follows:</p>
+<ul>
+<li>Title: the title of your report and the names of the members of the group.<br />
+</li>
+<li>Abstract: a summary of your results and the method you employed (max 150 words).<br />
+</li>
+<li>Introduction: state your objective and summarize the problem at stake.<br />
+</li>
+<li>Results: you shall seperate your results into four subsections: Explanatory analysis, Model building, Model checking and Prediction.<br />
+</li>
+<li>Discussion: summarize the important findings and open the debate for future research.</li>
+</ul>
+<p>The result should contain the most relevant findings. For example, if two predictors are multicollinear, it may be worth illustrating it in the Explantory Analysis. While working, there might be several iterations between Model building and Model checking. You should be as succint as possible: give your initial and final models and why (on what basis) you included/modified/excluded some predictors.</p>
+<p>To help you construct the report, you should answer the following questions:</p>
+<ol style="list-style-type: decimal">
+<li><p>Make an exploratory analysis of the dataset, in particular answer the questions:</p>
+<ul>
+<li>What are the predictors, what are the response variables? What is their nature (factors, numeric, ordinal, …)?</li>
+<li>Do you think there are problems of outliers, multicollinearity, non-linearity?</li>
+</ul></li>
+<li>Perform a one-way ANOVA test of BlueLake per week_day. Give all the necessary details (testing hypothesis, conclusion). Perform a multiple pairwise comparison. Repeat for the two other menus.<br />
+</li>
+<li>Based on previous points, what regression model would you like to fit to explain the quantities of menus sold? Would you transform variables? Make a robust regression? Other? Write down the regression models you intend to fit.<br />
+</li>
+<li>Based on your answer at point 3, fit three regression models, one per menu. Write down the estimated regression equations.<br />
+</li>
+<li>Analyse the residuals of your regressions. Are the assumptions met? Would you make any modifications to the proposed model at point 3?<br />
+</li>
+<li>Construct the full model for each menu: add potential non-linearities, take into account potential sources heteroscedasticity, outliers.</li>
+<li>Select the ‘best’ model according to the AIC. Which model is it? Does it make sense to you? Do you believe some predictors are missing?<br />
+</li>
+<li>Check your ‘best’ model. Do the assumptions of your multivariate linear regression hold? Discuss each assumption.<br />
+</li>
+<li><p>Based on your ‘best’ model and the dataset <code>goodfood_test.csv</code>, construct the prediction interval for the three menus.</p></li>
 </ol>
 </div>
     </section>

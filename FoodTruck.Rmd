@@ -12,7 +12,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warnings = FALSE, message = FALSE)
 ```
 
 ## Presentation
@@ -33,20 +33,6 @@ The historical data of Goodfood comprises twelve variables:
 * *Earth*: The amount of _Earth_ menu sold.   
 * *BlueLake*: The amount of _BlueLake_ menu sold.   
 
-## Questions for multivariate statistics part
-1. Make an exploratory analysis of the dataset, in particular answer the questions: 
-
-    + What are the predictors, what are the response variables? What is their nature (factors, numeric, ordinal, ...)?   
-    + Do you think there are problems of outliers, multicollinearity, non-linearity?   
-    
-2. Perform a one-way ANOVA test of `BlueLake` per `week_day`. Give all the necessary details (testing hypothesis, conclusion). Perform a multiple pairwise comparison. Repeat for the two other menus.   
-
-3. Based on previous points, what regression model would you like to fit to explain the quantities of menus sold? Would you transform variables? Make a robust regression? Other? Write down the regression models you intend to fit.    
-
-4. Based on your answer at point 3, fit three regression models, one per menu. Write down the estimated regression equations.   
-
-5. Analyse the residuals of your regressions. Are the assumptions met? Would make any modifications to the proposed model at point 3?    
-
 ## Work process
 
 Your project is spread into two parts:   
@@ -61,3 +47,30 @@ Your project is spread into two parts:
      + Group: On the 15th of November, we constitute groups of 4 students, by mixing random groups of your class.  
      + Work: You receive a new set of data. These data are specific for your Group and differs from other Groups. With this new set of data you answer the questions written in the project presentation. You write a report of maximum 4 pages (meaning 2 sheets recto-verso) per course (statistics, management science). The deadline to submit your report is December 15th. In case of late submission, a penalty of -0.2/day will be automatically applied. If no report is submitted, the group will receive the grade 0.
 
+## Questions for multivariate statistics part
+Your goal is to build a multivariate regression model that leads to good prediction accuracy. Your report (max 4 pages) should be structured as follows: 
+
+* Title: the title of your report and the names of the members of the group.   
+* Abstract: a summary of your results and the method you employed (max 150 words).   
+* Introduction: state your objective and summarize the problem at stake.    
+* Results: you shall seperate your results into four subsections: Explanatory analysis, Model building, Model checking and Prediction.   
+* Discussion: summarize the important findings and open the debate for future research.   
+
+The result should contain the most relevant findings. For example, if two predictors are multicollinear, it may be worth illustrating it in the Explantory Analysis. While working, there might be several iterations between Model building and Model checking. You should be as succint as possible: give your initial and final models and why (on what basis) you included/modified/excluded some predictors. 
+
+
+To help you construct the report, you should answer the following questions:    
+
+1. Make an exploratory analysis of the dataset, in particular answer the questions:    
+
+      + What are the predictors, what are the response variables? What is their nature (factors, numeric, ordinal, …)?
+      + Do you think there are problems of outliers, multicollinearity, non-linearity?   
+      
+2. Perform a one-way ANOVA test of BlueLake per week_day. Give all the necessary details (testing hypothesis, conclusion). Perform a multiple pairwise comparison. Repeat for the two other menus.    
+3. Based on previous points, what regression model would you like to fit to explain the quantities of menus sold? Would you transform variables? Make a robust regression? Other? Write down the regression models you intend to fit.    
+4. Based on your answer at point 3, fit three regression models, one per menu. Write down the estimated regression equations.    
+5. Analyse the residuals of your regressions. Are the assumptions met? Would you make any modifications to the proposed model at point 3?    
+6. Construct the full model for each menu: add potential non-linearities, take into account potential sources heteroscedasticity, outliers.
+7. Select the 'best' model according to the AIC. Which model is it? Does it make sense to you? Do you believe some predictors are missing?     
+8. Check your 'best' model. Do the assumptions of your multivariate linear regression hold? Discuss each assumption.   
+9. Based on your 'best' model and the dataset `goodfood_test.csv`, construct the prediction interval for the three menus.   
