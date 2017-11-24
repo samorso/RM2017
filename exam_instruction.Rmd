@@ -1,0 +1,88 @@
+---
+title: "Multivariate statistics"
+subtitle: "Examination"
+author: "Samuel Orso"
+date: "`r Sys.Date()`"
+output: 
+ prettydoc::html_pretty:
+  theme: architect
+  highlight: github
+  toc: true
+  df_print: kable
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Exam instruction
+Please note the following instructions for your examination:    
+
+1. The exam is closed book (no books, no slides, ...), but a cheat sheet of 6 pages (3 sheets A4) is allowed.   
+2. Computers and cell phones, or any other communications system, are forbidden.   
+3. A calculator of your choice is allowed.   
+4. The exam lasts 120 minutes.   
+5. You must answer with a blue or black pen (no other colors, no pencil).    
+6. The exam is written in both french and english and you can decide to answer in french or in english (but only one).   
+7. The exam is seperated into multiple quetions (QCM) and open questions:   
+
+    * QCM: There are 15 questions with 5 possible answers each. There is only **one** correct answer. One correct answer is 1 point, one wrong answer is -0.2 point, no answer is 0 point. Two or more answers is one wrong answer.
+    * Open questions: You must answer on the exam sheets within the dedicated space, external sheets are not considered during the correction. It is a supreme necessity that you justify each of your answers.   
+    
+# Examples
+### QCM
+
+**Question:**   
+
+What is the signification of the level $\alpha$ when testing hypothesis?   
+_Que signifie le niveau $\alpha$ dans un test d'hypothèse?_
+
+1. The probability of making correct inference.  
+  _La probabilité de faire une inférence correcte._   
+2. The risk of failing to reject $H_0$ when $H_0$ is false.   
+  _Le risque de ne pas rejeter $H_0$ lorsque $H_0$ est fausse._   
+3. The probability of accepting $H_1$.   
+  _La probabilité d'accepter $H_1$._  
+4. The risk of rejecting $H_0$ when $H_0$ is true.   
+  _Le risque de rejeter $H_0$ lorsque $H_0$ est vraie._
+5. The risk of rejecting $H_0$ when $H_0$ is false.   
+  _Le risque de rejeter $H_0$ lorsque $H_0$ est fausse._  
+  
+**Answer:** (not provided with the exam)   
+
+When testing an hypothesis, the level $\alpha$ is the risk of rejecting the null-hypothesis when it is true, also known as the Type I error. Clearly answer 4. is correct and answers 1.,2. and 5. are wrong. Answer 3. is also wrong because: first, you never accept an hypothesis but fail to reject it, second, the statement is unconditionnal of the true nature of $H_0$ (you are not saying whether $H_0$ is true or false).
+
+
+### Open questions
+
+**Question:**   
+You receive this `R` output:
+```{r, echo=F, message = F, warning = F}
+require(car)
+fit_lm <- lm(income ~ age + sex + population, data = Chile)
+```
+
+```{r}
+summary(fit_lm)
+```
+
+Based on this output, write down the estimated regression model and specify which regression coefficient are significant at a level of $\alpha=5\%$.
+
+_Vous recevez cet ouput de `R`. Ecrivez le modèle de régression estimé et spécifiez quel(s) coefficient(s) de régression sont significatifs à un niveau $\alpha=5\%$._
+
+**Answer:** (not provided with the exam)   
+
+The estimated regression model is given by:
+$$ \hat{y} = 22'490 - 100.7\;\text{age} + 4'455\;\text{sex}_{\text{M}} + 0.0836\;\text{population} $$
+All the regression coefficients are significant at a level of $\alpha=5\%$.
+
+
+**Question:**   
+Suppose that `sex` is a factor with two levels: `F` for female and `M` for male. Based on your previous answer, what is the marginal effect of being a male on the income with this regression model?   
+
+_Supposez que `sex` est un facteur avec deux niveaux: `F` pour femme et `M` pour homme. En vous basant sur votre réponse précédente, quelle est l'effet marginal d'être un homme sur les revenus dans ce modèle de régression?_
+
+**Answer:** (not provided with the exam)  
+
+Marginally being a male increases of 4'455 units the income (we do not know in what units the income is expressed) based on this regression model.
+
