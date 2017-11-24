@@ -73,8 +73,8 @@ _Vous recevez cet ouput de `R`. Ecrivez le modèle de régression estimé et sp�
 **Answer:** (not provided with the exam)   
 
 The estimated regression model is given by:
-$$ \hat{y} = 22'490 - 100.7\;\text{age} + 4'455\;\text{sex}_{\text{M}} + 0.0836\;\text{population} $$
-All the regression coefficients are significant at a level of $\alpha=5\%$.
+$$ \hat{y} = 22'490 - 100.7\;\text{age} + 4'455\;\text{sex}_{\text{M}} + 0.0836\;\text{population}, $$
+where $\hat{y}$ are the estimated `income` based on this regression model. All the regression coefficients are significant at a level of $\alpha=5\%$.
 
 
 **Question:**   
