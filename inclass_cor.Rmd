@@ -1,0 +1,399 @@
+---
+title: "Multivariate statistics"
+subtitle: "In-class exercises - partial correction"
+author: "Samuel Orso"
+date: "`r Sys.Date()`"
+output: 
+ prettydoc::html_pretty:
+  theme: architect
+  highlight: github
+  toc: true
+  df_print: kable
+  fig_width: 7
+  fig_height: 5
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, fig.pos = 'center')
+```
+
+# Inference
+<div id="ex7">
+**Exercise 7:** In a chain of supermarkets, you want to know if a product is enhanced when installed in front or in the middle. The data set of product sales (a soda) is in `sales.csv`. We consider that being in front is a privilege, which is applied to a product if there is clear evidence that this position improves sales.  
+
+1. Load the dataset in `R`. First set the working directory (where you want to work with `R` in your computer) by using the `setwd("my directory")` commands. Then load the dataset using the command `sales <- read.csv(file="sales.csv", header=TRUE, sep=";")`.  
+```{r,echo=F}
+setwd("~/Documents/Teaching/RM")
+sales <- read.csv(file="sales.csv", header=TRUE, sep=";")
+```
+
+
+```{r,eval=F}
+setwd("your/path/") # Specify the working directory (where is sales.csv save)
+sales <- read.csv(file="sales.csv", header=TRUE, sep=";")
+```
+
+_It is not asked in this question, but a graph is always helpful to understand the data, and it will be useful in question._
+```{r, cache=T}
+require(ggplot2)
+ggplot(data=sales, aes(x=Position, y=Sales, group=Position, fill=Position)) +
+  geom_boxplot()
+```
+
+
+2. Which test should you pick? What are the null and alternative hypothesis?  
+_We want to test the difference in sales of a soda in two situations. It is not explicit, but testing the sales average seems a good way to go. We saw two tests in class: $t$-test for two populations and paired $t$-test. We can reasonably assumed that it is not the same "individual" soda test into two different situations (a client buys a soda but does not give it back), hence a $t$-test for two populations is the right choice (and the only one we saw in class). The null-hypothesis is: $$H_0: \mu_{\text{Front}} = \mu_{\text{Middle}}$$ Since it is assumed that soda being in front is a privilege, the test is oriented, the  alternative hypothesis is $$H_1: \mu_{\text{Front}} > \mu_{\text{Middle}}$$_
+
+3. Make a test for two populations. Use directly the `R` function `t.test(.)` and inspire yourself from the course. What is your conclusion?   
+```{r}
+t.test(Sales ~ Position, alternative = "greater", data = sales)
+```
+_The level of significance is not explicitly stated so we choose by default $\alpha=5\%$. Here the $p$-value is greater than $\alpha$, so we do not reject the null-hypothesis: we did not gather enough evidence against $H_0$._
+
+4. Same as 3 but with a paired $t$-test. What am I assuming when making this test?   
+_Since there are exactly 10 sales per position, we can also make a paired $t$-test, and hereby assume that the very "individual" soda are tested into two different situations._
+```{r}
+t.test(Sales ~ Position, alternative = "greater", data = sales, paired = T)
+```
+_We cannot reject $H_0$ at a level of $alpha=5\%$._
+
+5. Repeat 3 and 4 with the Wilcoxon's signed-rank test. Is the conclusion different? How can you check if there are outliers? Have you found any?   
+On the boxplot we can see one outlier for soda in front. It has the effect to reduce the sales on average.
+```{r}
+wilcox.test(Sales ~ Position, alternative = "greater", data = sales)
+wilcox.test(Sales ~ Position, alternative = "greater", data = sales, paired = T)
+```
+_With the Wilcoxon test for two different populations, we reject the null-hypothesis at a level of 5\%: based on this sample, we gathered enough evidence to conclude that enhancing the soda in front increases significantly the sales on average._
+</div>
+
+
+<div id="ex8">  
+**Exercise 8:** We are interested in the difference of delays of airplaines at NYC in 2013.   
+
+1. Load the data from the package `nycflights13`. Install and call the package.    
+```{r, eval=F}
+install.packages("nycflights13")
+require(nycflights13)
+```
+```{r,echo=F}
+require(nycflights13)
+```
+
+2. The data you are interested is called `flights`, run the command `flights` and `?flights` to understand the data.    
+```{r,eval=F}
+flights
+?flights
+```
+
+3. Construct a boxplot of `arr_delay` against `carrier`. You can find to which company the `carrier` refers to in `airlines` data (just enter `airlines` in `R`).    
+```{r,cache=T}
+require(ggplot2)
+ggplot(data=flights, aes(x=carrier, y=arr_delay, group=carrier, fill=carrier)) +
+  geom_boxplot()
+```
+
+4. Perform an one-way ANOVA test of `arr_delay` per `carrier`. What are the hypothesis? What is your conclusion?    
+_We test $H_0: all averages are equals$, against $H_1: at least one difference$._
+```{r}
+anova_test <- aov(arr_delay ~ carrier, data = flights)
+summary(anova_test)
+```
+_We can clearly reject $H_0$ at any level: we conclude that there is at least one difference of average based on this sample._
+
+5. Perform multiple comparisons. What is the Dunn-Sidak correction? How many pairs? For which pair can you conclude the test?   
+_There are 16 different carrier, so there are $c = \begin{pmatrix} 16 \\ 2 \end{pmatrix} = 120$ different pairs. Assuming a global level of risk $\alpha=5\%$, the Dunn-Sidak correction for individual testing is $\alpha_I = 1 - 0.95^{1/120}\approx 4.27\cdot10^{-4}$. The multiple comparison are given by:_
+```{r,cache=T}
+p <- pairwise.t.test(x = flights$arr_delay, g = flights$carrier, p.adjust.method = "none", pool.sd = FALSE)
+print(p)
+sum(p$p.value<1-.95^(1/120),na.rm=T)
+```
+_It is hard to distinguish a clear pattern with this amount of test. There are in total 83 tests that are significant ($p$-value under 4.27\cdot10^{-4}). Maybe the only noticeable fact is that the carrier "OO" is not significantly different from all the other carrier._
+
+6. Restart 4 and 5 with Kruskal-Wallis and Wilcoxon tests? Are there contradictions? If yes, why?  
+```{r,cache=T}
+# kruskal.test(arr_delay ~ carrier, data = flights)
+p2 <- pairwise.wilcox.test(x = flights$arr_delay, g = flights$carrier, p.adjust.method = "none", pool.sd = FALSE)
+print(p2)
+sum(p2$p.value<1-.95^(1/120),na.rm=T)
+```
+There are 96 tests significant. Compare to the previous multiple $t$-test, more are significant. These difference accounts for the large number of outliers present in the dataset. Wilcoxon test seems more reliable due to its robustness. All the extra significant test are unsignificant $t$-test that "became" significant once using Wilcoxon test, with the only exception of "9E" against "UA" (significant with $t$-test and not significant with Wilcoxon test). 
+</div>
+
+# Multivariate Regression model
+<div id="ex11">
+**Exercice 11:** Model the linear regression to explain the _Price_ from **CS** with the predictors _Mileage_, _Make_, _Doors_, _Liter_, _Cruise_, _Cylinder_.
+
+1. Fit the linear model and plot the residuals against the fitted values. Do you think the assumption of homoscedasticity holds?   
+```{r}
+setwd("~/Documents/Teaching/RM/")
+cs_data_set <- read.csv(file = "kuiper.csv", sep = ",", head = T)
+str(cs_data_set)
+
+# Specify some variables as the factors
+cs_data_set$Doors <- as.factor(cs_data_set$Doors)
+cs_data_set$Cylinder <- as.factor(cs_data_set$Cylinder)
+cs_data_set$Cruise <- as.factor(cs_data_set$Cruise)
+cs_data_set$Sound <- as.factor(cs_data_set$Sound)
+cs_data_set$Leather <- as.factor(cs_data_set$Leather)
+
+# Fit linear model
+fit_lm <- lm(Price ~ Mileage + Make + Doors + Liter + Cruise + Cylinder, data = cs_data_set)
+summary(fit_lm)
+```
+
+```{r,cache=T}
+# Plot residuals against fitted values
+require(ggfortify)
+autoplot(fit_lm, which = 1, label.size = 3)
+```
+
+_We can clearly see a pattern appearing: the points do not seem to be randomly distributed around 0. On the contrary, the variability seems to increase with the values of $\hat{y}$. The assumption of homoscedasticity appears to be violated._
+
+2. Log-transform the _Price_ and answer point 1). Do you see any difference?    
+```{r}
+# Log transformation Price
+cs_data_set <- within(cs_data_set, Price <- log(Price))
+
+# Fit linear model
+fit_lm2 <- lm(Price ~ Mileage + Make + Doors + Liter + Cruise + Cylinder, data = cs_data_set)
+summary(fit_lm2)
+```
+
+```{r,cache=T}
+# Plot residuals against fitted values
+require(ggfortify)
+autoplot(fit_lm2, which = 1, label.size = 3)
+```
+_The difference is striking: the impression of increasing variability has (almost) disappeared._ 
+</div>
+
+<div id="ex12">
+**Exercice 12:** Use your responses of **Exercise 11** and answer the following questions:
+
+1. Plot the residuals against _Mileage_. Do you see any particular pattern? Do you believe any polynomials should be included in the regression model?   
+
+```{r,cache=T}
+# Plot residuals against fitted Mileage
+d_f <- data.frame(
+  residual = residuals(fit_lm2),
+  Mileage = cs_data_set$Mileage
+)
+ggplot(d_f, aes(x=Mileage,y=residual)) + geom_point()
+```
+
+_We cannot see any specific pattern on the graph._
+
+2. Add _Mileage_ up to the order 4 in the regression model using the `poly()` function and answer question 1) again.   
+
+```{r,cache=T}
+# Fit linear model
+fit_lm3 <- lm(Price ~ poly(Mileage,4) + Make + Doors + Liter + Cruise + Cylinder, data = cs_data_set)
+summary(fit_lm3)
+
+# Plot residuals against fitted Mileage
+d_f <- data.frame(
+  residual = residuals(fit_lm3),
+  Mileage = cs_data_set$Mileage
+)
+ggplot(d_f, aes(x=Mileage,y=residual)) + geom_point()
+```
+_The pattern here is very similar to the previous one. Adding extra order of the variable Mileage does not seem to provide us with a better the model. Note that the terms of order 1 and 3 are significant._
+
+</div>
+
+
+<div id="ex13">
+**Exercice 13:** Use your responses of **Exercise 11** and answer the following questions:
+
+1. Explore the linear relationship between the predictors using the correlation and the scatterplots. Is there any reason to believe some predictors are multicollinear?  
+
+_I only show the relevant result (but it is a good idea for you to train on all variables). The relation between `Liter` and `Cylinder` seems strongly linearly correlated._
+```{r,cache=T}
+# Correlation 
+cor(as.numeric(cs_data_set$Cylinder), cs_data_set$Liter)
+
+# scatterplot
+require(ggplot2)
+qplot(cs_data_set$Cylinder, cs_data_set$Liter)
+
+# multiple boxplot
+ggplot(data=cs_data_set, aes(x=Cylinder, y=Liter, group=Cylinder, fill=Cylinder)) +
+  geom_boxplot()
+```
+
+2. If yes, try to fit the model with and without the multicollinear predictors. What difference do you observe?   
+
+```{r}
+fit_lm4 <- lm(Price ~ Mileage + Make + Doors + Cruise + Cylinder, data = cs_data_set)
+summary(fit_lm4)
+```
+
+_There is a clear difference for the coefficients and their standard deviation of $\text{Cylinder}_6$ and $\text{Cylinder}_8$._
+
+</div>
+
+
+<div id="ex14">
+**Exercice 14:** Using your regression model in **Exercise 13** answer the following questions:
+
+1. Make an autocorrelation plot of your response variable. How do you interpret the plot? What do you think would be the appropriate action to take here, if any?   
+
+```{r,cache=T}
+require(forecast)
+ggAcf(cs_data_set$Price)
+```
+_The Price is clearly autocorrelated at any lags._
+
+2. Same as point 1) but on the residuals of the fitted model.   
+
+```{r,cache=T}
+res <- residuals(fit_lm4)
+ggAcf(res)
+```
+_Here also the residuals are autocorrelated._
+
+3. What do you believe will happen if we randomly reorganize the rows of the dataset? Is there argument preventing us of doing so?       
+
+_There are no reasons for not changing the order of the rows. A counter-example would be if the data was time dependent, but here there is no reason to have the first car on the first row, or on any other rows, and so on._
+
+```{r}
+set.seed(1234)
+cs_data_set2 <- cs_data_set[sample.int(nrow(cs_data_set),nrow(cs_data_set)),]
+fit_lm5 <- lm(Price ~ Mileage + Make + Doors + Cruise + Cylinder, data = cs_data_set2)
+summary(fit_lm5)
+```
+_There are abolutely no difference in any values with the previous regression model. Let have a look at the autocorrelated plot:_
+
+```{r,cache=T}
+res <- residuals(fit_lm5)
+ggAcf(res)
+```
+
+_All the autocorrelation has disappeared. Morality, the autocorrelation here was simply an artifact created from the the entry position of the car. We do not need to take into account in the model._
+
+```{r,eval=F,echo=F}
+kars3 <- kars2[sample.int(nrow(kars2),nrow(kars2)),]
+fit_lm <- lm(Price ~ Mileage + Make + Cylinder + Doors + Cruise, data = kars3)
+d_f <- data.frame(
+  fitted <- fitted(fit_lm),
+  index <- seq_len(nrow(kars2)),
+  group <- kars2$Model
+)
+qplot(d_f$index, d_f$fitted)
+ggplot(d_f, aes(x=index, y=fitted, color=group)) + geom_point()
+d_f <- data.frame(
+  fitted <- fitted(fit_lm),
+  index <- seq_len(nrow(kars2)),
+  group <- kars2$Trim
+)
+ggplot(d_f, aes(x=index, y=fitted, color=group)) + geom_point()
+
+fit_lm2 <- lm(Price ~ Mileage + Make + Model + Cylinder + Doors + Cruise, data = kars2)
+summary(fit_lm2)
+d_f <- data.frame(
+  fitted <- residuals(fit_lm2),
+  index <- seq_len(nrow(kars2)),
+  group <- kars2$Model
+)
+qplot(d_f$index, d_f$fitted)
+ggplot(d_f, aes(x=index, y=fitted, color=group)) + geom_point()
+```
+</div>
+
+<div id="ex15">
+**Exercice 15:** Using the same model as in **Exercise 14**, fit a robust linear regression and compare the coefficients. Do you believe there is a problem of outliers?   
+
+```{r}
+require(MASS)
+fit_rlm <- rlm(Price ~ Mileage + Make + Doors + Cruise + Cylinder, data = cs_data_set)
+summary(fit_rlm)
+cbind(coef(fit_rlm),coef(fit_lm4))
+```
+
+_The coefficients are very close. The linear regression model does not seem to suffer from outliers._
+
+</div>
+
+<div id="ex16">
+**Exercice 16:** Using the **CS** dataset:    
+
+1. Fit the linear regression model with all predictors. What is the AIC criterion? (Use the function `extractAIC()`)
+
+```{r}
+fit_lm6 <- lm(Price ~ ., data = cs_data_set)
+extractAIC(fit_lm6)
+```
+
+_There are 74 coefficients, the AIC is -5867.51._
+
+
+2. Fit another model with less predictors and compare the AIC criterion. Which one of the two would you choose?   
+_We can use a model from previous question._
+```{r}
+extractAIC(fit_lm4)
+```
+_There 11 coefficients, the AIC is -3269.248 Based on the AIC, we would choose the full model as AIC is smaller._
+
+3. Select the best model according to the AIC criterion by using the function `stepAIC()`.   
+
+```{r}
+select_aic <- stepAIC(fit_lm6)
+summary(select_aic)
+```
+
+_The `NA` values appearing in the selected model means that some levels of the factors are perfectly colinear with other ones. In order to resolve this issue, one should then merge these levels appropriately (not seen here)._
+
+4. Which predictors are present in the 'best' model? Write down the regression model.   
+
+_There are 6 predictors present in the final model: `Mileage`, `Model`, `Trim`, `Cruise`, `Sound` and `Leather`. With 74 regressors, it is bit too tedious to write down the whole model._
+
+</div>
+ 
+<div id="ex17">
+**Exercice 17:** Suppose you observe the following new values for the predictors in **CS**:
+```{r}
+new_x <- data.frame(
+  Mileage = 49081,
+  Make = "Saturn",
+  Model = "Ion",
+  Trim = "Quad Coupe 2D",
+  Type = "Coupe",
+  Cylinder = "6",
+  Liter = 2.2,
+  Doors = "2",
+  Cruise = "0",
+  Sound = "1",
+  Leather = "1"
+)
+new_x
+```
+
+1. What is the prediction of the _Price_ based on your 'best' model of **Exercise 16**?   
+
+_Here I used the log-transform of the Price. You need to transform back to the right scale by taking the exponential._ 
+```{r}
+y_new <- exp(predict(select_aic, newdata = new_x))
+y_new
+```
+
+2. Give the confidence interval at a level of 90% and 95%.   
+```{r}
+exp(predict(select_aic, newdata = new_x, interval = "confidence", level = c(0.9,0.95)))
+```
+
+3. Give the prediction interval at a level of 90% and 95%.   
+```{r}
+exp(predict(select_aic, newdata = new_x, interval = "predict", level = c(0.9,0.95)))
+```
+_Clearly the prediction intervals are wider than confidence intervals._
+
+4. In which of the category do you think this car belongs? Category 1: "Cheap" (below 25 quantile), Category 2: "Low Average" (between 25 quantile and median), Category 3: "Upper Average" (median - 75-quantile), Category 4: "Expensive" (above 75-quantile).    
+
+_We can simply check what is the quantile of this new car (be careful on the scale)_
+```{r}
+log_y_new <- predict(select_aic, newdata = new_x)
+mean(cs_data_set$Price < log_y_new)
+```
+_It is about the 8\%-quantile. Consequently it is the "Cheap" category._
+
+</div>
