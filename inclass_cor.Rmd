@@ -116,7 +116,7 @@ p2 <- pairwise.wilcox.test(x = flights$arr_delay, g = flights$carrier, p.adjust.
 print(p2)
 sum(p2$p.value<1-.95^(1/120),na.rm=T)
 ```
-There are 96 tests significant. Compare to the previous multiple $t$-test, more are significant. These difference accounts for the large number of outliers present in the dataset. Wilcoxon test seems more reliable due to its robustness. All the extra significant test are unsignificant $t$-test that "became" significant once using Wilcoxon test, with the only exception of "9E" against "UA" (significant with $t$-test and not significant with Wilcoxon test). 
+_There are 96 tests significant. Compare to the previous multiple $t$-test, more are significant. These difference accounts for the large number of outliers present in the dataset. Wilcoxon test seems more reliable due to its robustness. All the extra significant test are unsignificant $t$-test that "became" significant once using Wilcoxon test, with the only exception of "9E" against "UA" (significant with $t$-test and not significant with Wilcoxon test)._
 </div>
 
 # Multivariate Regression model

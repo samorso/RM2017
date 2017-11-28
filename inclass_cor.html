@@ -284,7 +284,7 @@ p2 &lt;-<span class="st"> </span><span class="kw">pairwise.wilcox.test</span>(<s
 ## P value adjustment method: none</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(p2$p.value&lt;<span class="dv">1</span><span class="fl">-.95</span>^(<span class="dv">1</span>/<span class="dv">120</span>),<span class="dt">na.rm=</span>T)</code></pre></div>
 <pre><code>## [1] 96</code></pre>
-<p>There are 96 tests significant. Compare to the previous multiple <span class="math inline">\(t\)</span>-test, more are significant. These difference accounts for the large number of outliers present in the dataset. Wilcoxon test seems more reliable due to its robustness. All the extra significant test are unsignificant <span class="math inline">\(t\)</span>-test that “became” significant once using Wilcoxon test, with the only exception of “9E” against “UA” (significant with <span class="math inline">\(t\)</span>-test and not significant with Wilcoxon test).</p>
+<p><em>There are 96 tests significant. Compare to the previous multiple <span class="math inline">\(t\)</span>-test, more are significant. These difference accounts for the large number of outliers present in the dataset. Wilcoxon test seems more reliable due to its robustness. All the extra significant test are unsignificant <span class="math inline">\(t\)</span>-test that “became” significant once using Wilcoxon test, with the only exception of “9E” against “UA” (significant with <span class="math inline">\(t\)</span>-test and not significant with Wilcoxon test).</em></p>
 </div>
 </div>
 <div id="multivariate-regression-model" class="section level1">
